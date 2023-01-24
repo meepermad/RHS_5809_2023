@@ -2,9 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.robot.Misc;
+package frc.robot.robot.RobotKeybindsAndFunctions;
 
-import frc.robot.robot.Misc.Constants.OperatorConstants;
+import frc.robot.robot.ConstantsAndConfigs.Constants.OperatorConstants;
 import frc.robot.robot.commands.Autos;
 import frc.robot.robot.commands.ExampleCommand;
 import frc.robot.robot.subsystems.ExampleSubsystem;
