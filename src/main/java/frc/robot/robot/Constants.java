@@ -125,7 +125,7 @@ public final class Constants {
         
         /* Back Left Module - Module 2 */
         public static final class Mod2 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 14;
+            public static final int driveMotorID = 16;
             public static final int angleMotorID = 12;
             public static final int canCoderID = 19;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0);
@@ -135,7 +135,7 @@ public final class Constants {
 
         /* Back Right Module - Module 3 */
         public static final class Mod3 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 16;
+            public static final int driveMotorID = 14;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 21;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0);
