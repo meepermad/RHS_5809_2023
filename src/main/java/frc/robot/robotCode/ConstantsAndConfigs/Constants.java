@@ -25,7 +25,7 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
-  public static final double stickDeadband = 0.15;
+  public static final double stickDeadband = 0.2;
 
     public static final class Swerve {
         public static final int pigeonID = 17;
@@ -94,9 +94,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 1.0; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 0.25; //TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = .70; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
