@@ -22,6 +22,8 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    public static double moveSensitivity = .25;
+    public static double rotationSensitivity = .25;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -45,15 +47,15 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX() * .25, 
-                                    translation.getY()* .25, 
-                                    rotation* .25, 
+                                    translation.getX() * moveSensitivity, 
+                                    translation.getY()* moveSensitivity, 
+                                    rotation* rotationSensitivity, 
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    translation.getX()* .25, 
-                                    translation.getY()* .25, 
-                                    rotation* .25)
+                                    translation.getX()* moveSensitivity, 
+                                    translation.getY()* moveSensitivity, 
+                                    rotation* rotationSensitivity)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
