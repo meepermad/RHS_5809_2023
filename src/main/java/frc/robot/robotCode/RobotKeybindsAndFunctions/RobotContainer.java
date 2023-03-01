@@ -44,6 +44,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -71,8 +72,8 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private void configureButtonBindings() {
       /* Driver Buttons */
       zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+      new JoystickButton(driver,9).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
   }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
