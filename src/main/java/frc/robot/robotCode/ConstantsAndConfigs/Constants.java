@@ -25,6 +25,16 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
+  public static class armConstants {
+public static final int kshouldermotorA =7;
+private static final int kshouldermotorB =5;
+private static final int kintakemotorA = 24;
+private static final int kintakemotorB =9;
+private static final int kelbowmotor =10;
+private static final int kwristmotor =23;
+
+  }
+
   public static final double stickDeadband = 0.2;
 
     public static final class Swerve {

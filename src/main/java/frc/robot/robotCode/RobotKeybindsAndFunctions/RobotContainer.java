@@ -19,6 +19,8 @@ import frc.robot.robotCode.commands.Autos;
 import frc.robot.robotCode.commands.ExampleCommand;
 import frc.robot.robotCode.commands.TeleopSwerve;
 import frc.robot.robotCode.subsystems.*;
+import frc.robot.robotCode.commands.armMove;
+import frc.robot.robotCode.subsystems.elbowSub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -45,7 +47,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
-
+    private final elbowSub elbow = new elbowSub();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -73,7 +75,11 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       /* Driver Buttons */
       zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
       new JoystickButton(driver,9).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
-  }
+    new JoystickButton(driver,8 ).whenPressed(new armMove(elbow, 1));
+    new JoystickButton(driver,11 ).whenPressed(new armMove(elbow, 0));
+
+
+    }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

@@ -14,7 +14,7 @@ import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 
 public class CANdleSubsystem extends SubsystemBase {
     private final CANdle m_candle = new CANdle(22, "rio");
-    private final int LedCount = 8; ///YOOO CHANGE THIS WHEN YOU ADD SHIIIIT
+    private final int LedCount = 300; ///YOOO CHANGE THIS WHEN YOU ADD SHIIIIT
     private Joystick joystick;
 
     private Animation m_toAnimate = null;
@@ -39,8 +39,9 @@ public class CANdleSubsystem extends SubsystemBase {
         CANdleConfiguration configAll = new CANdleConfiguration();
         configAll.statusLedOffWhenActive = true;
         configAll.disableWhenLOS = false;
-        configAll.stripType = LEDStripType.GRB;
-        configAll.brightnessScalar = 0.1;
+        configAll.stripType = LEDStripType.GRB;   //GRB is what works for 5V
+        //GRBW no work
+        configAll.brightnessScalar = 0.95; //use a % here to show how bright to make it
         configAll.vBatOutputMode = VBatOutputMode.Modulated;
         m_candle.configAllSettings(configAll, 100);
     }
@@ -111,7 +112,7 @@ public class CANdleSubsystem extends SubsystemBase {
                 m_toAnimate = new SingleFadeAnimation(50, 2, 200, 0, 0.5, LedCount);
                 break;
             case Strobe:
-                m_toAnimate = new StrobeAnimation(240, 10, 180, 0, 98.0 / 256.0, LedCount);
+                m_toAnimate = new StrobeAnimation(160  , 230, 0, 0, 69 / 256.0, LedCount);
                 break;
             case Twinkle:
                 m_toAnimate = new TwinkleAnimation(30, 70, 60, 0, 0.4, LedCount, TwinklePercent.Percent6);
