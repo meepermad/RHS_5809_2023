@@ -19,8 +19,18 @@ import frc.robot.robotCode.commands.Autos;
 import frc.robot.robotCode.commands.ExampleCommand;
 import frc.robot.robotCode.commands.TeleopSwerve;
 import frc.robot.robotCode.subsystems.*;
-import frc.robot.robotCode.commands.armMove;
+import frc.robot.robotCode.commands.intakeIN;
+import frc.robot.robotCode.commands.intakeOUT;
+import frc.robot.robotCode.commands.wristUP;
+import frc.robot.robotCode.commands.wristDOWN;
+import frc.robot.robotCode.commands.elbowDOWN;
+import frc.robot.robotCode.commands.elbowUP;
+import frc.robot.robotCode.commands.shoulderDOWN;
+import frc.robot.robotCode.commands.shoulderUP;
 import frc.robot.robotCode.subsystems.elbowSub;
+import frc.robot.robotCode.subsystems.shoulderSub;
+import frc.robot.robotCode.subsystems.wristSub;
+import frc.robot.robotCode.subsystems.intakeSub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -47,7 +57,12 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
-    private final elbowSub elbow = new elbowSub();
+  //i'm using the the "a_" to denote arm subsystems.  *spiderman camera "neat" meme here*
+  private final elbowSub a_elbowSub = new elbowSub();
+  private final intakeSub a_inkateSub = new intakeSub();
+  private final shoulderSub a_ShoulderSub = new shoulderSub();
+  private final wristSub a_WristSub = new wristSub();
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -74,10 +89,41 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private void configureButtonBindings() {
       /* Driver Buttons */
       zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-      new JoystickButton(driver,9).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
-    new JoystickButton(driver,8 ).whenPressed(new armMove(elbow, 1));
-    new JoystickButton(driver,11 ).whenPressed(new armMove(elbow, 0));
 
+
+
+
+      
+      //this is the shoulder up/down command ON behavior
+      new JoystickButton(driver, 5).onTrue(new shoulderUP(a_ShoulderSub, .1, 0));
+      new JoystickButton(driver, 3).onTrue(new shoulderDOWN(a_ShoulderSub, 0, .05));
+      //this is the should up/down command OFF behavoid
+      new JoystickButton(driver, 5).onFalse(new shoulderUP(a_ShoulderSub, 0, 0));
+      new JoystickButton(driver, 3).onFalse(new shoulderDOWN(a_ShoulderSub, 0, 0));
+
+      //this is the elbow up/down command ON behavior
+      new JoystickButton(driver, 6).onTrue(new elbowUP(a_elbowSub, .1, 0));
+      new JoystickButton(driver, 4).onTrue(new elbowDOWN(a_elbowSub, 0, .05));
+      //this is the elbow up/down command OFF behavoir
+      new JoystickButton(driver, 6).onFalse(new elbowUP(a_elbowSub, 0, 0));
+      new JoystickButton(driver, 4).onFalse(new elbowDOWN(a_elbowSub, 0, 0));
+
+    
+
+
+
+      
+      //panic KILL IT ALL switch
+
+      new JoystickButton(driver, 1).onTrue(new elbowUP(a_elbowSub, 0, 0));
+      new JoystickButton(driver, 1).onTrue(new elbowDOWN(a_elbowSub, 0, 0));
+      new JoystickButton(driver, 1).onTrue(new shoulderDOWN(a_ShoulderSub,0,0));
+      new JoystickButton(driver, 1).onTrue(new shoulderUP(a_ShoulderSub,0,0));
+
+
+
+      new JoystickButton(driver,9).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
+  
 
     }
   /**
@@ -89,4 +135,5 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       // An ExampleCommand will run in autonomous
       return new exampleAuto(s_Swerve);
   }
+
 }

@@ -3,20 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.robotCode.commands;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.robotCode.subsystems.elbowSub;
 
-public class armMove extends CommandBase {
-
-  private final elbowSub elbowSub;
-  private final double speed;
-  
-  /** Creates a new armMove. */
-  public armMove(elbowSub elbowSub, double speed) {
-    this.elbowSub = elbowSub;
-    this.speed = speed;
-    addRequirements(elbowSub);
-
+public class intakeIN extends CommandBase {
+  /** Creates a new intakeIN. */
+  public intakeIN() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,15 +18,11 @@ public class armMove extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    elbowSub.movedatelho(speed);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    elbowSub.movedatelho(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

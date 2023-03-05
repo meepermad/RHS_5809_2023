@@ -1,5 +1,4 @@
 //Nendick addition 3/5
-
 //these import the key library...things The most important is the vendordep for rev, which is up to date on 3/5
 package frc.robot.robotCode.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -9,27 +8,27 @@ import frc.robot.robotCode.ConstantsAndConfigs.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
-public class elbowSub extends SubsystemBase {
+public class shoulderSub extends SubsystemBase {
   //this creates the subsystem for the elbow
  
-    CANSparkMax elbowA = new CANSparkMax(Constants.armConstants.kelbowmotor, MotorType.kBrushless);
-    //critical step that sets the sparkMax to the brushless
+    CANSparkMax shoulderTOP = new CANSparkMax(Constants.armConstants.kshouldermotorTOP, MotorType.kBrushless);
+    CANSparkMax shoulderBOT = new CANSparkMax(Constants.armConstants.kshouldermotorBOT, MotorType.kBrushless);
+    //critical step that sets the sparkMax to the brushless. Naming reflects position on gearbox
 
-    public elbowSub(){
-
-      elbowA.setInverted(false);
+    public shoulderSub(){
     
   }
 
-  public void elUP(double speed){
+  public void shoulderUP(double speed){
     //this is the up command
-
-   elbowA.set(speed);
+   shoulderTOP.set(speed);
+   shoulderBOT.set(speed);
   }
 
-  public void elDOWN(double speedD){
+  public void shoulderDOWN(double speedD){
     //this is the down command
-    elbowA.set(-1*speedD);
+    shoulderTOP.set(-1*speedD);
+    shoulderBOT.set(-1*speedD);
 
   }
 
