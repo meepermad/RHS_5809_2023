@@ -1,14 +1,40 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// 3/5 nendick addition
 
+//remember this system is a talon, so it has different code.
 package frc.robot.robotCode.subsystems;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.robotCode.ConstantsAndConfigs.*;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class wristSub extends SubsystemBase {
-  /** Creates a new wristSub. */
-  public wristSub() {}
+
+  public WPI_TalonSRX WristMot = new WPI_TalonSRX(Constants.armConstants.kwristmotor);
+  
+
+
+//this allows us to go up, down
+  public wristSub() {
+    WristMot.setInverted(true);
+  }
+
+  public void movewristUP(double upspeed){
+    WristMot.setNeutralMode(NeutralMode.Coast);
+    WristMot.set(upspeed);
+   
+  }
+
+  public void movewristDOWN(double downspeed){
+    WristMot.setNeutralMode(NeutralMode.Coast);
+    WristMot.set(-1*downspeed);
+
+  }
+
+  public void brakeWrist(){
+    WristMot.setNeutralMode(NeutralMode.Brake);
+  }
+
 
   @Override
   public void periodic() {

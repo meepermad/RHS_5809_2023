@@ -4,25 +4,22 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 //if your code isn't working make sure the sub below is right
-import frc.robot.robotCode.subsystems.intakeSub;
+import frc.robot.robotCode.subsystems.wristSub;
 
-public class intakeOUT extends CommandBase {
+public class brakeWrist extends CommandBase {
 
   //any called variables in your subsytem go in here
   // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
-  private final intakeSub intakeSub;
-  private final double intakespeed;
-  private final double intakevomspeed;
+  private final wristSub wristSub;
+
   
 //create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
 // that's a bit kludge-y but I also don't particularlly mind it. Note that one of the
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
-  public intakeOUT(intakeSub intakeSub, double intakespeed, double intakevomspeed) {
-    this.intakeSub = intakeSub;
-    this.intakespeed = intakespeed;
-    this.intakevomspeed = intakevomspeed;
-    addRequirements(intakeSub);
+  public brakeWrist(wristSub wristSub){
+    this.wristSub = wristSub;
+    addRequirements(wristSub);
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -34,13 +31,14 @@ public class intakeOUT extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSub.intakeVOM(intakevomspeed);
+    wristSub.brakeWrist();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  intakeSub.intakeVOM(0);  }
+    wristSub.brakeWrist();
+  }
 
   // Returns true when the command should end.
   @Override

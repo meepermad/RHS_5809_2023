@@ -23,13 +23,20 @@ public class elbowSub extends SubsystemBase {
 
   public void elUP(double speed){
     //this is the up command
-
+    elbowA.setIdleMode(CANSparkMax.IdleMode.kCoast);
    elbowA.set(speed);
   }
 
   public void elDOWN(double speedD){
     //this is the down command
+    elbowA.setIdleMode(CANSparkMax.IdleMode.kCoast);
     elbowA.set(-1*speedD);
+
+  }
+
+  public void brakeEL(){
+
+    elbowA.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
   }
 

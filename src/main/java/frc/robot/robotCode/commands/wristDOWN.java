@@ -1,14 +1,29 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+//nedick addition 3/5
 
+//import supporting packages. Note you need to import the correct subsystem
 package frc.robot.robotCode.commands;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+//if your code isn't working make sure the sub below is right
+import frc.robot.robotCode.subsystems.wristSub;
 
 public class wristDOWN extends CommandBase {
-  /** Creates a new wristDOWN. */
-  public wristDOWN() {
+
+  //any called variables in your subsytem go in here
+  // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
+  private final wristSub wristSub;
+  private final double upspeed;
+  private final double downspeed;
+  
+//create the command to move
+//i'm setting it up to allow for a speed up and down to be passed no matter what.
+// that's a bit kludge-y but I also don't particularlly mind it. Note that one of the
+// two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
+  public wristDOWN(wristSub wristSub, double upspeed, double downspeed) {
+    this.wristSub = wristSub;
+    this.upspeed = upspeed;
+    this.downspeed = downspeed;
+    addRequirements(wristSub);
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -18,11 +33,15 @@ public class wristDOWN extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    wristSub.movewristDOWN(downspeed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    wristSub.movewristDOWN(0);
+  }
 
   // Returns true when the command should end.
   @Override

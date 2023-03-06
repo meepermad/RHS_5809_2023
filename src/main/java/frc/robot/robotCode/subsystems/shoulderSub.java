@@ -21,14 +21,25 @@ public class shoulderSub extends SubsystemBase {
 
   public void shoulderUP(double speed){
     //this is the up command
+    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kCoast);
    shoulderTOP.set(speed);
    shoulderBOT.set(speed);
   }
 
   public void shoulderDOWN(double speedD){
     //this is the down command
+    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kCoast);
     shoulderTOP.set(-1*speedD);
     shoulderBOT.set(-1*speedD);
+
+  }
+
+  public void brakeSH(){
+
+    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
   }
 

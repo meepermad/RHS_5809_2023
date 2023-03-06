@@ -39,6 +39,7 @@ public class elbowUP extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     elbowSub.elUP(0);
+    elbowSub.brakeEL();
   }
 
   // Returns true when the command should end.
