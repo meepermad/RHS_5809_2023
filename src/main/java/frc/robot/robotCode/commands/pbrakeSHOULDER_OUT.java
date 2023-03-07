@@ -6,11 +6,11 @@ import frc.robot.robotCode.subsystems.pnuematicsSub;
 
 
 //this tells the rio to make the commmand name "pbrakeSHOULDER"
-public class pbrakeSHOULDER_ON extends CommandBase {
+public class pbrakeSHOULDER_OUT extends CommandBase {
 
   private final pnuematicsSub pnuematicsSub;
 
-  public pbrakeSHOULDER_ON(pnuematicsSub pnuematicsSub) {
+  public pbrakeSHOULDER_OUT(pnuematicsSub pnuematicsSub) {
     this.pnuematicsSub = pnuematicsSub;
     addRequirements(pnuematicsSub);
   }
@@ -26,7 +26,7 @@ public class pbrakeSHOULDER_ON extends CommandBase {
   @Override
   public void execute() {
 
-      pnuematicsSub.p_shoulderForward();
+      pnuematicsSub.p_shoulderReverse();
 
   }
 

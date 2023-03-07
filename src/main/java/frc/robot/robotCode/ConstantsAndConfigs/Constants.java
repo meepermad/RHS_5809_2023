@@ -33,6 +33,12 @@ public static final int kintakemotorB =9;
 public static final int kelbowmotor =10;
 public static final int kwristmotor =23;
 
+
+  }
+
+
+  public static class pConstants {
+    public static final int kPhub = 2;
   }
 
   public static final double stickDeadband = 0.2;

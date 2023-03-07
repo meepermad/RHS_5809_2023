@@ -21,7 +21,6 @@ import frc.robot.robotCode.commands.TeleopSwerve;
 import frc.robot.robotCode.subsystems.*;
 import frc.robot.robotCode.commands.intakeIN;
 import frc.robot.robotCode.commands.intakeOUT;
-import frc.robot.robotCode.commands.pbrakeSHOULDER_ON;
 import frc.robot.robotCode.commands.wristUP;
 import frc.robot.robotCode.commands.wristDOWN;
 import frc.robot.robotCode.commands.elbowDOWN;
@@ -29,6 +28,8 @@ import frc.robot.robotCode.commands.elbowUP;
 import frc.robot.robotCode.commands.shoulderDOWN;
 import frc.robot.robotCode.commands.shoulderUP;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_ON;
+import frc.robot.robotCode.commands.pbrakeSHOULDER_OFF;
+import frc.robot.robotCode.commands.pbrakeSHOULDER_OUT;
 import frc.robot.robotCode.commands.brakeWrist;
 //import frc.robot.robotCode.commands.compressorOFF;
 import frc.robot.robotCode.commands.brakeElbow;
@@ -39,8 +40,7 @@ import frc.robot.robotCode.subsystems.shoulderSub;
 import frc.robot.robotCode.subsystems.wristSub;
 import frc.robot.robotCode.subsystems.intakeSub;
 //import frc.robot.robotCode.subsystems.compressorSub;
-import frc.robot.robotCode.subsystems.pShoulderSub;
-import edu.wpi.first.wpilibj.PneumaticHub;
+import frc.robot.robotCode.subsystems.pnuematicsSub;
 
 
 
@@ -75,8 +75,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final intakeSub a_intakeSub = new intakeSub();
   private final shoulderSub a_ShoulderSub = new shoulderSub();
   private final wristSub a_WristSub = new wristSub();
-  private final pShoulderSub p_ShoulderSub = new pShoulderSub();
-  private final PneumaticHub m_pH = new PneumaticHub(2);
+  private final pnuematicsSub p_pPnuematicsSub = new pnuematicsSub();
 
   //private final compressorSub p_cpCompressorSub = new compressorSub();
 
@@ -166,11 +165,12 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       new JoystickButton(driver, 1).onTrue(new shoulderDOWN(a_ShoulderSub,0,0));
       new JoystickButton(driver, 1).onTrue(new shoulderUP(a_ShoulderSub,0,0));
       new JoystickButton(driver, 1).onTrue(new wristUP(a_WristSub,0,0));
-      //new JoystickButton(driver, 1).onTrue(new compressorOFF(p_cpCompressorSub));
+      new JoystickButton(driver, 1).onTrue(new pbrakeSHOULDER_OFF(p_pPnuematicsSub));
 
 
       //new JoystickButton(driver,2).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
-      new JoystickButton(driver, 2).onTrue(new pbrakeSHOULDER_ON(p_ShoulderSub));
+      new JoystickButton(driver, 2).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
+      new JoystickButton(driver, 8).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
 
 
     }
