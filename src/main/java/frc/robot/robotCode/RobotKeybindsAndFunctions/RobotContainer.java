@@ -31,6 +31,9 @@ import frc.robot.robotCode.commands.pbrakeSHOULDER_ON;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_OFF;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_OUT;
 import frc.robot.robotCode.commands.brakeWrist;
+import frc.robot.robotCode.commands.pbrakeELBOW_OFF;
+import frc.robot.robotCode.commands.pbrakeELBOW_ON;
+import frc.robot.robotCode.commands.pbrakeELBOW_OUT;
 //import frc.robot.robotCode.commands.compressorOFF;
 import frc.robot.robotCode.commands.brakeElbow;
 import frc.robot.robotCode.commands.brakeShoulder;
@@ -170,7 +173,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
       //new JoystickButton(driver,2).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
       new JoystickButton(driver, 2).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
+      new JoystickButton(driver, 2).onTrue(new pbrakeELBOW_ON(p_pPnuematicsSub));
       new JoystickButton(driver, 8).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
+      new JoystickButton(driver, 8).onTrue(new pbrakeELBOW_OUT(p_pPnuematicsSub));
 
 
     }
