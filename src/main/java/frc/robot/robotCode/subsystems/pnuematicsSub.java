@@ -13,12 +13,13 @@ import frc.robot.robotCode.ConstantsAndConfigs.Constants.pConstants;
 public class pnuematicsSub extends SubsystemBase {
 
 PneumaticHub m_pH = new PneumaticHub(pConstants.kPhub);
-DoubleSolenoid m_shoulder_solenoid = m_pH.makeDoubleSolenoid(4, 12);
+DoubleSolenoid m_shoulder_solenoid = m_pH.makeDoubleSolenoid(1, 15);
+DoubleSolenoid m_elbow_solenoid = m_pH.makeDoubleSolenoid(4, 12);
 
   /** Creates a new pShoulderSub. */
   public pnuematicsSub() {}
 
-
+  
   public void p_shoulderForward(){
     //this is the up command
 
@@ -26,10 +27,23 @@ DoubleSolenoid m_shoulder_solenoid = m_pH.makeDoubleSolenoid(4, 12);
 
   }
 
-  
+  public void p_elbowForward(){
+    
+    m_elbow_solenoid.set(DoubleSolenoid.Value.kForward);
+
+  }
+
   public void p_shoulderReverse(){
 
     m_shoulder_solenoid.set(DoubleSolenoid.Value.kReverse);
+
+    //this is the up command
+
+  }
+
+  public void p_elbowReverse(){
+
+    m_elbow_solenoid.set(DoubleSolenoid.Value.kReverse);
 
     //this is the up command
 
@@ -43,7 +57,12 @@ DoubleSolenoid m_shoulder_solenoid = m_pH.makeDoubleSolenoid(4, 12);
 
   }
 
+  public void p_elbowOFF(){
 
+    m_elbow_solenoid.set(DoubleSolenoid.Value.kOff);
+    //this is the up command
+
+  }
 
 
   @Override
