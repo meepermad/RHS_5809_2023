@@ -7,11 +7,11 @@ import frc.robot.robotCode.ConstantsAndConfigs.*;
 //imported the whole of the constants because I had issues doing it the "right" way - this works fine, and it's not a huge size penalty
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class pShoulderBrakeSub extends SubsystemBase {
+public class shoulderBrakeSub extends SubsystemBase {
     CANSparkMax shoulderTOP = new CANSparkMax(Constants.armConstants.kshouldermotorTOP, MotorType.kBrushless);
     CANSparkMax shoulderBOT = new CANSparkMax(Constants.armConstants.kshouldermotorBOT, MotorType.kBrushless);
 
-    public pShoulderBrakeSub(){}
+    public shoulderBrakeSub(){}
 
     public void brakeSH(){
     shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kBrake);
