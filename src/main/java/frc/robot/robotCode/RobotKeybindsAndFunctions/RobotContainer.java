@@ -57,6 +57,7 @@ import frc.robot.robotCode.subsystems.pnuematicsSub;
 public class RobotContainer {
   /* Controllers */
   private final Joystick driver = new Joystick(0);
+  private final Joystick operator = new Joystick(1);
 
   /* Drive Controls */
 
@@ -79,6 +80,8 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final shoulderSub a_ShoulderSub = new shoulderSub();
   private final wristSub a_WristSub = new wristSub();
   private final pnuematicsSub p_pPnuematicsSub = new pnuematicsSub();
+  //private final pnuematicsSub p_pPnuematicsSub1 = new pnuematicsSub();
+  //private final pnuematicsSub p_pPnuematicsSub2 = new pnuematicsSub();
 
   //private final compressorSub p_cpCompressorSub = new compressorSub();
 
@@ -114,39 +117,42 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
       
       //this is the shoulder up/down command ON behavior
-      new JoystickButton(driver, 5).onTrue(new shoulderUP(a_ShoulderSub, .1, 0));
-      new JoystickButton(driver, 3).onTrue(new shoulderDOWN(a_ShoulderSub, 0, .1));
-      //this is the should up/down command OFF behavoid
-      new JoystickButton(driver, 5).onFalse(new shoulderUP(a_ShoulderSub, 0, 0));
-      new JoystickButton(driver, 3).onFalse(new shoulderDOWN(a_ShoulderSub, 0, 0));
-      new JoystickButton(driver, 3).onFalse(new brakeShoulder(a_ShoulderSub));
-      new JoystickButton(driver, 5).onFalse(new brakeShoulder(a_ShoulderSub));
+      new JoystickButton(driver, 5).onTrue(new shoulderUP(a_ShoulderSub, .1, 0).alongWith(new pbrakeSHOULDER_OUT(p_pPnuematicsSub)));
+      new JoystickButton(driver, 3).onTrue(new shoulderDOWN(a_ShoulderSub, 0, .1).alongWith(new pbrakeSHOULDER_OUT(p_pPnuematicsSub)));
 
+      //this is the should up/down command OFF behavoid
+      new JoystickButton(driver, 5).onFalse(new shoulderUP(a_ShoulderSub, 0, 0).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
+      new JoystickButton(driver, 3).onFalse(new shoulderDOWN(a_ShoulderSub, 0, 0).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
+     
       //this is the elbow up/down command ON behavior
-      new JoystickButton(driver, 6).onTrue(new elbowUP(a_elbowSub, .8, 0));
-      new JoystickButton(driver, 4).onTrue(new elbowDOWN(a_elbowSub, 0, .05));
+      new JoystickButton(driver, 6).onTrue(new elbowUP(a_elbowSub, .1, 0).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
+      new JoystickButton(driver, 4).onTrue(new elbowDOWN(a_elbowSub, 0, .05).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
+
       //this is the elbow up/down command OFF behavoir
-      new JoystickButton(driver, 6).onFalse(new elbowUP(a_elbowSub, 0, 0));
-      new JoystickButton(driver, 6).onFalse(new brakeElbow(a_elbowSub));
-      new JoystickButton(driver, 4).onFalse(new elbowDOWN(a_elbowSub, 0, 0));
-      new JoystickButton(driver, 4).onFalse(new brakeElbow(a_elbowSub));
+      new JoystickButton(driver, 6).onFalse(new elbowUP(a_elbowSub, 0, 0).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
+      new JoystickButton(driver, 4).onFalse(new elbowUP(a_elbowSub, 0, 0).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
+
+
 
       //this is the wrist up/down command ON behavoir
       new JoystickButton(driver, 11).onTrue(new wristUP(a_WristSub, .6, 0));
       new JoystickButton(driver, 12).onTrue(new wristDOWN(a_WristSub, 0, .1));
+      
       //this is the wrist up/down command OFF behavoir
-      new JoystickButton(driver, 11).onFalse(new wristUP(a_WristSub, 0, 0));
-      new JoystickButton(driver, 12).onFalse(new wristDOWN(a_WristSub, 0, 0));
-      new JoystickButton(driver, 11).onFalse(new brakeWrist(a_WristSub));
-      new JoystickButton(driver, 12).onFalse(new brakeWrist(a_WristSub));
+      //new JoystickButton(driver, 11).onFalse(new wristUP(a_WristSub, 0, 0).andThen(new brakeWrist(a_WristSub)));
+      //new JoystickButton(driver, 12).onFalse(new wristDOWN(a_WristSub, 0, 0).andThen(new brakeWrist(a_WristSub)));
+      new JoystickButton(driver, 11).onFalse(new wristUP(a_WristSub, 0, 0).andThen(new TestCommand()));
+      new JoystickButton(driver, 12).onFalse(new wristDOWN(a_WristSub, 0, 0).andThen(new TestCommand()));
 
       //this is the intake IN/OUT command ON behavoir
       new JoystickButton(driver, 9).onTrue(new intakeIN(a_intakeSub, .85, 0));
       new JoystickButton(driver, 10).onTrue(new intakeOUT(a_intakeSub, 0, .85));
+
       //this is the intake IN/OUT command OFF behavoir
       new JoystickButton(driver, 9).onFalse(new intakeIN(a_intakeSub, .0, 0));
       new JoystickButton(driver, 10).onFalse(new intakeOUT(a_intakeSub, .0, 0));
 
+    
 
 
 
@@ -160,7 +166,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       
       //panic KILL IT ALL switch
 
-      new JoystickButton(driver, 1).onTrue(new elbowUP(a_elbowSub, 0, 0));
+      //new JoystickButton(driver, 1).onTrue(pbrakeSHOULDER_ON(p_pPnuematicsSub).andThen(elbowUP(a_elbowSub, 0, 0)));
       new JoystickButton(driver, 1).onTrue(new elbowDOWN(a_elbowSub, 0, 0));
       new JoystickButton(driver, 1).onTrue(new brakeElbow(a_elbowSub));
       new JoystickButton(driver, 1).onTrue(new brakeWrist(a_WristSub));
@@ -173,10 +179,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
       //new JoystickButton(driver,2).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
       new JoystickButton(driver, 2).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
-      new JoystickButton(driver, 2).onTrue(new pbrakeELBOW_ON(p_pPnuematicsSub));
       new JoystickButton(driver, 8).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
-      new JoystickButton(driver, 8).onTrue(new pbrakeELBOW_OUT(p_pPnuematicsSub));
-
+    
+       
 
     }
   /**

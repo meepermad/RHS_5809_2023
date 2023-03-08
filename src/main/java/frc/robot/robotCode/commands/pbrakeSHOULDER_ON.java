@@ -34,7 +34,7 @@ public class pbrakeSHOULDER_ON extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    pnuematicsSub.p_shoulderOFF();
+   // pnuematicsSub.p_shoulderOFF();
      }
 
   // Returns true when the command should end.

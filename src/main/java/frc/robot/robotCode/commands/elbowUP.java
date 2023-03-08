@@ -4,6 +4,10 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.subsystems.elbowSub;
+import frc.robot.robotCode.commands.pbrakeELBOW_OFF;
+import frc.robot.robotCode.commands.pbrakeELBOW_ON;
+import frc.robot.robotCode.commands.pbrakeELBOW_OUT;
+import frc.robot.robotCode.subsystems.pnuematicsSub;
 
 public class elbowUP extends CommandBase {
 
@@ -11,6 +15,7 @@ public class elbowUP extends CommandBase {
   private final elbowSub elbowSub;
   private final double speed;
   private final double speedD;
+  //private pnuematicsSub pnuematicsSub;
   
 //create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
@@ -21,6 +26,7 @@ public class elbowUP extends CommandBase {
     this.speed = speed;
     this.speedD = speedD;
     addRequirements(elbowSub);
+ 
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -33,6 +39,7 @@ public class elbowUP extends CommandBase {
   @Override
   public void execute() {
     elbowSub.elUP(speed);
+    //pnuematicsSub.p_elbowForward();
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +47,7 @@ public class elbowUP extends CommandBase {
   public void end(boolean interrupted) {
     elbowSub.elUP(0);
     elbowSub.brakeEL();
+    //pnuematicsSub.p_elbowReverse();
   }
 
   // Returns true when the command should end.

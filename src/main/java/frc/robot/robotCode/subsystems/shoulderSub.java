@@ -15,9 +15,7 @@ public class shoulderSub extends SubsystemBase {
     CANSparkMax shoulderBOT = new CANSparkMax(Constants.armConstants.kshouldermotorBOT, MotorType.kBrushless);
     //critical step that sets the sparkMax to the brushless. Naming reflects position on gearbox
 
-    public shoulderSub(){
-    
-  }
+    public shoulderSub(){}
 
   public void shoulderUP(double speed){
     //this is the up command
@@ -36,12 +34,6 @@ public class shoulderSub extends SubsystemBase {
 
   }
 
-  public void brakeSH(){
-
-    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kBrake);
-    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kBrake);
-
-  }
 
   @Override
   public void periodic() {

@@ -34,7 +34,7 @@ public class pbrakeELBOW_OUT extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    pnuematicsSub.p_elbowOFF();
+   // pnuematicsSub.p_elbowOFF();
      }
 
   // Returns true when the command should end.
