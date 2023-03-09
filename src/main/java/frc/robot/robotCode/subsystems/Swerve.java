@@ -23,7 +23,7 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
     public static double moveSensitivity = .25; //change me to .25 when done
-    public static double rotationSensitivity = .25;
+    public static double rotationSensitivity = .15;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
