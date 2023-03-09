@@ -34,6 +34,17 @@ public class shoulderSub extends SubsystemBase {
 
   }
 
+  
+  public void brakeSH0(){
+
+      shoulderBOT.set(0);
+      shoulderTOP.set(0);
+    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+
+  }
+
 
   @Override
   public void periodic() {

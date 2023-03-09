@@ -37,7 +37,7 @@ public class elbowSub extends SubsystemBase {
   public void brakeEL(){
 
     elbowA.setIdleMode(CANSparkMax.IdleMode.kBrake);
-
+    elbowA.set(0);
   }
 
   @Override

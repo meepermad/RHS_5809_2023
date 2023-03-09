@@ -32,6 +32,7 @@ public class wristSub extends SubsystemBase {
   }
 
   public void brakeWrist(){
+    WristMot.set(0);
     WristMot.setNeutralMode(NeutralMode.Brake);
   }
 

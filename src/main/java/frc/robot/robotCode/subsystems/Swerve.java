@@ -22,7 +22,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
-    public static double moveSensitivity = .25;
+    public static double moveSensitivity = .25; //change me to .25 when done
     public static double rotationSensitivity = .25;
 
     public Swerve() {
