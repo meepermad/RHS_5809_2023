@@ -4,7 +4,6 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.subsystems.elbowSub;
-import frc.robot.lib.util.PIDFElbow;
 import frc.robot.robotCode.commands.pbrakeELBOW_OFF;
 import frc.robot.robotCode.commands.pbrakeELBOW_ON;
 import frc.robot.robotCode.commands.pbrakeELBOW_OUT;
@@ -16,7 +15,6 @@ public class elbowUP extends CommandBase {
   private final elbowSub elbowSub;
   private final double speed;
   private final double speedD;
-  PIDFElbow angleController = new PIDFElbow("angle", 0, 0, 0, 0);
   //private pnuematicsSub pnuematicsSub;
   
 //create the command to move

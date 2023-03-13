@@ -175,7 +175,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       new JoystickButton(operator, 8).onTrue(new p_intake_RELEASE(p_pPnuematicsSub));
 
       
-
+    //new JoystickButton(operator, 9).onTrue(new);
 
 
 
@@ -186,14 +186,6 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       
       //panic KILL IT ALL switch
 
-      //new JoystickButton(driver, 1).onTrue(pbrakeSHOULDER_ON(p_pPnuematicsSub).andThen(elbowUP(a_elbowSub, 0, 0)));
-      new JoystickButton(driver, 1).onTrue(new elbowDOWN(a_elbowSub, 0, 0));
-      new JoystickButton(driver, 1).onTrue(new brakeElbow(a_elbowSub));
-      new JoystickButton(driver, 1).onTrue(new brakeWrist(a_WristSub));
-      new JoystickButton(driver, 1).onTrue(new shoulderDOWN(a_ShoulderSub,0,0));
-      new JoystickButton(driver, 1).onTrue(new shoulderUP(a_ShoulderSub,0,0));
-      new JoystickButton(driver, 1).onTrue(new wristUP(a_WristSub,0,0));
-      new JoystickButton(driver, 1).onTrue(new pbrakeSHOULDER_OFF(p_pPnuematicsSub));
 
 
       //new JoystickButton(driver,2).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);

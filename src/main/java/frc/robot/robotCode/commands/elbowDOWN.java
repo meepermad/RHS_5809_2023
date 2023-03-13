@@ -4,7 +4,6 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.subsystems.elbowSub;
-import frc.robot.lib.util.*;
 
 public class elbowDOWN extends CommandBase {
 
@@ -12,7 +11,6 @@ public class elbowDOWN extends CommandBase {
   private final elbowSub elbowSub;
   private final double speed;
   private final double speedD;
-  PIDFElbow angleController = new PIDFElbow("angle", 0, 0, 0, 0);
   
 //create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
@@ -36,7 +34,7 @@ public class elbowDOWN extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elbowSub.elDOWN(angleController.calculate(elbowSub.getAngle()));
+    elbowSub.elDOWN(speedD);
   }
 
   // Called once the command ends or is interrupted.

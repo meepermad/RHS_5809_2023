@@ -197,4 +197,19 @@ public static final class Encoders{
    // public static final DutyCycleEncoder elbowEncoder = new DutyCycleEncoder(1);
     //public static final DutyCycleEncoder wristEncoder = new DutyCycleEncoder(2);
 }
+
+public static final class PIDS{
+    public static double kP_shoulder = 0;
+    public static double kI_shoulder = 0;
+    public static double kD_shoulder = 0;
+
+    public static double kP_elbow = 0;
+    public static double kI_elbow = 0;
+    public static double kD_elbow = 0;
+
+    public static double kP_wrist = 0;
+    public static double kI_wrist = 0;
+    public static double kD_wrist = 0;
+
+}
 }
