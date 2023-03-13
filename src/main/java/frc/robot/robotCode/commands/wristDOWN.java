@@ -29,7 +29,9 @@ public class wristDOWN extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    wristSub.initializeCounter();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -46,6 +48,6 @@ public class wristDOWN extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return wristSub.isSwitchSet();
   }
 }

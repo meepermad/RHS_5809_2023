@@ -7,16 +7,24 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
 //imported the whole of the constants because I had issues doing it the "right" way - this works fine, and it's not a huge size penalty
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 
 public class elbowSub extends SubsystemBase {
   //this creates the subsystem for the elbow
+
+  DigitalInput limitSwitch = Constants.Switches.elbowSwitch;
+  Counter counter = new Counter(limitSwitch);
+  DutyCycleEncoder encoder;
  
     CANSparkMax elbowA = new CANSparkMax(Constants.armConstants.kelbowmotor, MotorType.kBrushless);
     //critical step that sets the sparkMax to the brushless
 
-    public elbowSub(){
-
+    public elbowSub(DutyCycleEncoder encoder){
+      this.encoder = encoder;
       elbowA.setInverted(false);
     
   }
@@ -39,6 +47,19 @@ public class elbowSub extends SubsystemBase {
     elbowA.setIdleMode(CANSparkMax.IdleMode.kBrake);
     elbowA.set(0);
   }
+
+  public boolean isSwitchSet(){
+    return counter.get() > 0;
+  }
+
+  public void initializeCounter(){
+    counter.reset();
+  }
+
+  public double getAngle(){
+    return encoder.get();
+  }
+
 
   @Override
   public void periodic() {

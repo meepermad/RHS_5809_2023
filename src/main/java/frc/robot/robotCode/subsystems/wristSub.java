@@ -7,15 +7,23 @@ import frc.robot.robotCode.ConstantsAndConfigs.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 public class wristSub extends SubsystemBase {
 
   public WPI_TalonSRX WristMot = new WPI_TalonSRX(Constants.armConstants.kwristmotor);
+  DigitalInput limitSwitch = Constants.Switches.wristSwitch;
+  Counter counter = new Counter(limitSwitch);
+  DutyCycleEncoder encoder;
   
 
 
 //this allows us to go up, down
-  public wristSub() {
+  public wristSub(DutyCycleEncoder encoder) {
+    this.encoder = encoder;
     WristMot.setInverted(true);
   }
 
@@ -36,6 +44,17 @@ public class wristSub extends SubsystemBase {
     WristMot.setNeutralMode(NeutralMode.Brake);
   }
 
+  public boolean isSwitchSet(){
+    return counter.get() > 0;
+  }
+
+  public void initializeCounter(){
+    counter.reset();
+  }
+
+  public double getAngle(){
+    return encoder.get();
+  }
 
   @Override
   public void periodic() {

@@ -7,7 +7,8 @@ package frc.robot.robotCode.RobotKeybindsAndFunctions;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.robotCode.ConstantsAndConfigs.CTREConfigs;
+import frc.robot.robotCode.ConstantsAndConfigs.*;
+import frc.robot.robotCode.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  public static final LimeLight limeVisionSubsystem = new LimeLight();
 
   /**
    * This function is run when the robot is first started up and should be used for any

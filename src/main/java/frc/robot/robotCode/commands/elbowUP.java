@@ -4,6 +4,7 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.subsystems.elbowSub;
+import frc.robot.lib.util.PIDFElbow;
 import frc.robot.robotCode.commands.pbrakeELBOW_OFF;
 import frc.robot.robotCode.commands.pbrakeELBOW_ON;
 import frc.robot.robotCode.commands.pbrakeELBOW_OUT;
@@ -15,6 +16,7 @@ public class elbowUP extends CommandBase {
   private final elbowSub elbowSub;
   private final double speed;
   private final double speedD;
+  PIDFElbow angleController = new PIDFElbow("angle", 0, 0, 0, 0);
   //private pnuematicsSub pnuematicsSub;
   
 //create the command to move
@@ -33,7 +35,9 @@ public class elbowUP extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    elbowSub.initializeCounter();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -53,6 +57,6 @@ public class elbowUP extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return elbowSub.isSwitchSet();
   }
 }

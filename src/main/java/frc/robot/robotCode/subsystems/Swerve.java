@@ -22,8 +22,6 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
-    public static double moveSensitivity = .25; //change me to .25 when done
-    public static double rotationSensitivity = .15;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -47,15 +45,15 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX() * moveSensitivity, 
-                                    translation.getY()* moveSensitivity, 
-                                    rotation* rotationSensitivity, 
+                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    rotation* Constants.JoysticksSensitivitys.rotationSensitivity, 
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    translation.getX()* moveSensitivity, 
-                                    translation.getY()* moveSensitivity, 
-                                    rotation* rotationSensitivity)
+                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    rotation* Constants.JoysticksSensitivitys.rotationSensitivity)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 

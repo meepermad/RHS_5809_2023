@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.lib.util.COTSFalconSwerveConstants;
 import frc.robot.lib.util.SwerveModuleConstants;
 
@@ -40,8 +41,6 @@ public static final int kwristmotor =23;
   public static class pConstants {
     public static final int kPhub = 2;
   }
-
-  public static final double stickDeadband = 0.2;
 
     public static final class Swerve {
         public static final int pigeonID = 17;
@@ -175,4 +174,27 @@ public static final int kwristmotor =23;
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+public static final class JoysticksSensitivitys{
+    public static final double stickDeadband = 0.2;
+    public static double moveSensitivity = .25; //change me to .25 when done
+    public static double rotationSensitivity = .15;
+}
+    
+public static final class Switches{
+    public static final DigitalInput shoulderSwitch = new DigitalInput(3);
+    public static final DigitalInput elbowSwitch = new DigitalInput(4);
+    public static final DigitalInput wristSwitch = new DigitalInput(5);
+}
+
+public static final class Encoders{
+
+
+    public static final int kShoulderEncoder = 0;
+    public static final int kelbowEncoder = 1;
+    public static final int kwristEncoder = 2;
+    //public static final DutyCycleEncoder shoulderEncoder = new DutyCycleEncoder(0);
+   // public static final DutyCycleEncoder elbowEncoder = new DutyCycleEncoder(1);
+    //public static final DutyCycleEncoder wristEncoder = new DutyCycleEncoder(2);
+}
 }
