@@ -13,7 +13,7 @@ public class pidfElbow extends CommandBase {
   /** Creates a new pidfShoulder. */
   private elbowSub elbowSub;
   private double goal;
-  private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_elbow, Constants.PIDS.kI_elbow, Constants.PIDS.kD_elbow, 0);
+  private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_elbow, Constants.PIDS.kI_elbow, Constants.PIDS.kD_elbow, 1);
   public pidfElbow(elbowSub elbowSub, double goal) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elbowSub = elbowSub;
