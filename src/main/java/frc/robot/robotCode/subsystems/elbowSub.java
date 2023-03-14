@@ -7,6 +7,8 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
 //imported the whole of the constants because I had issues doing it the "right" way - this works fine, and it's not a huge size penalty
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
@@ -42,6 +44,13 @@ public class elbowSub extends SubsystemBase {
 
   }
 
+  public void elABS(double speedD){
+    //this is the down command
+    elbowA.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    elbowA.set(speedD * .1);
+
+  }
+
   public void brakeEL(){
 
     elbowA.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -57,7 +66,8 @@ public class elbowSub extends SubsystemBase {
   }
 
   public double getAngle(){
-    return encoder.get();
+    double angle = encoder.getDistance() % 360;
+    return Rotation2d.fromDegrees(angle % 360).getDegrees();
   }
 
 

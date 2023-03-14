@@ -9,8 +9,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class wristSub extends SubsystemBase {
 
@@ -41,7 +41,7 @@ public class wristSub extends SubsystemBase {
 
   public void movewristABS(double downspeed){
     WristMot.setNeutralMode(NeutralMode.Coast);
-    WristMot.set(downspeed);
+    WristMot.set(downspeed * -.02);
 
   }
 
@@ -59,11 +59,11 @@ public class wristSub extends SubsystemBase {
   }
 
   public double getAngle(){
-    return encoder.get();
+    double angle = encoder.getDistance() % 360;
+    return Rotation2d.fromDegrees(angle % 360).getDegrees();
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

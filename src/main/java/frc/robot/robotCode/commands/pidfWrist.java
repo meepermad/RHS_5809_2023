@@ -9,11 +9,11 @@ import frc.robot.lib.util.*;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 import frc.robot.robotCode.subsystems.*;
 
-
 public class pidfWrist extends CommandBase {
   /** Creates a new pidfShoulder. */
   private final wristSub wristSub;
-  private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_shoulder, Constants.PIDS.kI_shoulder, Constants.PIDS.kD_shoulder, 0);
+  private PIDFWrist angleController = new PIDFWrist("angle", Constants.PIDS.kP_wrist, Constants.PIDS.kI_wrist, Constants.PIDS.kD_wrist, 1);
+  private double setpoint;
   public pidfWrist(wristSub wristSub) {
     this.wristSub = wristSub;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -21,17 +21,28 @@ public class pidfWrist extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    setpoint = -110;
+    //angleController.setIntegratorRange(0,1);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    wristSub.movewristABS(angleController.calculate(wristSub.getAngle()));
+    wristSub.movewristABS(angleController.calculate(wristSub.getAngle(), setpoint));
+    System.out.println("Current angle | " + wristSub.getAngle());
+    System.out.println("PID Value | " + angleController.calculate(wristSub.getAngle(), setpoint));
+    System.out.println("Position Error | " + angleController.getPositionError());
+    //System.out.println(setpoint);
+    System.out.println("");
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    wristSub.movewristABS(0);
+  }
 
   // Returns true when the command should end.
   @Override

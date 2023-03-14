@@ -12,9 +12,11 @@ import frc.robot.robotCode.subsystems.*;
 public class pidfShoulder extends CommandBase {
   /** Creates a new pidfShoulder. */
   private final shoulderSub shoulderSub;
-  private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_shoulder, Constants.PIDS.kI_shoulder, Constants.PIDS.kD_shoulder, 0);
-  public pidfShoulder(shoulderSub shoulderSub) {
+  private PIDFShoulder angleController = new PIDFShoulder("angle", Constants.PIDS.kP_shoulder, Constants.PIDS.kI_shoulder, Constants.PIDS.kD_shoulder, 0);
+  private double goal;
+  public pidfShoulder(shoulderSub shoulderSub, double goal) {
     this.shoulderSub = shoulderSub;
+    this.goal = goal;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,12 +27,19 @@ public class pidfShoulder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shoulderSub.shoulderABS(angleController.calculate(shoulderSub.getAngle()));
+    shoulderSub.shoulderABS(angleController.calculate(shoulderSub.getAngle(), goal));
+    System.out.println("Current angle | " + shoulderSub.getAngle());
+    System.out.println("PID Value | " + angleController.calculate(shoulderSub.getAngle(), goal));
+    System.out.println("Position Error | " + angleController.getPositionError());
+    //System.out.println(setpoint);
+    System.out.println("");
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shoulderSub.shoulderABS(0);
+  }
 
   // Returns true when the command should end.
   @Override

@@ -177,7 +177,7 @@ public static final int kwristmotor =23;
 
 public static final class JoysticksSensitivitys{
     public static final double stickDeadband = 0.2;
-    public static double moveSensitivity = .25; //change me to .25 when done
+    public static double moveSensitivity = .4; //change me to .25 when done
     public static double rotationSensitivity = .15;
 }
     
@@ -199,15 +199,15 @@ public static final class Encoders{
 }
 
 public static final class PIDS{
-    public static double kP_shoulder = 0;
+    public static double kP_shoulder = .05;
     public static double kI_shoulder = 0;
     public static double kD_shoulder = 0;
 
-    public static double kP_elbow = 0;
+    public static double kP_elbow = .15;
     public static double kI_elbow = 0;
     public static double kD_elbow = 0;
 
-    public static double kP_wrist = 0;
+    public static double kP_wrist = .6;
     public static double kI_wrist = 0;
     public static double kD_wrist = 0;
 

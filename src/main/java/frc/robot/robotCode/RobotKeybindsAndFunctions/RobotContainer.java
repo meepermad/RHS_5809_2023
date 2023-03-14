@@ -35,6 +35,9 @@ import frc.robot.robotCode.commands.shoulderUP;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_ON;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_OFF;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_OUT;
+import frc.robot.robotCode.commands.pidfElbow;
+import frc.robot.robotCode.commands.pidfShoulder;
+import frc.robot.robotCode.commands.pidfWrist;
 import frc.robot.robotCode.commands.p_intake_GRAB;
 import frc.robot.robotCode.commands.p_intake_OFF;
 import frc.robot.robotCode.commands.p_intake_RELEASE;
@@ -78,11 +81,15 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
+  public static final DutyCycleEncoder shoulderEncoder = new DutyCycleEncoder(0);
+  public static final DutyCycleEncoder elbowEncoder = new DutyCycleEncoder(1);
+  public static final DutyCycleEncoder wristEncoder = new DutyCycleEncoder(2);
+
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
   //i'm using the the "a_" to denote arm subsystems.  *spiderman camera "neat" meme here*
-  private final elbowSub a_elbowSub = new elbowSub(shoulderEncoder);
+  private final elbowSub a_elbowSub = new elbowSub(elbowEncoder);
   private final intakeSub a_intakeSub = new intakeSub();
   private final shoulderSub a_ShoulderSub = new shoulderSub(shoulderEncoder);
   private final wristSub a_WristSub = new wristSub(wristEncoder);
@@ -95,10 +102,6 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
   //private final compressorSub p_cpCompressorSub = new compressorSub();
 
-  public static final DutyCycleEncoder shoulderEncoder = new DutyCycleEncoder(0);
-  public static final DutyCycleEncoder elbowEncoder = new DutyCycleEncoder(1);
-  public static final DutyCycleEncoder wristEncoder = new DutyCycleEncoder(2);
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
       s_Swerve.setDefaultCommand(
@@ -110,8 +113,6 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
               () -> robotCentric.getAsBoolean()
           )
       );
-
-      //shoulderEncoder.setDistancePerRotation(4.0);
 
       // Configure the button bindings
       configureButtonBindings();
@@ -136,16 +137,20 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       new JoystickButton(operator, 2).onTrue(new shoulderDOWN(a_ShoulderSub, 0, .1).alongWith(new pbrakeSHOULDER_OUT(p_pPnuematicsSub)));
 
       //this is the should up/down command OFF behavoid
-      new JoystickButton(operator, 1).onFalse(new brakeShoulder(a_ShoulderSub).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
-      new JoystickButton(operator, 2).onFalse(new brakeShoulder(a_ShoulderSub).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 1).onFalse(new brakeShoulder(a_ShoulderSub).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 2).onFalse(new brakeShoulder(a_ShoulderSub).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
+      new JoystickButton(driver, 11).whileTrue(new pidfShoulder(a_ShoulderSub, 2.5));
+      new JoystickButton(driver, 12).whileTrue(new pidfShoulder(a_ShoulderSub, 25));
      
       //this is the elbow up/down command ON behavior
       new JoystickButton(operator, 4).onTrue(new elbowUP(a_elbowSub, .2, 0).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
       new JoystickButton(operator, 3).onTrue(new elbowDOWN(a_elbowSub, 0, .2).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
 
       //this is the elbow up/down command OFF behavoir
-      new JoystickButton(operator, 4).onFalse(new brakeElbow(a_elbowSub).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
-      new JoystickButton(operator, 3).onFalse(new brakeElbow(a_elbowSub).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 4).onFalse(new brakeElbow(a_elbowSub).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 3).onFalse(new brakeElbow(a_elbowSub).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
+      new JoystickButton(driver, 4).whileTrue(new pidfElbow(a_elbowSub, 5));
+      new JoystickButton(driver, 6).whileTrue(new pidfElbow(a_elbowSub, 35));
 
 
 
@@ -154,10 +159,11 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       new JoystickButton(operator, 6).onTrue(new wristDOWN(a_WristSub, 0, .1)); 
       
       //this is the wrist up/down command OFF behavoir
-      new JoystickButton(operator, 5).onFalse(new brakeWrist(a_WristSub));
+      /*new JoystickButton(operator, 5).onFalse(new brakeWrist(a_WristSub));
       new JoystickButton(operator, 6).onFalse(new brakeWrist(a_WristSub));
       new JoystickButton(operator, 5).onFalse(new wristUP(a_WristSub, 0, 0).andThen(new TestCommand()));
-      new JoystickButton(operator, 6).onFalse(new wristDOWN(a_WristSub, 0, 0).andThen(new TestCommand()));
+      new JoystickButton(operator, 6).onFalse(new wristDOWN(a_WristSub, 0, 0).andThen(new TestCommand()));*/
+      new JoystickButton(driver, 5).whileTrue(new pidfWrist(a_WristSub));
 
 
 
@@ -174,8 +180,8 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       new JoystickButton(operator, 7).onTrue(new p_intake_GRAB(p_pPnuematicsSub));
       new JoystickButton(operator, 8).onTrue(new p_intake_RELEASE(p_pPnuematicsSub));
 
-      
-    //new JoystickButton(operator, 9).onTrue(new);
+     //scoring positon
+     new JoystickButton(operator, 9).whileTrue(new pidfShoulder(a_ShoulderSub, 15).alongWith(new pidfElbow(a_elbowSub, 60)).alongWith(new pidfWrist(a_WristSub)));
 
 
 

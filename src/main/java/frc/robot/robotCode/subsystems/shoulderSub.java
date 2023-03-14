@@ -6,6 +6,8 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
 //imported the whole of the constants because I had issues doing it the "right" way - this works fine, and it's not a huge size penalty
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
@@ -43,6 +45,15 @@ public class shoulderSub extends SubsystemBase {
 
   }
 
+  public void shoulderABS(double speedD){
+    //this is the down command
+    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    shoulderTOP.set(speedD * -.1);
+    shoulderBOT.set(speedD * -.1);
+
+  }
+
   
   public void brakeSH0(){
 
@@ -61,9 +72,10 @@ public class shoulderSub extends SubsystemBase {
   public void initializeCounter(){
     counter.reset();
   }
-  
+
   public double getAngle(){
-    return encoder.get();
+    double angle = encoder.getDistance() % 360;
+    return Rotation2d.fromDegrees(angle % 360).getDegrees() / 5.0;
   }
 
   @Override

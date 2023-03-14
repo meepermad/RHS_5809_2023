@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
 import frc.robot.robotCode.subsystems.*;
+import frc.robot.robotCode.RobotKeybindsAndFunctions.RobotContainer;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -34,6 +35,18 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    RobotContainer.shoulderEncoder.reset();
+    RobotContainer.elbowEncoder.reset();
+    RobotContainer.wristEncoder.reset();
+    /*RobotContainer.shoulderEncoder.setPositionOffset(0.5);
+    RobotContainer.elbowEncoder.setPositionOffset(0.5);
+    RobotContainer.wristEncoder.setPositionOffset(0.5);*/
+    RobotContainer.shoulderEncoder.setDistancePerRotation(360.0);
+    RobotContainer.elbowEncoder.setDistancePerRotation(360.0);
+    RobotContainer.wristEncoder.setDistancePerRotation(360.0);
+    RobotContainer.shoulderEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
+    RobotContainer.elbowEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
+    RobotContainer.wristEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
   }
 
   /**
