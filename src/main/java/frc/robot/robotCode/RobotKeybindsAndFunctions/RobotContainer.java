@@ -218,7 +218,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     //low scoring position
     new JoystickButton(operator, 2).whileTrue(
-        new pidfWrist(a_WristSub, -75), new waitFor(1)
+        new pidfWrist(a_WristSub, -75)
         .andThen(new pidfShoulder(a_ShoulderSub, 35))
         .alongWith(new pidfElbow(a_elbowSub, 20))
         .alongWith(new pidfWrist(a_WristSub, -80))
@@ -226,7 +226,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
      // mid scoring positon
      new JoystickButton(operator, 3).whileTrue(
-        new pidfWrist(a_WristSub, -75), new waitFor(1)
+        new pidfWrist(a_WristSub, -75)
         .andThen(new pidfShoulder(a_ShoulderSub, 15))
         .alongWith(new pidfElbow(a_elbowSub, 75))
         .alongWith(new pidfWrist(a_WristSub, -75))
@@ -234,7 +234,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     // high scoring position
     new JoystickButton(operator, 4).whileTrue(
-        new pidfWrist(a_WristSub, -75), new waitFor(1)
+        new pidfWrist(a_WristSub, -75)
         .andThen(new pidfShoulder(a_ShoulderSub, 28))
         .alongWith(new pidfElbow(a_elbowSub, 115))
         .alongWith(new pidfWrist(a_WristSub, -75))
@@ -242,7 +242,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     // driving postion
     new JoystickButton(operator, 1).whileTrue(
-        new pidfWrist(a_WristSub, -75), new waitFor(1)
+        new pidfWrist(a_WristSub, -75)
         .andThen(new pidfShoulder(a_ShoulderSub, 5))
         .alongWith(new pidfElbow(a_elbowSub, 0))
         .alongWith(new pidfWrist(a_WristSub, -75))
@@ -251,7 +251,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     //pickup position
      new JoystickButton(operator, 10).whileTrue(
-        new pidfWrist(a_WristSub, -60), new waitFor(1)
+        new pidfWrist(a_WristSub, -60)
         .andThen(new pidfShoulder(a_ShoulderSub, 15))
         .alongWith(new pidfElbow(a_elbowSub, 70))
         .alongWith(new pidfWrist(a_WristSub, -60))
