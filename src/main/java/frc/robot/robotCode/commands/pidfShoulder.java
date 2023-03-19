@@ -14,7 +14,6 @@ public class pidfShoulder extends CommandBase {
   private final shoulderSub shoulderSub;
   private PIDFShoulder angleController = new PIDFShoulder("angle", Constants.PIDS.kP_shoulder, Constants.PIDS.kI_shoulder, Constants.PIDS.kD_shoulder, 0);
   private double goal;
-  private boolean isInterrupted = false;
   public pidfShoulder(shoulderSub shoulderSub, double goal) {
     this.shoulderSub = shoulderSub;
     this.goal = goal;
@@ -23,9 +22,7 @@ public class pidfShoulder extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    isInterrupted = false;
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -41,16 +38,12 @@ public class pidfShoulder extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //isInterrupted = interrupted;
+    shoulderSub.shoulderABS(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    /*if (isInterrupted){
-      isInterrupted = false;
-      return true;
-    }*/
     return false;
   }
 }

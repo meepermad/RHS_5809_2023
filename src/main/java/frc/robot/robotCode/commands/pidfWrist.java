@@ -13,8 +13,7 @@ public class pidfWrist extends CommandBase {
   /** Creates a new pidfShoulder. */
   private final wristSub wristSub;
   private final double goal;
-  private boolean isInterrupted = false;
-  private PIDFWrist angleController = new PIDFWrist("angle", Constants.PIDS.kP_wrist, Constants.PIDS.kI_wrist, Constants.PIDS.kD_wrist, 0);
+  private PIDFWrist angleController = new PIDFWrist("angle", Constants.PIDS.kP_wrist, Constants.PIDS.kI_wrist, Constants.PIDS.kD_wrist, 1);
   public pidfWrist(wristSub wristSub, double goal) {
     this.wristSub = wristSub;
     this.goal = goal;
@@ -24,14 +23,14 @@ public class pidfWrist extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isInterrupted = false;
+    //angleController.setIntegratorRange(0,1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {//
+  public void execute() {
     wristSub.movewristABS(angleController.calculate(wristSub.getAngle(), goal));
-    System.out.println("Current angle |  " + wristSub.getAngle());
+    System.out.println("Current angle | " + wristSub.getAngle());
     System.out.println("PID Value | " + angleController.calculate(wristSub.getAngle(), goal));
     System.out.println("Position Error | " + angleController.getPositionError());
     //System.out.println(setpoint);
@@ -42,17 +41,12 @@ public class pidfWrist extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //isInterrupted = interrupted;
-    //wristSub.movewristABS(0);
+    wristSub.movewristABS(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    /*if (isInterrupted){
-      isInterrupted = false;
-      return true;
-    }*/
     return false;
   }
 }
