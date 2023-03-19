@@ -109,9 +109,9 @@ public static final int kwristmotor =23;
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 0.25; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 1.2; //TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = .70; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 2.0; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -178,7 +178,7 @@ public static final int kwristmotor =23;
 public static final class JoysticksSensitivitys{
     public static final double stickDeadband = 0.2;
     public static double moveSensitivity = .5; //change me to .25 when done
-    public static double rotationSensitivity = .15;
+    public static double rotationSensitivity = .45;
 }
     
 public static final class Switches{
@@ -203,13 +203,13 @@ public static final class PIDS{
     public static double kI_shoulder = 0;
     public static double kD_shoulder = 0;
 
-    public static double kP_elbow = .075;
-    public static double kI_elbow = .0045;
-    public static double kD_elbow = .008;
+    public static double kP_elbow = .16;
+    public static double kI_elbow = .05;
+    public static double kD_elbow = .0045;
 
-    public static double kP_wrist = .3;
-    public static double kI_wrist = .15;
-    public static double kD_wrist = .01;
+    public static double kP_wrist = .5;
+    public static double kI_wrist = .175;
+    public static double kD_wrist = .02;
 
 }
 }

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 import frc.robot.robotCode.ConstantsAndConfigs.SwerveModule;
+import frc.robot.robotCode.RobotKeybindsAndFunctions.*;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -45,14 +46,14 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
-                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
                                     rotation* Constants.JoysticksSensitivitys.rotationSensitivity, 
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
-                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
                                     rotation* Constants.JoysticksSensitivitys.rotationSensitivity)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);

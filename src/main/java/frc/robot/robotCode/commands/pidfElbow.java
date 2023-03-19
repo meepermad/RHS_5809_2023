@@ -13,7 +13,8 @@ public class pidfElbow extends CommandBase {
   /** Creates a new pidfShoulder. */
   private elbowSub elbowSub;
   private double goal;
-  private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_elbow, Constants.PIDS.kI_elbow, Constants.PIDS.kD_elbow, 1);
+  private boolean isInterrupted = false;
+  private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_elbow, Constants.PIDS.kI_elbow, Constants.PIDS.kD_elbow, 0);
   public pidfElbow(elbowSub elbowSub, double goal) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elbowSub = elbowSub;
@@ -22,7 +23,9 @@ public class pidfElbow extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    isInterrupted = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -38,12 +41,15 @@ public class pidfElbow extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elbowSub.elABS(0);
+    //isInterrupted = interrupted;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+      isInterrupted = false;
+      return true;
+    }*/
     return false;
   }
 }
