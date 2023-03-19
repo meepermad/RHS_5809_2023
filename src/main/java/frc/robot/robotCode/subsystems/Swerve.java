@@ -45,14 +45,14 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
-                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
                                     rotation* Constants.JoysticksSensitivitys.rotationSensitivity, 
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
-                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity, 
+                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
                                     rotation* Constants.JoysticksSensitivitys.rotationSensitivity)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
