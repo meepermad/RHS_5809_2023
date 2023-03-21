@@ -44,11 +44,12 @@ public class pidfWrist extends CommandBase {
   public void end(boolean interrupted) {
     isInterrupted = true;
     wristSub.movewristABS(0);
+    wristSub.brakeWrist();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (Math.abs(angleController.getPositionError()) < 0.5);
   }
 }

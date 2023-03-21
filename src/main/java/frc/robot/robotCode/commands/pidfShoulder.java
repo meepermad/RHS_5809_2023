@@ -25,6 +25,7 @@ public class pidfShoulder extends CommandBase {
   @Override
   public void initialize() {
     isInterrupted = false;
+    shoulderSub.initializeCounter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,11 +44,12 @@ public class pidfShoulder extends CommandBase {
   public void end(boolean interrupted) {
     isInterrupted = true;
     shoulderSub.shoulderABS(0);
+    shoulderSub.brakeSH0();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return shoulderSub.isSwitchSet() || (Math.abs(angleController.getPositionError()) < 0.5);
   }
 }

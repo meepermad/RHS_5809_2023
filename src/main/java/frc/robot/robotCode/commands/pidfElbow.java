@@ -43,11 +43,12 @@ public class pidfElbow extends CommandBase {
   public void end(boolean interrupted) {
     isInterrupted = true;
     elbowSub.elABS(0);
+    elbowSub.brakeEL();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return  (Math.abs(angleController.getPositionError()) < 0.5);
   }
 }
