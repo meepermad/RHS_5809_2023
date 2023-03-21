@@ -15,7 +15,7 @@ public class pnuematicsSub extends SubsystemBase {
 PneumaticHub m_pH = new PneumaticHub(pConstants.kPhub);
 DoubleSolenoid m_shoulder_solenoid = m_pH.makeDoubleSolenoid(3, 14);
 DoubleSolenoid m_elbow_solenoid = m_pH.makeDoubleSolenoid(5, 8);
-DoubleSolenoid m_intake_solenoid = m_pH.makeDoubleSolenoid(10, 7);
+DoubleSolenoid m_intake_solenoid = m_pH.makeDoubleSolenoid(7, 10);
 
   /** Creates a new pShoulderSub. */
   public pnuematicsSub() {}

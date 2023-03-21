@@ -12,8 +12,8 @@ public class intakeSub extends SubsystemBase {
   //this creates the subsystem for the elbow
  
   //right denotes the motor on the right, looking along the arm(right from the robot perspective)
-    CANSparkMax intakeLeftMotor = new CANSparkMax(Constants.armConstants.kintakemotorB, MotorType.kBrushless);
-    CANSparkMax intakeRightMotor = new CANSparkMax(Constants.armConstants.kintakemotorA, MotorType.kBrushless);
+    CANSparkMax intakeLeftMotor = new CANSparkMax(Constants.armConstants.kintakemotorB, MotorType.kBrushed);
+    CANSparkMax intakeRightMotor = new CANSparkMax(Constants.armConstants.kintakemotorA, MotorType.kBrushed);
     //critical step that sets the sparkMax to the brushless. Naming reflects position on gearbox
 
     public intakeSub(){
@@ -28,15 +28,16 @@ public class intakeSub extends SubsystemBase {
    intakeRightMotor.set(intakespeed);
    //kludge, where I manually invert leftmotor
    intakeLeftMotor.set(-1*intakespeed);
+      intakeRightMotor.set(intakespeed);
+
   }
 
   public void intakeVOM(double intakevomspeed){
     //this is the down command
      //kludge, where I manually invert leftmotor
 
-    intakeLeftMotor.set(intakevomspeed);
+   intakeLeftMotor.set(intakevomspeed);
     intakeRightMotor.set(-1*intakevomspeed);
-
   }
 
 

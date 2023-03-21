@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -32,6 +34,7 @@ import frc.robot.robotCode.commands.elbowDOWN;
 import frc.robot.robotCode.commands.elbowUP;
 import frc.robot.robotCode.commands.shoulderDOWN;
 import frc.robot.robotCode.commands.shoulderUP;
+import frc.robot.robotCode.commands.waitFor;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_ON;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_OFF;
 import frc.robot.robotCode.commands.pbrakeSHOULDER_OUT;
@@ -51,6 +54,7 @@ import frc.robot.robotCode.commands.brakeElbow;
 import frc.robot.robotCode.commands.brakeShoulder;
 //import frc.robot.robotCode.commands.compressorON;
 import frc.robot.robotCode.commands.TestCommand;
+import frc.robot.robotCode.commands.autoSwerve;
 
 
 
@@ -71,6 +75,7 @@ public class RobotContainer {
  /* */ private final int translationAxis = XboxController.Axis.kLeftY.value;
 private final int strafeAxis = XboxController.Axis.kLeftX.value;
  private final int rotationAxis = XboxController.Axis.kLeftTrigger.value;
+ public static double sensitivityAxis = (XboxController.Axis.kRightTrigger.value / 2.0) + 1; 
 
     /* 
     DutyCycleEncoder shoulderEncoder = Constants.Encoders.shoulderEncoder;
@@ -79,7 +84,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kX.value);
 
   public static final DutyCycleEncoder shoulderEncoder = new DutyCycleEncoder(0);
   public static final DutyCycleEncoder elbowEncoder = new DutyCycleEncoder(1);
@@ -133,43 +138,43 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
       
       //this is the shoulder up/down command ON behavior
-      new JoystickButton(operator, 1).whileTrue(new shoulderUP(a_ShoulderSub, .2, 0).alongWith(new pbrakeSHOULDER_OUT(p_pPnuematicsSub)));
-      new JoystickButton(operator, 2).whileTrue(new shoulderDOWN(a_ShoulderSub, 0, .1).alongWith(new pbrakeSHOULDER_OUT(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 1).whileTrue(new shoulderUP(a_ShoulderSub, .2, 0).alongWith(new pbrakeSHOULDER_OUT(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 2).whileTrue(new shoulderDOWN(a_ShoulderSub, 0, .1).alongWith(new pbrakeSHOULDER_OUT(p_pPnuematicsSub)));
 
       //this is the should up/down command OFF behavoid
       //new JoystickButton(operator, 1).onFalse(new brakeShoulder(a_ShoulderSub).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
       //new JoystickButton(operator, 2).onFalse(new brakeShoulder(a_ShoulderSub).alongWith(new pbrakeSHOULDER_ON(p_pPnuematicsSub)));
-      new JoystickButton(driver, 11).whileTrue(new pidfShoulder(a_ShoulderSub, 2.5));
-      new JoystickButton(driver, 12).whileTrue(new pidfShoulder(a_ShoulderSub, 25));
+      //new JoystickButton(driver, 11).whileTrue(new pidfShoulder(a_ShoulderSub, 2.5));
+      //new JoystickButton(driver, 12).whileTrue(new pidfShoulder(a_ShoulderSub, 25));
      
       //this is the elbow up/down command ON behavior
-      new JoystickButton(operator, 4).whileTrue(new elbowUP(a_elbowSub, .2, 0).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
-      new JoystickButton(operator, 3).whileTrue(new elbowDOWN(a_elbowSub, 0, .2).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 4).whileTrue(new elbowUP(a_elbowSub, .2, 0).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
+      //new JoystickButton(operator, 3).whileTrue(new elbowDOWN(a_elbowSub, 0, .2).alongWith(new pbrakeELBOW_OUT(p_pPnuematicsSub)));
 
       //this is the elbow up/down command OFF behavoir
       //new JoystickButton(operator, 4).onFalse(new brakeElbow(a_elbowSub).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
       //new JoystickButton(operator, 3).onFalse(new brakeElbow(a_elbowSub).alongWith(new pbrakeELBOW_ON(p_pPnuematicsSub)));
-      new JoystickButton(driver, 4).whileTrue(new pidfElbow(a_elbowSub, 5));
-      new JoystickButton(driver, 6).whileTrue(new pidfElbow(a_elbowSub, 35));
+      //new JoystickButton(driver, 4).whileTrue(new pidfElbow(a_elbowSub, 5));
+      //new JoystickButton(driver, 6).whileTrue(new pidfElbow(a_elbowSub, 35));
 
 
 
       //this is the wrist up/down command ON behavoir
-      new JoystickButton(operator, 5).whileTrue(new wristUP(a_WristSub, .3, 0));
-      new JoystickButton(operator, 6).whileTrue(new wristDOWN(a_WristSub, 0, .1)); 
+      //new JoystickButton(operator, 5).whileTrue(new wristUP(a_WristSub, .3, 0));
+      //new JoystickButton(operator, 6).whileTrue(new wristDOWN(a_WristSub, 0, .1)); 
       
       //this is the wrist up/down command OFF behavoir
       /*new JoystickButton(operator, 5).onFalse(new brakeWrist(a_WristSub));
       new JoystickButton(operator, 6).onFalse(new brakeWrist(a_WristSub));
       new JoystickButton(operator, 5).onFalse(new wristUP(a_WristSub, 0, 0).andThen(new TestCommand()));
       new JoystickButton(operator, 6).onFalse(new wristDOWN(a_WristSub, 0, 0).andThen(new TestCommand()));*/
-      new JoystickButton(driver, 5).whileTrue(new pidfWrist(a_WristSub, -70));
+      //new JoystickButton(driver, 5).whileTrue(new pidfWrist(a_WristSub, -70));
 
 
 
       //this is the intake IN/OUT command ON behavoir
-      new JoystickButton(driver, 9).whileTrue(new intakeIN(a_intakeSub, .85, 0));
-      new JoystickButton(driver, 10).whileTrue(new intakeOUT(a_intakeSub, 0, .85));
+      new JoystickButton(operator, 5).whileTrue(new intakeIN(a_intakeSub, .85, 0));
+      new JoystickButton(operator, 6).whileTrue(new intakeOUT(a_intakeSub, 0, .85));
 
       //this is the intake IN/OUT command OFF behavoir
       //new JoystickButton(driver, 9).onFalse(new intakeIN(a_intakeSub, .0, 0));
@@ -180,7 +185,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       new JoystickButton(operator, 7).whileTrue(new p_intake_GRAB(p_pPnuematicsSub));
       new JoystickButton(operator, 8).onTrue(
         Commands.race(
-            new p_intake_GRAB(p_pPnuematicsSub),
+            new p_intake_RELEASE(p_pPnuematicsSub),
             new pidfShoulder(a_ShoulderSub, 5),
             new pidfElbow(a_elbowSub, 0),
             new pidfWrist(a_WristSub, -15),
@@ -212,49 +217,49 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     );
 
-    new JoystickButton(operator, 9).whileTrue(new p_intake_GRAB(p_pPnuematicsSub));
-
+    new JoystickButton(operator, 9).whileTrue(new p_intake_RELEASE(p_pPnuematicsSub));
+    
 
 
     //low scoring position
-    new JoystickButton(operator, 2).whileTrue(
-        new pidfWrist(a_WristSub, -75)
-        .andThen(new pidfShoulder(a_ShoulderSub, 35))
+    new JoystickButton(operator, 2).onTrue(
+        (new pidfShoulder(a_ShoulderSub, 30))
         .alongWith(new pidfElbow(a_elbowSub, 20))
         .alongWith(new pidfWrist(a_WristSub, -80))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
      // mid scoring positon
-     new JoystickButton(operator, 3).whileTrue(
-        new pidfWrist(a_WristSub, -75)
-        .andThen(new pidfShoulder(a_ShoulderSub, 15))
+     new JoystickButton(operator, 3).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 10))
         .alongWith(new pidfElbow(a_elbowSub, 75))
-        .alongWith(new pidfWrist(a_WristSub, -75))
+        .alongWith(new pidfWrist(a_WristSub, -75)))
+        .until(()-> new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
     // high scoring position
-    new JoystickButton(operator, 4).whileTrue(
-        new pidfWrist(a_WristSub, -75)
-        .andThen(new pidfShoulder(a_ShoulderSub, 28))
-        .alongWith(new pidfElbow(a_elbowSub, 115))
-        .alongWith(new pidfWrist(a_WristSub, -75))
+    new JoystickButton(operator, 4).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 23))
+        .alongWith(new pidfElbow(a_elbowSub, 117.5))
+        .alongWith(new pidfWrist(a_WristSub, -45)))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
     // driving postion
-    new JoystickButton(operator, 1).whileTrue(
-        new pidfWrist(a_WristSub, -75)
-        .andThen(new pidfShoulder(a_ShoulderSub, 5))
+    new JoystickButton(operator, 1).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 0))
         .alongWith(new pidfElbow(a_elbowSub, 0))
-        .alongWith(new pidfWrist(a_WristSub, -75))
+        .alongWith(new pidfWrist(a_WristSub, -75)))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
 
     //pickup position
-     new JoystickButton(operator, 10).whileTrue(
-        new pidfWrist(a_WristSub, -60)
-        .andThen(new pidfShoulder(a_ShoulderSub, 15))
-        .alongWith(new pidfElbow(a_elbowSub, 70))
-        .alongWith(new pidfWrist(a_WristSub, -60))
+     new JoystickButton(operator, 10).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 10))
+        .alongWith(new pidfElbow(a_elbowSub, 74))
+        .alongWith(new pidfWrist(a_WristSub, -40)))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean())
      );
 
 
@@ -267,7 +272,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
 
-      //new JoystickButton(driver,2).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
+      new JoystickButton(driver,2).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
      // new JoystickButton(driver, 9).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
      // new JoystickButton(driver, 10).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
     

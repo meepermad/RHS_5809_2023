@@ -205,7 +205,7 @@ public static final class PIDS{
 
     public static double kP_elbow = .16;
     public static double kI_elbow = .05;
-    public static double kD_elbow = .0045;
+    public static double kD_elbow = .006;
 
     public static double kP_wrist = .5;
     public static double kI_wrist = .175;

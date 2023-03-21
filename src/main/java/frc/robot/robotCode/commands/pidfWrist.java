@@ -13,6 +13,7 @@ public class pidfWrist extends CommandBase {
   /** Creates a new pidfShoulder. */
   private final wristSub wristSub;
   private final double goal;
+  private boolean isInterrupted = false;
   private PIDFWrist angleController = new PIDFWrist("angle", Constants.PIDS.kP_wrist, Constants.PIDS.kI_wrist, Constants.PIDS.kD_wrist, 1);
   public pidfWrist(wristSub wristSub, double goal) {
     this.wristSub = wristSub;
@@ -23,7 +24,7 @@ public class pidfWrist extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //angleController.setIntegratorRange(0,1);
+    isInterrupted = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,6 +42,7 @@ public class pidfWrist extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    isInterrupted = true;
     wristSub.movewristABS(0);
   }
 
