@@ -9,6 +9,7 @@ import frc.robot.robotCode.subsystems.pnuematicsSub;
 public class pbrakeSHOULDER_ON extends CommandBase {
 
   private final pnuematicsSub pnuematicsSub;
+  private boolean x;
 
   public pbrakeSHOULDER_ON(pnuematicsSub pnuematicsSub) {
     this.pnuematicsSub = pnuematicsSub;
@@ -19,14 +20,14 @@ public class pbrakeSHOULDER_ON extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    x = true;
+    pnuematicsSub.p_shoulderForward();
+    x = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-      pnuematicsSub.p_shoulderForward();
 
   }
 
@@ -40,7 +41,7 @@ public class pbrakeSHOULDER_ON extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return x;
   } 
 }
   

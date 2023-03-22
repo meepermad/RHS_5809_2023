@@ -9,6 +9,7 @@ import java.beans.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.robotCode.Auto.exampleAuto;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
@@ -46,6 +48,8 @@ import frc.robot.robotCode.commands.p_intake_OFF;
 import frc.robot.robotCode.commands.p_intake_RELEASE;
 
 import frc.robot.robotCode.commands.brakeWrist;
+import frc.robot.robotCode.commands.candleRGB;
+import frc.robot.robotCode.commands.changeOffset;
 import frc.robot.robotCode.commands.pbrakeELBOW_OFF;
 import frc.robot.robotCode.commands.pbrakeELBOW_ON;
 import frc.robot.robotCode.commands.pbrakeELBOW_OUT;
@@ -76,6 +80,7 @@ public class RobotContainer {
 private final int strafeAxis = XboxController.Axis.kLeftX.value;
  private final int rotationAxis = XboxController.Axis.kLeftTrigger.value;
  public static double sensitivityAxis = (XboxController.Axis.kRightTrigger.value / 2.0) + 1; 
+ public static double elbowOffset = 0;
 
     /* 
     DutyCycleEncoder shoulderEncoder = Constants.Encoders.shoulderEncoder;
@@ -107,6 +112,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
   //private final compressorSub p_cpCompressorSub = new compressorSub();
 
+  Alliance alliance = DriverStation.getAlliance();
+  int r1,g1,b1;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
       s_Swerve.setDefaultCommand(
@@ -118,6 +126,16 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
               () -> robotCentric.getAsBoolean()
           )
       );
+
+      if(alliance.equals(Alliance.Red)){
+        r1 = 255;
+        g1 = 0;
+        b1 = 0;
+      } else{
+        r1 = 0;
+        g1 = 0;
+        b1 = 255;
+      }
 
       // Configure the button bindings
       configureButtonBindings();
@@ -160,15 +178,15 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
       //this is the wrist up/down command ON behavoir
-      //new JoystickButton(operator, 5).whileTrue(new wristUP(a_WristSub, .3, 0));
-      //new JoystickButton(operator, 6).whileTrue(new wristDOWN(a_WristSub, 0, .1)); 
+      //new JoystickButton(operator, 11).whileTrue(new wristUP(a_WristSub, .3, 0));
+      //new JoystickButton(operator, 12).whileTrue(new wristDOWN(a_WristSub, 0, .1)); 
       
       //this is the wrist up/down command OFF behavoir
       /*new JoystickButton(operator, 5).onFalse(new brakeWrist(a_WristSub));
       new JoystickButton(operator, 6).onFalse(new brakeWrist(a_WristSub));
       new JoystickButton(operator, 5).onFalse(new wristUP(a_WristSub, 0, 0).andThen(new TestCommand()));
       new JoystickButton(operator, 6).onFalse(new wristDOWN(a_WristSub, 0, 0).andThen(new TestCommand()));*/
-      //new JoystickButton(driver, 5).whileTrue(new pidfWrist(a_WristSub, -70));
+      new JoystickButton(driver, 5).whileTrue(new pidfWrist(a_WristSub, -70));
 
 
 
@@ -179,6 +197,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       //this is the intake IN/OUT command OFF behavoir
       //new JoystickButton(driver, 9).onFalse(new intakeIN(a_intakeSub, .0, 0));
       //new JoystickButton(driver, 10).onFalse(new intakeOUT(a_intakeSub, .0, 0));
+
+      new JoystickButton(operator, 11).onTrue(new changeOffset(-2));
+      new JoystickButton(operator, 12).onTrue(new changeOffset(2));
 
     
       //this is the intake IN/OUT command ON behavoir
@@ -223,7 +244,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     //low scoring position
     new JoystickButton(operator, 2).onTrue(
-        (new pidfShoulder(a_ShoulderSub, 30))
+        ((new pidfShoulder(a_ShoulderSub, 30)))
         .alongWith(new pidfElbow(a_elbowSub, 20))
         .alongWith(new pidfWrist(a_WristSub, -80))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
@@ -271,8 +292,10 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       //panic KILL IT ALL switch
 
 
-
-      new JoystickButton(driver,2).whenPressed(m_candleSubsystem::incrementAnimation, m_candleSubsystem);
+    //yellow  
+    new JoystickButton(driver,1).whileTrue(new candleRGB(m_candleSubsystem, 255, 255, 0, r1, g1, b1));
+    //purple
+    new JoystickButton(driver,2).whileTrue(new candleRGB(m_candleSubsystem, 221,160,221, r1, g1, b1));
      // new JoystickButton(driver, 9).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
      // new JoystickButton(driver, 10).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
     

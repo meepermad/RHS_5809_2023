@@ -7,6 +7,7 @@ package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.lib.util.*;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
+import frc.robot.robotCode.RobotKeybindsAndFunctions.RobotContainer;
 import frc.robot.robotCode.subsystems.*;
 
 public class pidfElbow extends CommandBase {
@@ -32,10 +33,11 @@ public class pidfElbow extends CommandBase {
   public void execute() {
    elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), goal));
    System.out.println("Current angle | " + elbowSub.getAngle());
-   System.out.println("PID Value | " + angleController.calculate(elbowSub.getAngle(), goal));
+   System.out.println("PID Value | " + angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
    System.out.println("Position Error | " + angleController.getPositionError());
+   System.out.println("Elbow Offset | " + elbowSub.getOffset());
    //System.out.println(setpoint);
-   System.out.println("");
+   System.out.println(""); 
   }
 
   // Called once the command ends or is interrupted.
@@ -49,6 +51,7 @@ public class pidfElbow extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return  (Math.abs(angleController.getPositionError()) < 0.5);
+    //return (Math.abs(angleController.getPositionError()) < 3);
+    return false;
   }
 }

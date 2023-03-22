@@ -32,11 +32,11 @@ public class pidfShoulder extends CommandBase {
   @Override
   public void execute() {
     shoulderSub.shoulderABS(angleController.calculate(shoulderSub.getAngle(), goal));
-    System.out.println("Current angle | " + shoulderSub.getAngle());
+    /*System.out.println("Current angle | " + shoulderSub.getAngle());
     System.out.println("PID Value | " + angleController.calculate(shoulderSub.getAngle(), goal));
     System.out.println("Position Error | " + angleController.getPositionError());
     //System.out.println(setpoint);
-    System.out.println("");
+    System.out.println("");*/
   }
 
   // Called once the command ends or is interrupted.
@@ -44,12 +44,13 @@ public class pidfShoulder extends CommandBase {
   public void end(boolean interrupted) {
     isInterrupted = true;
     shoulderSub.shoulderABS(0);
-    shoulderSub.brakeSH0();
+    //shoulderSub.brakeSH0();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return shoulderSub.isSwitchSet() || (Math.abs(angleController.getPositionError()) < 0.5);
+    //return shoulderSub.isSwitchSet();
+    return false;
   }
 }

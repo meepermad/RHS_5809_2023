@@ -7,6 +7,7 @@ package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.lib.util.*;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
+import frc.robot.robotCode.RobotKeybindsAndFunctions.RobotContainer;
 import frc.robot.robotCode.subsystems.*;
 
 public class pidfWrist extends CommandBase {
@@ -31,11 +32,11 @@ public class pidfWrist extends CommandBase {
   @Override
   public void execute() {
     wristSub.movewristABS(angleController.calculate(wristSub.getAngle(), goal));
-    System.out.println("Current angle | " + wristSub.getAngle());
+    /*System.out.println("Current angle | " + wristSub.getAngle());
     System.out.println("PID Value | " + angleController.calculate(wristSub.getAngle(), goal));
     System.out.println("Position Error | " + angleController.getPositionError());
     //System.out.println(setpoint);
-    System.out.println("");
+    System.out.println("");*/
 
   }
 
@@ -50,6 +51,6 @@ public class pidfWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(angleController.getPositionError()) < 0.5);
+    return false;
   }
 }

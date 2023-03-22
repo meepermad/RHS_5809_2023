@@ -87,6 +87,7 @@ public class CANdleSubsystem extends SubsystemBase {
     public void configLos(boolean disableWhenLos) { m_candle.configLOSBehavior(disableWhenLos, 0); }
     public void configLedType(LEDStripType type) { m_candle.configLEDType(type, 0); }
     public void configStatusLedBehavior(boolean offWhenActive) { m_candle.configStatusLedState(offWhenActive, 0); }
+    public void setRGB(int r, int b, int g){m_candle.setLEDs(r, g, b);}
 
     public void changeAnimation(AnimationTypes toChange) {
         m_currentAnimation = toChange;

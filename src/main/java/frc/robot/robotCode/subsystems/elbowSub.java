@@ -5,6 +5,8 @@ package frc.robot.robotCode.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
+import frc.robot.robotCode.RobotKeybindsAndFunctions.RobotContainer;
+
 //imported the whole of the constants because I had issues doing it the "right" way - this works fine, and it's not a huge size penalty
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -68,6 +70,10 @@ public class elbowSub extends SubsystemBase {
   public double getAngle(){
     double angle = encoder.getDistance() % 360;
     return Rotation2d.fromDegrees(angle % 360).getDegrees();
+  }
+
+  public double getOffset(){
+    return RobotContainer.elbowOffset;
   }
 
 
