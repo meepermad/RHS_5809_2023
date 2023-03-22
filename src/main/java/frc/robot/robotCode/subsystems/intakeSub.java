@@ -8,7 +8,7 @@ import frc.robot.robotCode.ConstantsAndConfigs.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
-public class intakeSub extends SubsystemBase {
+public class IntakeSub extends SubsystemBase {
   //this creates the subsystem for the elbow
  
   //right denotes the motor on the right, looking along the arm(right from the robot perspective)
@@ -16,7 +16,7 @@ public class intakeSub extends SubsystemBase {
     CANSparkMax intakeRightMotor = new CANSparkMax(Constants.armConstants.kintakemotorA, MotorType.kBrushed);
     //critical step that sets the sparkMax to the brushless. Naming reflects position on gearbox
 
-    public intakeSub(){
+    public IntakeSub(){
     //  intakeLeftMotor.setInverted(true);
     //idk why but the above command isn't working, so anyway 
   

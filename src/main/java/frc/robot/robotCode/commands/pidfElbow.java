@@ -12,11 +12,11 @@ import frc.robot.robotCode.subsystems.*;
 
 public class pidfElbow extends CommandBase {
   /** Creates a new pidfShoulder. */
-  private elbowSub elbowSub;
+  private ElbowSub elbowSub;
   private double goal;
   private boolean isInterrupted = false;
   private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_elbow, Constants.PIDS.kI_elbow, Constants.PIDS.kD_elbow, 1);
-  public pidfElbow(elbowSub elbowSub, double goal) {
+  public pidfElbow(ElbowSub elbowSub, double goal) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elbowSub = elbowSub;
     this.goal = goal;
@@ -31,7 +31,7 @@ public class pidfElbow extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), goal));
+   elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
    System.out.println("Current angle | " + elbowSub.getAngle());
    System.out.println("PID Value | " + angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
    System.out.println("Position Error | " + angleController.getPositionError());

@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 
-public class elbowSub extends SubsystemBase {
+public class ElbowSub extends SubsystemBase {
   //this creates the subsystem for the elbow
 
   DigitalInput limitSwitch = Constants.Switches.elbowSwitch;
@@ -27,7 +27,7 @@ public class elbowSub extends SubsystemBase {
     CANSparkMax elbowA = new CANSparkMax(Constants.armConstants.kelbowmotor, MotorType.kBrushless);
     //critical step that sets the sparkMax to the brushless
 
-    public elbowSub(DutyCycleEncoder encoder){
+    public ElbowSub(DutyCycleEncoder encoder){
       this.encoder = encoder;
       elbowA.setInverted(false);
     

@@ -7,6 +7,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -23,12 +25,17 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    private PIDController balancePID = new PIDController(0.014, 0, .008);
+	private double oldPitch;
+    private double time;
 
     public Swerve() {
+        //Assigning variables
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
 
+        //Getting each wheel
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
             new SwerveModule(1, Constants.Swerve.Mod1.constants),
@@ -62,6 +69,8 @@ public class Swerve extends SubsystemBase {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
     }    
+
+
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -109,6 +118,49 @@ public class Swerve extends SubsystemBase {
             mod.resetToAbsolute();
         }
     }
+
+    public Rotation2d getPitchR2d() {
+        return Rotation2d.fromDegrees(gyro.getPitch());
+    }
+
+    public void balance() {
+		double pitch = getPitchR2d().getDegrees();
+		boolean better =  (Math.abs(pitch) < Math.abs(oldPitch)  && Math.abs(pitch) < 9) || (Math.signum(pitch) != Math.signum(oldPitch));
+		boolean waiting = time != 00 && time+0.1 > Timer.getFPGATimestamp();
+		if (waiting ){
+			drive(0,0,0);
+		} else if (better) {
+			//it is getting better so wait.
+			time = Timer.getFPGATimestamp();
+			drive(0,0,0);
+		} else {
+			//drive 
+			double xPower = MathUtil.clamp(balancePID.calculate(pitch), -0.15, 0.15);
+			drive(-xPower, 0, 0);
+		}
+		oldPitch = pitch;
+	}
+
+	public void resetBalance(){
+		balancePID.setSetpoint(0);
+		balancePID.setTolerance(2);
+		balancePID.reset();
+	}
+
+    public Rotation2d getYawR2d() {
+		return getPose().getRotation();
+		//eturn Rotation2d.fromDegrees(m_pigeon.getYaw());
+	}
+
+	public void drive(double x, double y, double rotation) {
+		ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+				x * Constants.Swerve.maxSpeed,
+				y * Constants.Swerve.maxSpeed,
+				rotation * Constants.Swerve.maxAngularVelocity,
+				getYawR2d());
+
+		//drive(chassisSpeeds);
+	}
 
     @Override
     public void periodic(){

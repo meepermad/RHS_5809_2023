@@ -12,33 +12,33 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 
-public class wristSub extends SubsystemBase {
-
+public class WristSub extends SubsystemBase {
+  //Initilizing variable
   public WPI_TalonSRX WristMot = new WPI_TalonSRX(Constants.armConstants.kwristmotor);
   DigitalInput limitSwitch = Constants.Switches.wristSwitch;
   Counter counter = new Counter(limitSwitch);
   DutyCycleEncoder encoder;
   
 
-
-//this allows us to go up, down
-  public wristSub(DutyCycleEncoder encoder) {
+  public WristSub(DutyCycleEncoder encoder) {
     this.encoder = encoder;
     WristMot.setInverted(true);
   }
 
+
+  //This allows us to go up
   public void movewristUP(double upspeed){
     WristMot.setNeutralMode(NeutralMode.Coast);
     WristMot.set(upspeed);
-   
   }
 
+  //this allows us to go down
   public void movewristDOWN(double downspeed){
     WristMot.setNeutralMode(NeutralMode.Coast);
     WristMot.set(-1*downspeed);
-
   }
 
+  //this allows us to go in any direction
   public void movewristABS(double downspeed){
     WristMot.setNeutralMode(NeutralMode.Coast);
     WristMot.set(downspeed * -.02);

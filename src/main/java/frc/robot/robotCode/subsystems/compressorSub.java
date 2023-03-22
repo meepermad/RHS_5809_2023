@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class compressorSub extends SubsystemBase {
+public class CompressorSub extends SubsystemBase {
 
   Compressor phCompressor = new Compressor(2,PneumaticsModuleType.REVPH);
 
-  public compressorSub() {}
+  public CompressorSub() {}
 
 
   public void compressorON(){

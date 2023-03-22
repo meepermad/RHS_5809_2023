@@ -26,6 +26,19 @@ public class SwerveModule {
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
+    public double makePositiveDegrees(double anAngle ){
+        double degrees = anAngle;
+        degrees = degrees % 360;
+        if (degrees < 0.0){
+            degrees = degrees + 360;
+        }
+        return degrees;
+
+    }
+    public double makePositiveDegrees(Rotation2d anAngle){
+        return makePositiveDegrees(anAngle.getDegrees());
+    }
+
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
@@ -79,7 +92,7 @@ public class SwerveModule {
     }
 
     public void resetToAbsolute(){
-        double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
+        double absolutePosition = Conversions.degreesToFalcon(makePositiveDegrees(getCanCoder().getDegrees() - angleOffset.getDegrees()), Constants.Swerve.angleGearRatio);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
     }
 

@@ -2,15 +2,16 @@
 //import libraries; the key thin is we need all the commands
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.robotCode.subsystems.pnuematicsSub;
+import frc.robot.robotCode.subsystems.PnuematicsSub;
 
 
 //this tells the rio to make the commmand name "pbrakeSHOULDER"
-public class p_intake_OFF extends CommandBase {
+public class pnuematicBrakeElbowEngage extends CommandBase {
 
-  private final pnuematicsSub pnuematicsSub;
+  private final PnuematicsSub pnuematicsSub;
+  private boolean x;
 
-  public p_intake_OFF(pnuematicsSub pnuematicsSub) {
+  public pnuematicBrakeElbowEngage(PnuematicsSub pnuematicsSub) {
     this.pnuematicsSub = pnuematicsSub;
     addRequirements(pnuematicsSub);
   }
@@ -19,14 +20,15 @@ public class p_intake_OFF extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    x = true;
+    pnuematicsSub.p_elbowReverse();
+    x = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-      pnuematicsSub.p_intakeOFF();
 
   }
 
@@ -34,13 +36,13 @@ public class p_intake_OFF extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    //pnuematicsSub.p_elbowOFF();
+   // pnuematicsSub.p_elbowOFF();
      }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return x;
   } 
 }
   

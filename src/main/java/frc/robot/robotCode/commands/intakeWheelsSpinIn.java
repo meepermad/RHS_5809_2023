@@ -4,13 +4,13 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 //if your code isn't working make sure the sub below is right
-import frc.robot.robotCode.subsystems.intakeSub;
+import frc.robot.robotCode.subsystems.IntakeSub;
 
-public class intakeIN extends CommandBase {
+public class intakeWheelsSpinIn extends CommandBase {
 
   //any called variables in your subsytem go in here
   // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
-  private final intakeSub intakeSub;
+  private final IntakeSub intakeSub;
   private final double intakespeed;
   private final double intakevomspeed;
   
@@ -18,7 +18,7 @@ public class intakeIN extends CommandBase {
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
 // that's a bit kludge-y but I also don't particularlly mind it. Note that one of the
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
-  public intakeIN(intakeSub intakeSub, double intakespeed, double intakevomspeed) {
+  public intakeWheelsSpinIn(IntakeSub intakeSub, double intakespeed, double intakevomspeed) {
     this.intakeSub = intakeSub;
     this.intakespeed = intakespeed;
     this.intakevomspeed = intakevomspeed;

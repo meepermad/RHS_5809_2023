@@ -2,15 +2,15 @@
 //import libraries; the key thin is we need all the commands
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.robotCode.subsystems.pnuematicsSub;
+import frc.robot.robotCode.subsystems.PnuematicsSub;
 
 
 //this tells the rio to make the commmand name "pbrakeSHOULDER"
-public class pbrakeSHOULDER_OFF extends CommandBase {
+public class pnuematicIntakeClawClose extends CommandBase {
 
-  private final pnuematicsSub pnuematicsSub;
+  private final PnuematicsSub pnuematicsSub;
 
-  public pbrakeSHOULDER_OFF(pnuematicsSub pnuematicsSub) {
+  public pnuematicIntakeClawClose(PnuematicsSub pnuematicsSub) {
     this.pnuematicsSub = pnuematicsSub;
     addRequirements(pnuematicsSub);
   }
@@ -26,7 +26,7 @@ public class pbrakeSHOULDER_OFF extends CommandBase {
   @Override
   public void execute() {
 
-      pnuematicsSub.p_shoulderOFF();
+      pnuematicsSub.p_intakeReverse();
 
   }
 
@@ -34,7 +34,7 @@ public class pbrakeSHOULDER_OFF extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    pnuematicsSub.p_shoulderOFF();
+    //pnuematicsSub.p_elbowOFF();
      }
 
   // Returns true when the command should end.

@@ -23,41 +23,35 @@ import frc.robot.robotCode.Auto.exampleAuto;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 //import frc.robot.robotCode.ConstantsAndConfigs.Constants.Swerve;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants.OperatorConstants;
-import frc.robot.robotCode.commands.Autos;
-import frc.robot.robotCode.commands.ExampleCommand;
 import frc.robot.robotCode.commands.TeleopSwerve;
 //import frc.robot.robotCode.subsystems.compressorSub;
 import frc.robot.robotCode.subsystems.*;
-import frc.robot.robotCode.commands.intakeIN;
-import frc.robot.robotCode.commands.intakeOUT;
-import frc.robot.robotCode.commands.wristUP;
-import frc.robot.robotCode.commands.wristDOWN;
-import frc.robot.robotCode.commands.elbowDOWN;
-import frc.robot.robotCode.commands.elbowUP;
-import frc.robot.robotCode.commands.shoulderDOWN;
-import frc.robot.robotCode.commands.shoulderUP;
+import frc.robot.robotCode.commands.intakeWheelsSpinIn;
+import frc.robot.robotCode.commands.intakeWheelsSpinOut;
+import frc.robot.robotCode.commands.wristUp;
+import frc.robot.robotCode.commands.wristDown;
+import frc.robot.robotCode.commands.elbowDown;
+import frc.robot.robotCode.commands.elbowUp;
+import frc.robot.robotCode.commands.shoulderDown;
+import frc.robot.robotCode.commands.shoulderUp;
 import frc.robot.robotCode.commands.waitFor;
-import frc.robot.robotCode.commands.pbrakeSHOULDER_ON;
-import frc.robot.robotCode.commands.pbrakeSHOULDER_OFF;
-import frc.robot.robotCode.commands.pbrakeSHOULDER_OUT;
+import frc.robot.robotCode.commands.pnuematicBrakeShoulderEngage;
+import frc.robot.robotCode.commands.pnuematicBrakeShoulderDisengage;
 import frc.robot.robotCode.commands.pidfElbow;
 import frc.robot.robotCode.commands.pidfShoulder;
 import frc.robot.robotCode.commands.pidfWrist;
-import frc.robot.robotCode.commands.p_intake_GRAB;
-import frc.robot.robotCode.commands.p_intake_OFF;
-import frc.robot.robotCode.commands.p_intake_RELEASE;
+import frc.robot.robotCode.commands.pnuematicIntakeClawClose;
+import frc.robot.robotCode.commands.pnuematicIntakeClawOpen;
 
 import frc.robot.robotCode.commands.brakeWrist;
 import frc.robot.robotCode.commands.candleRGB;
 import frc.robot.robotCode.commands.changeOffset;
-import frc.robot.robotCode.commands.pbrakeELBOW_OFF;
-import frc.robot.robotCode.commands.pbrakeELBOW_ON;
-import frc.robot.robotCode.commands.pbrakeELBOW_OUT;
+import frc.robot.robotCode.commands.pnuematicBrakeElbowDisengage;
+import frc.robot.robotCode.commands.pnuematicBrakeElbowEngage;
 //import frc.robot.robotCode.commands.compressorOFF;
 import frc.robot.robotCode.commands.brakeElbow;
 import frc.robot.robotCode.commands.brakeShoulder;
 //import frc.robot.robotCode.commands.compressorON;
-import frc.robot.robotCode.commands.TestCommand;
 import frc.robot.robotCode.commands.autoSwerve;
 
 
@@ -99,11 +93,11 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final Swerve s_Swerve = new Swerve();
   private final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
   //i'm using the the "a_" to denote arm subsystems.  *spiderman camera "neat" meme here*
-  private final elbowSub a_elbowSub = new elbowSub(elbowEncoder);
-  private final intakeSub a_intakeSub = new intakeSub();
-  private final shoulderSub a_ShoulderSub = new shoulderSub(shoulderEncoder);
-  private final wristSub a_WristSub = new wristSub(wristEncoder);
-  private final pnuematicsSub p_pPnuematicsSub = new pnuematicsSub();
+  private final ElbowSub a_elbowSub = new ElbowSub(elbowEncoder);
+  private final IntakeSub a_intakeSub = new IntakeSub();
+  private final ShoulderSub a_ShoulderSub = new ShoulderSub(shoulderEncoder);
+  private final WristSub a_WristSub = new WristSub(wristEncoder);
+  private final PnuematicsSub p_pPnuematicsSub = new PnuematicsSub();
   //private final pnuematicsSub p_pPnuematicsSub1 = new pnuematicsSub();
   //private final pnuematicsSub p_pPnuematicsSub2 = new pnuematicsSub();
   //private final PIDFElbow pidfElbow = new PIDFElbow();
@@ -191,8 +185,8 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
       //this is the intake IN/OUT command ON behavoir
-      new JoystickButton(operator, 5).whileTrue(new intakeIN(a_intakeSub, .85, 0));
-      new JoystickButton(operator, 6).whileTrue(new intakeOUT(a_intakeSub, 0, .85));
+      new JoystickButton(operator, 5).whileTrue(new intakeWheelsSpinIn(a_intakeSub, .85, 0));
+      new JoystickButton(operator, 6).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
 
       //this is the intake IN/OUT command OFF behavoir
       //new JoystickButton(driver, 9).onFalse(new intakeIN(a_intakeSub, .0, 0));
@@ -203,10 +197,10 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     
       //this is the intake IN/OUT command ON behavoir
-      new JoystickButton(operator, 7).whileTrue(new p_intake_GRAB(p_pPnuematicsSub));
+      new JoystickButton(operator, 7).whileTrue(new pnuematicIntakeClawClose(p_pPnuematicsSub));
       new JoystickButton(operator, 8).onTrue(
         Commands.race(
-            new p_intake_RELEASE(p_pPnuematicsSub),
+            new pnuematicIntakeClawOpen(p_pPnuematicsSub),
             new pidfShoulder(a_ShoulderSub, 5),
             new pidfElbow(a_elbowSub, 0),
             new pidfWrist(a_WristSub, -15),
@@ -238,7 +232,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     );
 
-    new JoystickButton(operator, 9).whileTrue(new p_intake_RELEASE(p_pPnuematicsSub));
+    new JoystickButton(operator, 9).whileTrue(new pnuematicIntakeClawOpen(p_pPnuematicsSub));
     
 
 

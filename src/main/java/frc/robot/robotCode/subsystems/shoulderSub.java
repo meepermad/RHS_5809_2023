@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 
-public class shoulderSub extends SubsystemBase {
+public class ShoulderSub extends SubsystemBase {
   //this creates the subsystem for the elbow
  
     CANSparkMax shoulderTOP = new CANSparkMax(Constants.armConstants.kshouldermotorTOP, MotorType.kBrushless);
@@ -24,7 +24,7 @@ public class shoulderSub extends SubsystemBase {
     Counter counter = new Counter(limitSwitch);
     DutyCycleEncoder encoder;
 
-    public shoulderSub(DutyCycleEncoder encoder){
+    public ShoulderSub(DutyCycleEncoder encoder){
       this.encoder = encoder;
     }
 

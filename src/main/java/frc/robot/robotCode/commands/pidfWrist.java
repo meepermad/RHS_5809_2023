@@ -12,11 +12,11 @@ import frc.robot.robotCode.subsystems.*;
 
 public class pidfWrist extends CommandBase {
   /** Creates a new pidfShoulder. */
-  private final wristSub wristSub;
+  private final WristSub wristSub;
   private final double goal;
   private boolean isInterrupted = false;
   private PIDFWrist angleController = new PIDFWrist("angle", Constants.PIDS.kP_wrist, Constants.PIDS.kI_wrist, Constants.PIDS.kD_wrist, 1);
-  public pidfWrist(wristSub wristSub, double goal) {
+  public pidfWrist(WristSub wristSub, double goal) {
     this.wristSub = wristSub;
     this.goal = goal;
     // Use addRequirements() here to declare subsystem dependencies.

@@ -4,20 +4,20 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 //if your code isn't working make sure the sub below is right
-import frc.robot.robotCode.subsystems.wristSub;
+import frc.robot.robotCode.subsystems.WristSub;
 
 public class brakeWrist extends CommandBase {
 
   //any called variables in your subsytem go in here
   // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
-  private final wristSub wristSub;
+  private final WristSub wristSub;
 
   
 //create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
 // that's a bit kludge-y but I also don't particularlly mind it. Note that one of the
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
-  public brakeWrist(wristSub wristSub){
+  public brakeWrist(WristSub wristSub){
     this.wristSub = wristSub;
     addRequirements(wristSub);
 

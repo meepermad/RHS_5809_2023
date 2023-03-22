@@ -9,6 +9,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 import frc.robot.robotCode.subsystems.Swerve;
 
-public class Reach extends CommandBase{
+public class gyroBalance extends CommandBase{
     
 }

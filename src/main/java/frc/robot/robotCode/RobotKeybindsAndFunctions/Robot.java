@@ -5,6 +5,8 @@
 package frc.robot.robotCode.RobotKeybindsAndFunctions;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
@@ -24,6 +26,9 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   public static final LimeLight limeVisionSubsystem = new LimeLight();
+  Alliance alliance = DriverStation.getAlliance();
+  int r1,g1,b1;
+  CANdleSubsystem can = new CANdleSubsystem(null);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -47,6 +52,19 @@ public class Robot extends TimedRobot {
     RobotContainer.shoulderEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
     RobotContainer.elbowEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
     RobotContainer.wristEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
+
+    if(alliance.equals(Alliance.Red)){
+      r1 = 255;
+      g1 = 0;
+      b1 = 0;
+    } else{
+      r1 = 0;
+      g1 = 0;
+      b1 = 255;
+    }
+
+    can.setRGB(r1, b1, g1);
+
   }
 
   /**
