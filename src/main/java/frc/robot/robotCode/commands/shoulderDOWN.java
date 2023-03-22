@@ -4,7 +4,6 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.subsystems.ShoulderSub;
-
 public class shoulderDown extends CommandBase {
 
     //any called variables in your subsytem go in here
