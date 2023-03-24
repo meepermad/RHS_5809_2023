@@ -240,9 +240,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     //low scoring position
     new JoystickButton(operator, 2).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, 30)))
-        .alongWith(new pidfElbow(a_elbowSub, 20))
-        .alongWith(new pidfWrist(a_WristSub, -80))
+        ((new pidfShoulder(a_ShoulderSub, 35)))
+        .alongWith(new pidfElbow(a_elbowSub, 25))
+        .alongWith(new pidfWrist(a_WristSub, -45))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
@@ -304,6 +304,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    m_candleSubsystem.setRGB(r1, b1, g1);
     return new auto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
   }
 

@@ -54,18 +54,6 @@ public class Robot extends TimedRobot {
     RobotContainer.elbowEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
     RobotContainer.wristEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
 
-    if(alliance.equals(Alliance.Red)){
-      r1 = 255;
-      g1 = 0;
-      b1 = 0;
-    } else{
-      r1 = 0;
-      g1 = 0;
-      b1 = 255;
-    }
-
-    can.setRGB(r1, b1, g1);
-
   }
 
   /**
@@ -88,7 +76,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
   public void disabledPeriodic() {}
