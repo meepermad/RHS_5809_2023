@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import frc.robot.robotCode.Auto.auto;
 import frc.robot.robotCode.Auto.exampleAuto;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 //import frc.robot.robotCode.ConstantsAndConfigs.Constants.Swerve;
@@ -180,7 +181,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       new JoystickButton(operator, 6).onFalse(new brakeWrist(a_WristSub));
       new JoystickButton(operator, 5).onFalse(new wristUP(a_WristSub, 0, 0).andThen(new TestCommand()));
       new JoystickButton(operator, 6).onFalse(new wristDOWN(a_WristSub, 0, 0).andThen(new TestCommand()));*/
-      new JoystickButton(driver, 5).whileTrue(new pidfWrist(a_WristSub, -70));
+      //new JoystickButton(driver, 5).whileTrue(new pidfWrist(a_WristSub, -70));
 
 
 
@@ -233,6 +234,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     );
 
     new JoystickButton(operator, 9).whileTrue(new pnuematicIntakeClawOpen(p_pPnuematicsSub));
+    new JoystickButton(driver, 5).whileTrue(new pnuematicIntakeClawOpen(p_pPnuematicsSub));
     
 
 
@@ -254,7 +256,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     // high scoring position
     new JoystickButton(operator, 4).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, 23))
+        ((new pidfShoulder(a_ShoulderSub, 25))
         .alongWith(new pidfElbow(a_elbowSub, 117.5))
         .alongWith(new pidfWrist(a_WristSub, -45)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
@@ -273,7 +275,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
      new JoystickButton(operator, 10).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 10))
         .alongWith(new pidfElbow(a_elbowSub, 74))
-        .alongWith(new pidfWrist(a_WristSub, -40)))
+        .alongWith(new pidfWrist(a_WristSub, -39)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean())
      );
 
@@ -302,8 +304,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-      // An ExampleCommand will run in autonomous
-      return new exampleAuto(s_Swerve);
+    return new auto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
   }
 
 }

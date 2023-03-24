@@ -53,8 +53,8 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
-                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    -(Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    -(Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
                                     rotation* Constants.JoysticksSensitivitys.rotationSensitivity, 
                                     getYaw()
                                 )
@@ -149,17 +149,17 @@ public class Swerve extends SubsystemBase {
 
     public Rotation2d getYawR2d() {
 		return getPose().getRotation();
-		//eturn Rotation2d.fromDegrees(m_pigeon.getYaw());
+		//return Rotation2d.fromDegrees(m_pigeon.getYaw());
 	}
 
 	public void drive(double x, double y, double rotation) {
-		ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+		SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(
 				x * Constants.Swerve.maxSpeed,
 				y * Constants.Swerve.maxSpeed,
 				rotation * Constants.Swerve.maxAngularVelocity,
-				getYawR2d());
+				getYawR2d()));
 
-		//drive(chassisSpeeds);
+        setModuleStates(swerveModuleStates);
 	}
 
     @Override

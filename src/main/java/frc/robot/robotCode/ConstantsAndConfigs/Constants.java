@@ -109,7 +109,7 @@ public static final int kwristmotor =23;
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 1.2; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 1.8; //TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 2.0; //TODO: This must be tuned to specific robot
 
