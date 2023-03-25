@@ -19,14 +19,15 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
+import frc.robot.robotCode.commands.*;
 import frc.robot.robotCode.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class simpleAuto extends SequentialCommandGroup {
+public class balanceAuto extends SequentialCommandGroup {
   /** Creates a new simpleAuto. */
-  public simpleAuto(Swerve s_Swerve) {
+  public balanceAuto(Swerve s_Swerve,ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
     TrajectoryConfig config = new TrajectoryConfig(
         Constants.AutoConstants.kMaxSpeedMetersPerSecond,
         Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
@@ -38,18 +39,18 @@ public class simpleAuto extends SequentialCommandGroup {
 
     Trajectory moveFoward = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(new Translation2d(1, 0)),
+        List.of(new Translation2d(.25, 0)),
         new Pose2d(0, 0, new Rotation2d(0)),
         config);
 
     Trajectory moveBackward = TrajectoryGenerator.generateTrajectory(
           new Pose2d(0, 0, new Rotation2d(0)),
-          List.of(new Translation2d(-1, 0)),
+          List.of(new Translation2d(-0.5, 0)),
           new Pose2d(0, 0, new Rotation2d(0)),
           config);
     Trajectory moveBackwardFar = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(-7, 0)),
+            List.of(new Translation2d(-1.7, 0)),
             new Pose2d(0, 0, new Rotation2d(180)),
             config);
 
@@ -87,13 +88,55 @@ public class simpleAuto extends SequentialCommandGroup {
               s_Swerve);
 
     addCommands(
-      //Commands.race(new reset(swerve), new waitFor(1)),
+      Commands.race(new reset(s_Swerve), new waitFor(0.5)),
+      Commands.race(new pnuematicIntakeClawClose(a), new waitFor(0.5)),
+      Commands.race(
+        new pidfShoulder(x, 20),
+        new pidfElbow(y, 117.5),
+        new pidfWrist(z, -45),
+        new waitFor(2)
+      ),
       new InstantCommand(() -> s_Swerve.resetOdometry(moveFoward.getInitialPose())),
-      moveFowardCommand,
+      Commands.race(
+        new pidfShoulder(x, 20),
+        new pidfElbow(y, 117.5),
+        new pidfWrist(z, -45),
+        new waitFor(2),
+        moveFowardCommand
+      ),
+      Commands.race(
+        new pidfShoulder(x, 25),
+        new pidfElbow(y, 117.5),
+        new pidfWrist(z, -45),
+        new waitFor(2)
+      ),
+      Commands.race(
+        new pidfShoulder(x, 25),
+        new pidfElbow(y, 117.5),
+        new pidfWrist(z, -45),
+        new pnuematicIntakeClawOpen(a),
+        new waitFor(1.5)
+      ),
       new InstantCommand(() -> s_Swerve.resetOdometry(moveBackward.getInitialPose())),
-      moveBackwardCommand,
+      
+      Commands.race(
+        new pidfShoulder(x, 25),
+        new pidfElbow(y, 117.5),
+        new pidfWrist(z, -45),
+        moveBackwardCommand
+      ),
       new InstantCommand(() -> s_Swerve.resetOdometry(moveBackwardFar.getInitialPose())),
-      moveBackwardFarCommand
+      Commands.race(
+        new pidfShoulder(x, 0),
+        new pidfElbow(y, 0),
+        new pidfWrist(z, -75),
+        moveBackwardFarCommand
+      ),
+      Commands.race(new pidfShoulder(x, 0),
+      new pidfElbow(y, 0),
+      new pidfWrist(z, -75),
+      new autoBalance(s_Swerve)
+      )
     );
   }
 }

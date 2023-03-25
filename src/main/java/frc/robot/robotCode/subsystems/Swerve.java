@@ -28,6 +28,7 @@ public class Swerve extends SubsystemBase {
     private PIDController balancePID = new PIDController(0.014, 0, .008);
 	private double oldPitch;
     private double time;
+    private SwerveModuleState[] m_desiredStates;
 
     public Swerve() {
         //Assigning variables
@@ -70,6 +71,19 @@ public class Swerve extends SubsystemBase {
         }
     }    
 
+    public void drive(ChassisSpeeds chassisSpeeds) {
+		if (m_desiredStates != null && chassisSpeeds.vxMetersPerSecond == 0 && chassisSpeeds.vyMetersPerSecond == 0
+				&& chassisSpeeds.omegaRadiansPerSecond == 0) {
+			m_desiredStates[0].speedMetersPerSecond = 0;
+			m_desiredStates[1].speedMetersPerSecond = 0;
+			m_desiredStates[2].speedMetersPerSecond = 0;
+			m_desiredStates[3].speedMetersPerSecond = 0;
+		} else {
+			m_desiredStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+		}
+		setModuleStates(m_desiredStates,true);
+	}
+
 
 
     /* Used by SwerveControllerCommand in Auto */
@@ -80,6 +94,14 @@ public class Swerve extends SubsystemBase {
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }
     }    
+
+    public void setModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);
+        }
+    }   
 
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
