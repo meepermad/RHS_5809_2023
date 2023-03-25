@@ -6,6 +6,8 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
 //imported the whole of the constants because I had issues doing it the "right" way - this works fine, and it's not a huge size penalty
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class IntakeSub extends SubsystemBase {
@@ -13,7 +15,8 @@ public class IntakeSub extends SubsystemBase {
  
   //right denotes the motor on the right, looking along the arm(right from the robot perspective)
     CANSparkMax intakeLeftMotor = new CANSparkMax(Constants.armConstants.kintakemotorB, MotorType.kBrushed);
-    CANSparkMax intakeRightMotor = new CANSparkMax(Constants.armConstants.kintakemotorA, MotorType.kBrushed);
+    //CANSparkMax intakeRightMotor = new CANSparkMax(Constants.armConstants.kintakemotorA, MotorType.kBrushed);
+    WPI_TalonSRX intakeRightMotor = new WPI_TalonSRX(Constants.armConstants.kintakemotorA);
     //critical step that sets the sparkMax to the brushless. Naming reflects position on gearbox
 
     public IntakeSub(){
@@ -25,10 +28,11 @@ public class IntakeSub extends SubsystemBase {
   public void intakeNOM(double intakespeed){
     //this is the up command
 
-   intakeRightMotor.set(intakespeed);
+   //intakeRightMotor.set(intakespeed);
    //kludge, where I manually invert leftmotor
    intakeLeftMotor.set(-1*intakespeed);
-      intakeRightMotor.set(intakespeed);
+   intakeRightMotor.setNeutralMode(NeutralMode.Coast);
+    intakeRightMotor.set(-intakespeed);
 
   }
 
@@ -37,7 +41,8 @@ public class IntakeSub extends SubsystemBase {
      //kludge, where I manually invert leftmotor
 
    intakeLeftMotor.set(intakevomspeed);
-    intakeRightMotor.set(-1*intakevomspeed);
+   intakeRightMotor.setNeutralMode(NeutralMode.Coast);
+    intakeRightMotor.set(intakevomspeed);
   }
 
 

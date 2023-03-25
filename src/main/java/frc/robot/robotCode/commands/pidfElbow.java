@@ -32,11 +32,11 @@ public class pidfElbow extends CommandBase {
   @Override
   public void execute() {
    elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
-   System.out.println("Current angle | " + elbowSub.getAngle());
+   /*System.out.println("Current angle | " + elbowSub.getAngle());
    System.out.println("PID Value | " + angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
    System.out.println("Position Error | " + angleController.getPositionError());
    System.out.println("Elbow Offset | " + elbowSub.getOffset());
-   //System.out.println(setpoint);
+   //System.out.println(setpoint);*/
    System.out.println(""); 
   }
 

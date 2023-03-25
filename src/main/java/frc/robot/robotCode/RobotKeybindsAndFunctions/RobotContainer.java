@@ -187,7 +187,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
       //this is the intake IN/OUT command ON behavoir
       new JoystickButton(operator, 5).whileTrue(new intakeWheelsSpinIn(a_intakeSub, .85, 0));
-      new JoystickButton(operator, 6).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
+      new JoystickButton(driver, 6).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
 
       //this is the intake IN/OUT command OFF behavoir
       //new JoystickButton(driver, 9).onFalse(new intakeIN(a_intakeSub, .0, 0));
@@ -242,7 +242,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     new JoystickButton(operator, 2).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 35)))
         .alongWith(new pidfElbow(a_elbowSub, 25))
-        .alongWith(new pidfWrist(a_WristSub, -45))
+        .alongWith(new pidfWrist(a_WristSub, -60))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 

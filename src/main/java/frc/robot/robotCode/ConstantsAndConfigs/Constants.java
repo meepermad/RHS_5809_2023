@@ -27,12 +27,12 @@ public final class Constants {
   }
 
   public static class armConstants {
-public static final int kshouldermotorTOP =7;
-public static final int kshouldermotorBOT =5;
+public static final int kshouldermotorTOP = 7;
+public static final int kshouldermotorBOT = 5;
 public static final int kintakemotorA = 24;
-public static final int kintakemotorB =9;
-public static final int kelbowmotor =10;
-public static final int kwristmotor =23;
+public static final int kintakemotorB = 9;
+public static final int kelbowmotor = 10;
+public static final int kwristmotor = 23;
 
 
   }
