@@ -27,9 +27,9 @@ import frc.robot.robotCode.subsystems.WristSub;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class auto extends SequentialCommandGroup {
+public class newNewAuto extends SequentialCommandGroup {
   /** Creates a new auto. */
-  public auto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
+  public newNewAuto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -50,46 +50,15 @@ public class auto extends SequentialCommandGroup {
     
     addCommands(
       Commands.race(new reset(swerve), new waitFor(1)),
-      Commands.race(new pnuematicIntakeClawClose(a), new waitFor(0.5)),
       Commands.race(
-        new pidfShoulder(x, 20),
-        new pidfElbow(y, 110),
-        new pidfWrist(z, -45),
-        new waitFor(2)
+        new newAutoSwerve(swerve, ()-> 0.5, ()-> 0.0, ()-> 0.0,()-> false),
+        new waitFor(1.97)
       ),
       Commands.race(
-        new autoSwerve(0, -10, 0, swerve),
-        new pidfShoulder(x, 20),
-        new pidfElbow(y, 110),
-        new pidfWrist(z, -45),
-        new waitFor(1.2)
-      ),
-      Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 105),
-        new pidfWrist(z, -45),
-        new waitFor(2)
-      ),
-      Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 105),
-        new pidfWrist(z, -45),
-        new pnuematicIntakeClawOpen(a),
-        new waitFor(1.5)
-      ),
-      Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 105),
-        new pidfWrist(z, -45),
-        new autoSwerve(0, 10, 0, swerve),
-        new waitFor(1)
-      ),
-      Commands.race(
-        new pidfShoulder(x, 0),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, -75),
-        new waitFor(3)
+        new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.3, ()-> 0.0,()-> false),
+        new waitFor(0.1)
       )
+      //,new wheelsX(swerve)
     );
   }
 }

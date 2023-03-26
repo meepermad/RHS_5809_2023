@@ -177,7 +177,7 @@ public static final int kwristmotor = 23;
 
 public static final class JoysticksSensitivitys{
     public static final double stickDeadband = 0.2;
-    public static double moveSensitivity = .5; //change me to .25 when done
+    public static double moveSensitivity = 0.85; //change me to .25 when done
     public static double rotationSensitivity = .45;
 }
     

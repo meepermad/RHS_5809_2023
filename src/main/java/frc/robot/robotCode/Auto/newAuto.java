@@ -27,9 +27,9 @@ import frc.robot.robotCode.subsystems.WristSub;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class auto extends SequentialCommandGroup {
+public class newAuto extends SequentialCommandGroup {
   /** Creates a new auto. */
-  public auto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
+  public newAuto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -58,7 +58,7 @@ public class auto extends SequentialCommandGroup {
         new waitFor(2)
       ),
       Commands.race(
-        new autoSwerve(0, -10, 0, swerve),
+        new newAutoSwerve(swerve, ()-> -0.4, ()-> 0.0, ()-> 0.0,()-> false).withTimeout(1),
         new pidfShoulder(x, 20),
         new pidfElbow(y, 110),
         new pidfWrist(z, -45),
@@ -81,8 +81,8 @@ public class auto extends SequentialCommandGroup {
         new pidfShoulder(x, 25),
         new pidfElbow(y, 105),
         new pidfWrist(z, -45),
-        new autoSwerve(0, 10, 0, swerve),
-        new waitFor(1)
+        new newAutoSwerve(swerve, ()-> 0.35, ()-> 0.0, ()-> 0.0,()-> false).withTimeout(1),
+        new waitFor(1.25)
       ),
       Commands.race(
         new pidfShoulder(x, 0),

@@ -39,7 +39,7 @@ public class defaultAuto extends SequentialCommandGroup {
 
     Trajectory moveFoward = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(new Translation2d(.25, 0)),
+        List.of(new Translation2d(1, 0)),
         new Pose2d(0, 0, new Rotation2d(0)),
         config);
 
@@ -101,7 +101,6 @@ public class defaultAuto extends SequentialCommandGroup {
         new pidfShoulder(x, 20),
         new pidfElbow(y, 117.5),
         new pidfWrist(z, -45),
-        new waitFor(2),
         moveFowardCommand
       ),
       Commands.race(

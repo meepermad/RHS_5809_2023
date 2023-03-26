@@ -11,7 +11,7 @@ public class brakeShoulder extends CommandBase {
     //any called variables in your subsytem go in here
   private final ShoulderSub shoulderSub;
 
-  
+
 //create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
 // that's a bit kludge-y but I also don't particularlly mind it. Note that one of the

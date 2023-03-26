@@ -184,6 +184,14 @@ public class Swerve extends SubsystemBase {
         setModuleStates(swerveModuleStates);
 	}
 
+public void setX(){
+    mSwerveMods[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), true);
+    mSwerveMods[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), true);
+    mSwerveMods[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), true);
+    mSwerveMods[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), true);
+
+}
+
     @Override
     public void periodic(){
         if (DriverStation.isDisabled()){

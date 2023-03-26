@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.robotCode.Auto.auto;
 import frc.robot.robotCode.Auto.defaultAuto;
 import frc.robot.robotCode.Auto.exampleAuto;
+import frc.robot.robotCode.Auto.newAuto;
+import frc.robot.robotCode.Auto.newNewAuto;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 //import frc.robot.robotCode.ConstantsAndConfigs.Constants.Swerve;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants.OperatorConstants;
@@ -88,7 +90,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, 6);
 
   public static final DutyCycleEncoder shoulderEncoder = new DutyCycleEncoder(0);
   public static final DutyCycleEncoder elbowEncoder = new DutyCycleEncoder(1);
@@ -246,9 +248,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     //low scoring position
     new JoystickButton(operator, 2).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, 35)))
-        .alongWith(new pidfElbow(a_elbowSub, 25))
-        .alongWith(new pidfWrist(a_WristSub, -60))
+        ((new pidfShoulder(a_ShoulderSub, 40)))
+        .alongWith(new pidfElbow(a_elbowSub, 30))
+        .alongWith(new pidfWrist(a_WristSub, -75))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
@@ -310,8 +312,6 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    m_candleSubsystem.setRGB(r1, b1, g1);
-    //return new auto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
     if(alliance.equals(Alliance.Red)){
         r1 = 255;
         g1 = 0;
@@ -321,7 +321,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
         g1 = 0;
         b1 = 255;
       }
-    return m_chooser.getSelected();
+    m_candleSubsystem.setRGB(r1, b1, g1);
+    return new newNewAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
+    //return m_chooser.getSelected();
 }
 
 }

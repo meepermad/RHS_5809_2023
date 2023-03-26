@@ -5,39 +5,33 @@
 package frc.robot.robotCode.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.robotCode.subsystems.Swerve;
 
-public class waitFor extends CommandBase {
-  private final double seconds;
-  private double seconds1;
-  /** Creates a new waitFor. */
-  public waitFor(double seconds) {
+public class wheelsX extends CommandBase {
+  /** Creates a new wheelsX. */
+  Swerve swerve;
+  public wheelsX(Swerve swerve) {
+    this.swerve = swerve;
     // Use addRequirements() here to declare subsystem dependencies.
-    this.seconds = (seconds*1000);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    seconds1 = seconds + System.currentTimeMillis();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*System.out.println("CT | " + System.currentTimeMillis());
-    System.out.println("T  | " + seconds1);*/
+    swerve.setX();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    System.out.println("Finished");
-    seconds1 = seconds + System.currentTimeMillis();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return seconds1 <= System.currentTimeMillis();
+    return false;
   }
 }
