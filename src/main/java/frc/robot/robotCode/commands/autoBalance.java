@@ -20,7 +20,7 @@ public class autoBalance extends CommandBase {
 
     @Override
     public void initialize() {
-       m_drivetrain.resetBalance();
+       //m_drivetrain.resetBalance();
        
     }
 
@@ -36,7 +36,7 @@ public class autoBalance extends CommandBase {
     
     @Override
     public void end(boolean interrupted) {
-      //m_drivetrain.drive(new ChassisSpeeds(0, 0, 0));
+      m_drivetrain.drive(new ChassisSpeeds(0, 0, 0));
     }
 
 

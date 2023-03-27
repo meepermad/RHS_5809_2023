@@ -310,6 +310,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    s_Swerve.resetBalance();
     Alliance alliance = DriverStation.getAlliance();
     if(alliance.equals(Alliance.Red)){
         r1 = 255;
