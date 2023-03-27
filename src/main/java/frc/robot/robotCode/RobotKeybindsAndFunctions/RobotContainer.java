@@ -118,7 +118,6 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private Command m_autoSelected;
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  Alliance alliance = DriverStation.getAlliance();
   int r1,g1,b1;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -304,7 +303,6 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
      // new JoystickButton(driver, 10).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
     
        
-
     }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -312,6 +310,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    Alliance alliance = DriverStation.getAlliance();
     if(alliance.equals(Alliance.Red)){
         r1 = 255;
         g1 = 0;

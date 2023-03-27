@@ -31,7 +31,10 @@ public class pidfShoulder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shoulderSub.shoulderABS(angleController.calculate(shoulderSub.getAngle(), goal));
+    if(Math.abs(angleController.getPositionError()) > 0.5)
+      shoulderSub.shoulderABS(angleController.calculate(shoulderSub.getAngle(), goal));
+    else
+      shoulderSub.brakeSH0();
     /*System.out.println("Current angle | " + shoulderSub.getAngle());
     System.out.println("PID Value | " + angleController.calculate(shoulderSub.getAngle(), goal));
     System.out.println("Position Error | " + angleController.getPositionError());

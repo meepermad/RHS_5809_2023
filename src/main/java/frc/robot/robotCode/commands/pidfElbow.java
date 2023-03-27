@@ -31,13 +31,16 @@ public class pidfElbow extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
+    if(Math.abs(angleController.getPositionError()) > 1)
+      elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
+    else
+      elbowSub.brakeEL();
    /*System.out.println("Current angle | " + elbowSub.getAngle());
    System.out.println("PID Value | " + angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
    System.out.println("Position Error | " + angleController.getPositionError());
    System.out.println("Elbow Offset | " + elbowSub.getOffset());
    //System.out.println(setpoint);*/
-   System.out.println(""); 
+   //System.out.println(""); 
   }
 
   // Called once the command ends or is interrupted.
