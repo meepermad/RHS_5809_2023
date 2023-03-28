@@ -109,18 +109,16 @@ public class balanceAuto extends SequentialCommandGroup {
       Commands.race(new reset(s_Swerve), new waitFor(0.5)),
       new InstantCommand(() -> new pnuematicIntakeClawClose(a)),
       new InstantCommand(() -> s_Swerve.resetOdometry(step1.getInitialPose())),
-      Commands.race(
+      step1Command.alongWith(
         new pidfShoulder(x, 20),
         new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
-        step1Command
+        new pidfWrist(z, -45)
       ),
       new InstantCommand(() -> s_Swerve.resetOdometry(step2.getInitialPose())),
-      Commands.race(
+      step2Command.alongWith(
         new pidfShoulder(x, 20),
         new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
-        step2Command
+        new pidfWrist(z, -45)
       ),
       Commands.race(
         new pidfShoulder(x, 25),
@@ -137,14 +135,13 @@ public class balanceAuto extends SequentialCommandGroup {
       ),
       new InstantCommand(() -> s_Swerve.resetOdometry(step3.getInitialPose())),
       
-      Commands.race(
+      step3Command.alongWith(
         new pidfShoulder(x, 0),
         new pidfElbow(y, 0),
-        new pidfWrist(z, -75),
-        step3Command
+        new pidfWrist(z, -75)
       ),
       new InstantCommand(() -> s_Swerve.resetOdometry(step4.getInitialPose())),
-      Commands.race(
+      step4Command.alongWith(
         new pidfShoulder(x, 0),
         new pidfElbow(y, 0),
         new pidfWrist(z, -75),
