@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
     RobotContainer.shoulderEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
     RobotContainer.elbowEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
     RobotContainer.wristEncoder.setDutyCycleRange(1.0/1024.0, 1023.0/1024.0);
+    RobotContainer.s_Swerve.resetBalance();
   }
 
   /**
