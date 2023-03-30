@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.robotCode.Auto.auto;
+import frc.robot.robotCode.Auto.balanceAuto;
 import frc.robot.robotCode.Auto.defaultAuto;
 import frc.robot.robotCode.Auto.exampleAuto;
 import frc.robot.robotCode.Auto.newAuto;
@@ -323,6 +324,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       }
     m_candleSubsystem.setRGB(r1, b1, g1);
     return new newNewAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
+    //return new balanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
     //return m_chooser.getSelected();
 }
 

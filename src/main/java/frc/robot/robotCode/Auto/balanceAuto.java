@@ -110,47 +110,47 @@ public class balanceAuto extends SequentialCommandGroup {
       new InstantCommand(() -> new pnuematicIntakeClawClose(a)),
       new InstantCommand(() -> s_Swerve.resetOdometry(step1.getInitialPose())),
       step1Command.alongWith(
-        new pidfShoulder(x, 20),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45)
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30)
       ),
       new InstantCommand(() -> s_Swerve.resetOdometry(step2.getInitialPose())),
       step2Command.alongWith(
-        new pidfShoulder(x, 20),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45)
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30)
       ),
       Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30),
         new waitFor(1)
       ),
       Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30),
         new pnuematicIntakeClawOpen(a),
         new waitFor(1)
       ),
       new InstantCommand(() -> s_Swerve.resetOdometry(step3.getInitialPose())),
       
       step3Command.alongWith(
-        new pidfShoulder(x, 0),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, -75)
+        new pidfShoulder(x, -20),
+        new pidfElbow(y, 20),
+        new pidfWrist(z, 73)
       ),
       new InstantCommand(() -> s_Swerve.resetOdometry(step4.getInitialPose())),
       step4Command.alongWith(
-        new pidfShoulder(x, 0),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, -75),
+        new pidfShoulder(x, -20),
+        new pidfElbow(y, 20),
+        new pidfWrist(z, 73),
         step4Command
       ),
       Commands.race(
-        new pidfShoulder(x, 0),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, -75),
+        new pidfShoulder(x, -20),
+        new pidfElbow(y, 20),
+        new pidfWrist(z, 73),
         new autoBalance(s_Swerve)
       )
     );
