@@ -35,11 +35,11 @@ public class pidfShoulder extends CommandBase {
       shoulderSub.shoulderABS(angleController.calculate(shoulderSub.getAngle(), goal));
     else
       shoulderSub.brakeSH0();
-    /*System.out.println("Current angle | " + shoulderSub.getAngle());
-    System.out.println("PID Value | " + angleController.calculate(shoulderSub.getAngle(), goal));
-    System.out.println("Position Error | " + angleController.getPositionError());
+    System.out.println("S | Current angle | " + shoulderSub.getAngle());
+    System.out.println("S | PID Value | " + angleController.calculate(shoulderSub.getAngle(), goal));
+    System.out.println("S | Position Error | " + angleController.getPositionError());
     //System.out.println(setpoint);
-    System.out.println("");*/
+    System.out.println("");
   }
 
   // Called once the command ends or is interrupted.

@@ -32,11 +32,11 @@ public class pidfWrist extends CommandBase {
   @Override
   public void execute() {
     wristSub.movewristABS(angleController.calculate(wristSub.getAngle(), goal));
-    /*System.out.println("Current angle | " + wristSub.getAngle());
-    System.out.println("PID Value | " + angleController.calculate(wristSub.getAngle(), goal));
-    System.out.println("Position Error | " + angleController.getPositionError());
+    System.out.println("W | Current angle | " + wristSub.getAngle());
+    System.out.println("W | PID Value | " + angleController.calculate(wristSub.getAngle(), goal));
+    System.out.println("W | Position Error | " + angleController.getPositionError());
     //System.out.println(setpoint);
-    System.out.println("");*/
+    System.out.println("");
 
   }
 

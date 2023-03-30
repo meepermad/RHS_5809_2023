@@ -35,12 +35,12 @@ public class pidfElbow extends CommandBase {
       elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
     else
       elbowSub.brakeEL();
-   /*System.out.println("Current angle | " + elbowSub.getAngle());
-   System.out.println("PID Value | " + angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
-   System.out.println("Position Error | " + angleController.getPositionError());
+   System.out.println("E | Current angle | " + elbowSub.getAngle());
+   System.out.println("E | PID Value | " + angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
+   System.out.println("E | Position Error | " + angleController.getPositionError());
    System.out.println("Elbow Offset | " + elbowSub.getOffset());
-   //System.out.println(setpoint);*/
-   //System.out.println(""); 
+   //System.out.println(setpoint);
+   System.out.println(""); 
   }
 
   // Called once the command ends or is interrupted.

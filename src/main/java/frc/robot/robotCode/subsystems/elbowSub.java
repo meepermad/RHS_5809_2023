@@ -49,7 +49,7 @@ public class ElbowSub extends SubsystemBase {
   public void elABS(double speedD){
     //this is the down command
     elbowA.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    elbowA.set(speedD * .1);
+    elbowA.set(speedD * -.1);
 
   }
 
