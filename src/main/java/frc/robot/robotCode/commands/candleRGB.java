@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.robotCode.commands;
+/*package frc.robot.robotCode.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.subsystems.*;
 
 public class candleRGB extends CommandBase {
-  /** Creates a new candleRGB. */
+  
   private final CANdleSubsystem sub;
   private final int r,g,b,r1,g1,b1;
   public candleRGB(CANdleSubsystem sub, int r, int b, int g, int r1, int g1, int b1) {
@@ -43,3 +43,4 @@ public class candleRGB extends CommandBase {
     return false;
   }
 }
+*/

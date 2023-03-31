@@ -25,7 +25,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
-    private PIDController balancePID = new PIDController(0.014, 0, .008);
+    private PIDController balancePID = new PIDController(0.075, 0, .008);
 	private double oldPitch;
     private double time;
     private SwerveModuleState[] m_desiredStates;
@@ -147,7 +147,8 @@ public class Swerve extends SubsystemBase {
 
     public void balance() {
 		double pitch = getPitchR2d().getDegrees();
-		boolean better =  (Math.abs(pitch) < Math.abs(oldPitch)  && Math.abs(pitch) < 9) || (Math.signum(pitch) != Math.signum(oldPitch));
+		boolean better =  (Math.abs(pitch) < Math.abs(oldPitch)  && Math.abs(pitch) < 15
+        ) || (Math.signum(pitch) != Math.signum(oldPitch));
 		boolean waiting = time != 00 && time+0.1 > Timer.getFPGATimestamp();
 		if (waiting ){
 			drive(0,0,0);

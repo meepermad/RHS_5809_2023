@@ -52,8 +52,9 @@ import frc.robot.robotCode.commands.pnuematicIntakeClawClose;
 import frc.robot.robotCode.commands.pnuematicIntakeClawOpen;
 import frc.robot.robotCode.commands.reset;
 import frc.robot.robotCode.commands.brakeWrist;
-import frc.robot.robotCode.commands.candleRGB;
-import frc.robot.robotCode.commands.changeOffset;
+//import frc.robot.robotCode.commands.candleRGB;
+import frc.robot.robotCode.commands.changeOffsetElbow;
+import frc.robot.robotCode.commands.changeOffsetShoulder;
 import frc.robot.robotCode.commands.pnuematicBrakeElbowDisengage;
 import frc.robot.robotCode.commands.pnuematicBrakeElbowEngage;
 //import frc.robot.robotCode.commands.compressorOFF;
@@ -83,6 +84,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
  private final int rotationAxis = XboxController.Axis.kLeftTrigger.value;
  public static double sensitivityAxis = (XboxController.Axis.kRightTrigger.value / 2.0) + 1; 
  public static double elbowOffset = 0;
+ public static double shoulderOffset = 0;
 
     /* 
     DutyCycleEncoder shoulderEncoder = Constants.Encoders.shoulderEncoder;
@@ -99,7 +101,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
   /* Subsystems */
   public static final Swerve s_Swerve = new Swerve();
-  public static final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
+  //public static final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
   //i'm using the the "a_" to denote arm subsystems.  *spiderman camera "neat" meme here*
   public static final ElbowSub a_elbowSub = new ElbowSub(elbowEncoder);
   public static final IntakeSub a_intakeSub = new IntakeSub();
@@ -198,8 +200,8 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       //new JoystickButton(driver, 9).onFalse(new intakeIN(a_intakeSub, .0, 0));
       //new JoystickButton(driver, 10).onFalse(new intakeOUT(a_intakeSub, .0, 0));
 
-      new JoystickButton(operator, 11).onTrue(new changeOffset(-2));
-      new JoystickButton(operator, 12).onTrue(new changeOffset(2));
+      new JoystickButton(operator, 11).onTrue(new changeOffsetElbow(-2));
+      new JoystickButton(operator, 12).onTrue(new changeOffsetElbow(2));
 
       new JoystickButton(driver, 12).whileTrue(new reset(s_Swerve));
 
@@ -209,37 +211,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       //this is the intake IN/OUT command ON behavoir
       new JoystickButton(operator, 7).whileTrue(new pnuematicIntakeClawClose(p_pPnuematicsSub));
       new JoystickButton(operator, 8).onTrue(
-        Commands.race(
-            new pnuematicIntakeClawOpen(p_pPnuematicsSub),
-            new pidfShoulder(a_ShoulderSub, 5),
-            new pidfElbow(a_elbowSub, 0),
-            new pidfWrist(a_WristSub, -15),
-            new waitFor(.01))
-        .andThen(
-            Commands.race(
-                new autoSwerve(0, -500, 0, s_Swerve),
-                new pidfShoulder(a_ShoulderSub, 5),
-                new pidfElbow(a_elbowSub, 0),
-                new pidfWrist(a_WristSub, -15),
-                new waitFor(.3)))
-        .andThen(Commands.race(
-            new pidfShoulder(a_ShoulderSub, 5),
-            new pidfElbow(a_elbowSub, 0),
-            new pidfWrist(a_WristSub, -15),
-            new waitFor(0.1)))
-        .andThen(Commands.race(
-            new autoSwerve(0, 0, 45, s_Swerve),
-            new pidfShoulder(a_ShoulderSub, 5),
-            new pidfElbow(a_elbowSub, 0),
-            new pidfWrist(a_WristSub, -15),
-            new waitFor(0.5)))
-        .andThen(Commands.race(
-            new pidfShoulder(a_ShoulderSub, 5),
-            new pidfElbow(a_elbowSub, 0),
-            new pidfWrist(a_WristSub, -15),
-            new waitFor(1))
-        )
-
+        new changeOffsetShoulder(2)
     );
 
     new JoystickButton(operator, 9).whileTrue(new pnuematicIntakeClawOpen(p_pPnuematicsSub));
@@ -248,15 +220,15 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
     //low scoring position
-    new JoystickButton(operator, 2).whileTrue(
-        ((new pidfShoulder(a_ShoulderSub, 40)))
+    new JoystickButton(operator, 2).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 35)))
         .alongWith(new pidfElbow(a_elbowSub, -10))
         .alongWith(new pidfWrist(a_WristSub, 53))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
      // mid scoring positon
-     new JoystickButton(operator, 3).whileTrue(
+     new JoystickButton(operator, 3).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 8))
         .alongWith(new pidfElbow(a_elbowSub, -53))
         .alongWith(new pidfWrist(a_WristSub, 63)))
@@ -264,24 +236,24 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     );
 
     // high scoring position
-    new JoystickButton(operator, 4).whileTrue(
-        ((new pidfShoulder(a_ShoulderSub, 23))
+    new JoystickButton(operator, 4).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 20))
         .alongWith(new pidfElbow(a_elbowSub, -101))
         .alongWith(new pidfWrist(a_WristSub, 30)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
     // driving postion
-    new JoystickButton(operator, 1).whileTrue(
+    new JoystickButton(operator, 1).onTrue(
         ((new pidfShoulder(a_ShoulderSub, -20))
-        .alongWith(new pidfElbow(a_elbowSub, 20))
+        .alongWith(new pidfElbow(a_elbowSub, 0))
         .alongWith(new pidfWrist(a_WristSub, 73)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
 
     //pickup position
-     new JoystickButton(operator, 10).whileTrue(
+     new JoystickButton(operator, 10).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 8))
         .alongWith(new pidfElbow(a_elbowSub, -53))
         .alongWith(new pidfWrist(a_WristSub, 63)))
@@ -298,9 +270,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
     //yellow  
-    new JoystickButton(driver,1).whileTrue(new candleRGB(m_candleSubsystem, 255, 255, 0, r1, g1, b1));
+    //new JoystickButton(driver,1).whileTrue(new candleRGB(m_candleSubsystem, 255, 255, 0, r1, g1, b1));
     //purple
-    new JoystickButton(driver,2).whileTrue(new candleRGB(m_candleSubsystem, 221,160,221, r1, g1, b1));
+    //new JoystickButton(driver,2).whileTrue(new candleRGB(m_candleSubsystem, 221,160,221, r1, g1, b1));
      // new JoystickButton(driver, 9).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
      // new JoystickButton(driver, 10).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
     
@@ -322,7 +294,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
         g1 = 0;
         b1 = 255;
       }
-    m_candleSubsystem.setRGB(r1, b1, g1);
+    //m_candleSubsystem.setRGB(r1, b1, g1);
     return new newNewAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
     //return new balanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
     //return m_chooser.getSelected();

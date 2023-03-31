@@ -23,9 +23,12 @@ public class ShoulderSub extends SubsystemBase {
     DigitalInput limitSwitch = Constants.Switches.shoulderSwitch;
     Counter counter = new Counter(limitSwitch);
     DutyCycleEncoder encoder;
+    boolean wasBrakeMode = false;
 
     public ShoulderSub(DutyCycleEncoder encoder){
       this.encoder = encoder;
+      shoulderBOT.restoreFactoryDefaults();
+      shoulderTOP.restoreFactoryDefaults();
     }
 
   public void shoulderUP(double speed){
@@ -47,8 +50,11 @@ public class ShoulderSub extends SubsystemBase {
 
   public void shoulderABS(double speedD){
     //this is the down command
-    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    if(wasBrakeMode){ 
+      shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kCoast);
+      shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    }
+    wasBrakeMode = false;
     shoulderTOP.set(speedD * -.1);
     shoulderBOT.set(speedD * -.1);
 
@@ -56,11 +62,14 @@ public class ShoulderSub extends SubsystemBase {
 
   
   public void brakeSH0(){
-
+    if(!wasBrakeMode){
+      shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kBrake);
+      shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    }
     shoulderBOT.set(0);
     shoulderTOP.set(0);
-    shoulderBOT.setIdleMode(CANSparkMax.IdleMode.kBrake);
-    shoulderTOP.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    wasBrakeMode = true;
+    
 
 
   }

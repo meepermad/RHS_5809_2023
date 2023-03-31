@@ -23,6 +23,7 @@ public class ElbowSub extends SubsystemBase {
   DigitalInput limitSwitch = Constants.Switches.elbowSwitch;
   Counter counter = new Counter(limitSwitch);
   DutyCycleEncoder encoder;
+  boolean wasBrakeMode = false;
  
     CANSparkMax elbowA = new CANSparkMax(Constants.armConstants.kelbowmotor, MotorType.kBrushless);
     //critical step that sets the sparkMax to the brushless
@@ -30,6 +31,7 @@ public class ElbowSub extends SubsystemBase {
     public ElbowSub(DutyCycleEncoder encoder){
       this.encoder = encoder;
       elbowA.setInverted(false);
+      elbowA.restoreFactoryDefaults();
     
   }
 
@@ -48,14 +50,19 @@ public class ElbowSub extends SubsystemBase {
 
   public void elABS(double speedD){
     //this is the down command
-    elbowA.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    if(wasBrakeMode){
+      elbowA.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    }
+    wasBrakeMode = false;
     elbowA.set(speedD * -.1);
 
   }
 
   public void brakeEL(){
-
-    elbowA.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    if(!wasBrakeMode){
+      elbowA.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    }
+    wasBrakeMode = true;
     elbowA.set(0);
   }
 

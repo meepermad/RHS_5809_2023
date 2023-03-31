@@ -1,4 +1,4 @@
-package frc.robot.robotCode.subsystems;
+/*package frc.robot.robotCode.subsystems;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
@@ -78,7 +78,7 @@ public class CANdleSubsystem extends SubsystemBase {
         changeAnimation(AnimationTypes.SetAll);
     }
 
-    /* Wrappers so we can access the CANdle from the subsystem */
+    
     public double getVbat() { return m_candle.getBusVoltage(); }
     public double get5V() { return m_candle.get5VRailVoltage(); }
     public double getCurrent() { return m_candle.getCurrent(); }
@@ -139,4 +139,4 @@ public class CANdleSubsystem extends SubsystemBase {
     public void simulationPeriodic() {
         // This method will be called once per scheduler run during simulation
     }
-}
+}*/

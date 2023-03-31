@@ -29,10 +29,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  public static final LimeLight limeVisionSubsystem = new LimeLight();
+  //public static final LimeLight limeVisionSubsystem = new LimeLight();
   Alliance alliance = DriverStation.getAlliance();
   int r1,g1,b1;
-  CANdleSubsystem can = new CANdleSubsystem(null);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -73,8 +72,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Elbow Offset", RobotContainer.elbowOffset);
-    SmartDashboard.putNumber("Sensitivity", RobotContainer.sensitivityAxis);
+    //SmartDashboard.putNumber("Elbow Offset", RobotContainer.elbowOffset);
+    //SmartDashboard.putNumber("Sensitivity", RobotContainer.sensitivityAxis);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

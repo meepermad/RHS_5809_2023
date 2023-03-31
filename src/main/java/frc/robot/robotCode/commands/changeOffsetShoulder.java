@@ -7,11 +7,11 @@ package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.RobotKeybindsAndFunctions.RobotContainer;
 
-public class changeOffset extends CommandBase {
+public class changeOffsetShoulder extends CommandBase {
   /** Creates a new changeOffset. */
   private final double offset;
   boolean x;
-  public changeOffset(double offset) {
+  public changeOffsetShoulder(double offset) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.offset = offset;
   }
@@ -20,7 +20,7 @@ public class changeOffset extends CommandBase {
   @Override
   public void initialize() {
     x = false;
-    RobotContainer.elbowOffset += offset;
+    RobotContainer.shoulderOffset += offset;
     x = true;
   }
 

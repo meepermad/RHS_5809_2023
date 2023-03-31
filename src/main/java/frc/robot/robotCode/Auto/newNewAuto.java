@@ -61,29 +61,38 @@ public class newNewAuto extends SequentialCommandGroup {
 
       Commands.race(new reset(swerve), new waitFor(0.5)),
       new InstantCommand(() -> new pnuematicIntakeClawClose(a)),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.3, ()-> 0.0,()-> false).withTimeout(0.5),
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.5, ()-> 0.0,()-> false).withTimeout(0.5),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
         new pidfShoulder(x, 23),
         new pidfElbow(y, -101),
         new pidfWrist(z, 30),
         new waitFor(0.5)
+      ).withTimeout(0.75),
+      Commands.race(
+        new pnuematicIntakeClawOpen(a),
+        new waitFor(0.5)
       ),
-      new InstantCommand(() -> new pnuematicIntakeClawOpen(a)),
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.5, ()-> 0.0,()-> false).alongWith(
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30),
+        new waitFor(.75)
+      ).withTimeout(.75),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.5, ()-> 0.0,()-> false).alongWith(
         new pidfShoulder(x, -20),
-        new pidfElbow(y, 20),
+        new pidfElbow(y, 0),
         new pidfWrist(z, 73),
-        new waitFor(2)
-      ),
+        new waitFor(2.25)
+      ).withTimeout(2.25),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
         new pidfShoulder(x, -20),
-        new pidfElbow(y, 20),
+        new pidfElbow(y, 0),
         new pidfWrist(z, 73),
-        new waitFor(1)
-      ),
+        new waitFor(1.25)
+      ).withTimeout(1.25),
       Commands.race(
         new pidfShoulder(x, -20),
-        new pidfElbow(y, 20),
+        new pidfElbow(y, 0),
         new pidfWrist(z, 73),
         new autoBalance(swerve)
       )

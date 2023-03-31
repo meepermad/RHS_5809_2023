@@ -45,8 +45,8 @@ public class autoSwerve extends CommandBase {
 
     SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
       new ChassisSpeeds(
-        -(Math.pow(1.5,y)-1), 
         -(Math.pow(1.5,x)-1), 
+        -(Math.pow(1.5,y)-1), 
         -rotation)
      );
 

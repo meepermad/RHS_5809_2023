@@ -40,7 +40,7 @@ public class pidfElbow extends CommandBase {
    System.out.println("E | Position Error | " + angleController.getPositionError());
    System.out.println("Elbow Offset | " + elbowSub.getOffset());
    //System.out.println(setpoint);
-   System.out.println(""); 
+   System.out.println("");
   }
 
   // Called once the command ends or is interrupted.
