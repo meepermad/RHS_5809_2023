@@ -54,8 +54,8 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    -(Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
-                                    -(Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    (Math.pow(1.5,translation.getX())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
+                                    (Math.pow(1.5,translation.getY())-1)* Constants.JoysticksSensitivitys.moveSensitivity * RobotContainer.sensitivityAxis, 
                                     rotation* Constants.JoysticksSensitivitys.rotationSensitivity, 
                                     getYaw()
                                 )
@@ -147,19 +147,22 @@ public class Swerve extends SubsystemBase {
 
     public void balance() {
 		double pitch = getPitchR2d().getDegrees();
-		boolean better =  (Math.abs(pitch) < Math.abs(oldPitch)  && Math.abs(pitch) < 15
+		boolean better =  (Math.abs(pitch) < Math.abs(oldPitch)  && Math.abs(pitch) < 9
         ) || (Math.signum(pitch) != Math.signum(oldPitch));
 		boolean waiting = time != 00 && time+0.1 > Timer.getFPGATimestamp();
 		if (waiting ){
-			drive(0,0,0);
+			SwerveModuleState[] abc = Constants.Swerve.swerveKinematics.toSwerveModuleStates(new ChassisSpeeds(0, 0, 0));
+			setModuleStates(abc);
 		} else if (better) {
 			//it is getting better so wait.
 			time = Timer.getFPGATimestamp();
-			drive(0,0,0);
+            SwerveModuleState[] abc = Constants.Swerve.swerveKinematics.toSwerveModuleStates(new ChassisSpeeds(0, 0, 0));
+			setModuleStates(abc);
 		} else {
 			//drive 
 			double xPower = MathUtil.clamp(balancePID.calculate(pitch), -0.15, 0.15);
-			drive(-xPower, 0, 0);
+            SwerveModuleState[] abc = Constants.Swerve.swerveKinematics.toSwerveModuleStates(new ChassisSpeeds(xPower, 0, 0));
+			setModuleStates(abc);
 		}
 		oldPitch = pitch;
 	}

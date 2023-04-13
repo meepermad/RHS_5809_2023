@@ -14,9 +14,8 @@ public class IntakeSub extends SubsystemBase {
   //this creates the subsystem for the elbow
  
   //right denotes the motor on the right, looking along the arm(right from the robot perspective)
-    WPI_TalonSRX intakeLeftMotor = new WPI_TalonSRX(Constants.armConstants.kintakemotorB);
+    CANSparkMax intakeMotor = new CANSparkMax(Constants.armConstants.kintakemotor, MotorType.kBrushless);
     //CANSparkMax intakeRightMotor = new CANSparkMax(Constants.armConstants.kintakemotorA, MotorType.kBrushed);
-    WPI_TalonSRX intakeRightMotor = new WPI_TalonSRX(Constants.armConstants.kintakemotorA);
     //critical step that sets the sparkMax to the brushless. Naming reflects position on gearbox
 
     public IntakeSub(){
@@ -30,20 +29,16 @@ public class IntakeSub extends SubsystemBase {
 
    //intakeRightMotor.set(intakespeed);
    //kludge, where I manually invert leftmotor
-   intakeLeftMotor.setNeutralMode(NeutralMode.Coast);
-   intakeLeftMotor.set(-1*intakespeed);
-   intakeRightMotor.setNeutralMode(NeutralMode.Coast);
-    intakeRightMotor.set(-intakespeed);
+   intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+     intakeMotor.set(intakespeed);
 
   }
 
   public void intakeVOM(double intakevomspeed){
     //this is the down command
      //kludge, where I manually invert leftmotor
-     intakeLeftMotor.setNeutralMode(NeutralMode.Coast);
-   intakeLeftMotor.set(intakevomspeed);
-   intakeRightMotor.setNeutralMode(NeutralMode.Coast);
-    intakeRightMotor.set(intakevomspeed);
+     intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+     intakeMotor.set(-intakevomspeed);
   }
 
 

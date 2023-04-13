@@ -133,7 +133,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
               s_Swerve, 
               () -> -driver.getRawAxis(translationAxis), 
               () -> -driver.getRawAxis(strafeAxis), 
-              () -> -driver.getRawAxis(rotationAxis), 
+              () -> driver.getRawAxis(rotationAxis), 
               () -> robotCentric.getAsBoolean()
           )
       );
@@ -220,7 +220,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
     //low scoring position
-    new JoystickButton(operator, 2).onTrue(
+    new JoystickButton(operator, 2).whileTrue(
         ((new pidfShoulder(a_ShoulderSub, 35)))
         .alongWith(new pidfElbow(a_elbowSub, -10))
         .alongWith(new pidfWrist(a_WristSub, 53))
@@ -228,35 +228,35 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     );
 
      // mid scoring positon
-     new JoystickButton(operator, 3).onTrue(
+     new JoystickButton(operator, 3).whileTrue(
         ((new pidfShoulder(a_ShoulderSub, 8))
-        .alongWith(new pidfElbow(a_elbowSub, -53))
+        .alongWith(new pidfElbow(a_elbowSub, -54))
         .alongWith(new pidfWrist(a_WristSub, 63)))
         .until(()-> new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
     // high scoring position
-    new JoystickButton(operator, 4).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, 20))
-        .alongWith(new pidfElbow(a_elbowSub, -101))
+    new JoystickButton(operator, 4).whileTrue(
+        ((new pidfShoulder(a_ShoulderSub, 24))
+        .alongWith(new pidfElbow(a_elbowSub, -103))
         .alongWith(new pidfWrist(a_WristSub, 30)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
     // driving postion
-    new JoystickButton(operator, 1).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, -20))
-        .alongWith(new pidfElbow(a_elbowSub, 0))
-        .alongWith(new pidfWrist(a_WristSub, 73)))
+    new JoystickButton(operator, 1).whileTrue(
+        ((new pidfShoulder(a_ShoulderSub, -28))
+        .alongWith(new pidfElbow(a_elbowSub, 3))
+        .alongWith(new pidfWrist(a_WristSub, 43)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
 
     //pickup position
-     new JoystickButton(operator, 10).onTrue(
+     new JoystickButton(operator, 10).whileTrue(
         ((new pidfShoulder(a_ShoulderSub, 8))
-        .alongWith(new pidfElbow(a_elbowSub, -53))
-        .alongWith(new pidfWrist(a_WristSub, 63)))
+        .alongWith(new pidfElbow(a_elbowSub, -60))
+        .alongWith(new pidfWrist(a_WristSub, 45)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean())
      );
 
@@ -294,7 +294,10 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
         g1 = 0;
         b1 = 255;
       }
+
     //m_candleSubsystem.setRGB(r1, b1, g1);
+    System.out.println("Auto");
+    s_Swerve.resetBalance();
     return new newNewAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
     //return new balanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
     //return m_chooser.getSelected();

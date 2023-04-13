@@ -33,21 +33,6 @@ public class newAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    TrajectoryConfig config = new TrajectoryConfig(
-        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        .setKinematics(Constants.Swerve.swerveKinematics);
-
-    var thetaController = new ProfiledPIDController(
-        Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    Trajectory moveFoward = TrajectoryGenerator.generateTrajectory(
-        new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(new Translation2d(1, 0)),
-        new Pose2d(0, 0, new Rotation2d(0)),
-        config);
-    
     addCommands(
       Commands.race(new reset(swerve), new waitFor(1)),
       Commands.race(new pnuematicIntakeClawClose(a), new waitFor(0.5)),

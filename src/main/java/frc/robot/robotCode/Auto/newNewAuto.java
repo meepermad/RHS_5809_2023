@@ -32,22 +32,9 @@ public class newNewAuto extends SequentialCommandGroup {
   public newNewAuto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-
-    TrajectoryConfig config = new TrajectoryConfig(
-        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        .setKinematics(Constants.Swerve.swerveKinematics);
-
-    var thetaController = new ProfiledPIDController(
-        Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    Trajectory moveFoward = TrajectoryGenerator.generateTrajectory(
-        new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(new Translation2d(1, 0)),
-        new Pose2d(0, 0, new Rotation2d(0)),
-        config);
     
+    System.out.println("Auto 1");
+
     addCommands(
       /*Commands.race(new reset(swerve), new waitFor(1)),
       Commands.race(
@@ -60,40 +47,50 @@ public class newNewAuto extends SequentialCommandGroup {
       )*/
 
       Commands.race(new reset(swerve), new waitFor(0.5)),
+      new resetGyro(swerve),
       new InstantCommand(() -> new pnuematicIntakeClawClose(a)),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.5, ()-> 0.0,()-> false).withTimeout(0.5),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
-        new pidfShoulder(x, 23),
+      new waitFor(1),
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.3, ()-> 0.0,()-> false).withTimeout(2),
+      new pidfShoulder(x, 23.5).alongWith(
         new pidfElbow(y, -101),
         new pidfWrist(z, 30),
-        new waitFor(0.5)
-      ).withTimeout(0.75),
+        new waitFor(1)
+      ).withTimeout(1),
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
+        new pidfShoulder(x, 23.5),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30),
+        new waitFor(1)
+      ).withTimeout(2.25),
       Commands.race(
         new pnuematicIntakeClawOpen(a),
-        new waitFor(0.5)
-      ),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.5, ()-> 0.0,()-> false).alongWith(
-        new pidfShoulder(x, 23),
+        new pidfShoulder(x, 23.5),
         new pidfElbow(y, -101),
         new pidfWrist(z, 30),
-        new waitFor(.75)
-      ).withTimeout(.75),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.5, ()-> 0.0,()-> false).alongWith(
+        new waitFor(0.5)
+      ),
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.25, ()-> 0.0,()-> false).alongWith(
+        new pidfShoulder(x, 23.5),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30),
+        new waitFor(1)
+      ).withTimeout(0.5),
+      new pidfShoulder(x, -20).alongWith(
+        new pidfElbow(y, 0),
+        new pidfWrist(z, 73),
+        new waitFor(1)
+      ).withTimeout(1),
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.45, ()-> 0.0,()-> false).alongWith(
         new pidfShoulder(x, -20),
         new pidfElbow(y, 0),
         new pidfWrist(z, 73),
-        new waitFor(2.25)
-      ).withTimeout(2.25),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
-        new pidfShoulder(x, -20),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, 73),
-        new waitFor(1.25)
-      ).withTimeout(1.25),
+        new waitFor(3.5)
+      ).withTimeout(3.5),
       Commands.race(
         new pidfShoulder(x, -20),
         new pidfElbow(y, 0),
         new pidfWrist(z, 73),
+        new waitFor(6),
         new autoBalance(swerve)
       )
     );

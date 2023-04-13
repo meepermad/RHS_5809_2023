@@ -29,8 +29,7 @@ public final class Constants {
   public static class armConstants {
 public static final int kshouldermotorTOP = 7;
 public static final int kshouldermotorBOT = 5;
-public static final int kintakemotorA = 24;
-public static final int kintakemotorB = 23;
+public static final int kintakemotor = 9;
 public static final int kelbowmotor = 10;
 public static final int kwristmotor = 25;
 
@@ -123,7 +122,7 @@ public static final int kwristmotor = 25;
             public static final int driveMotorID = 13;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 20;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(270.0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(272.0);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -177,7 +176,7 @@ public static final int kwristmotor = 25;
 
 public static final class JoysticksSensitivitys{
     public static final double stickDeadband = 0.2;
-    public static double moveSensitivity = 0.85; //change me to .25 when done
+    public static double moveSensitivity = 0.9; //change me to .25 when done
     public static double rotationSensitivity = .45;
 }
     
@@ -199,17 +198,17 @@ public static final class Encoders{
 }
 
 public static final class PIDS{
-    public static double kP_shoulder = .1;
+    public static double kP_shoulder = .15;
     public static double kI_shoulder = 0;
     public static double kD_shoulder = 0;
 
-    public static double kP_elbow = .16;
-    public static double kI_elbow = .05;
-    public static double kD_elbow = .006;
+    public static double kP_elbow = .3;
+    public static double kI_elbow = .0;
+    public static double kD_elbow = .00;
 
-    public static double kP_wrist = .5;
-    public static double kI_wrist = .175;
-    public static double kD_wrist = .02;
+    public static double kP_wrist = 1;
+    public static double kI_wrist = .0;
+    public static double kD_wrist = .0;
 
 }
 }
