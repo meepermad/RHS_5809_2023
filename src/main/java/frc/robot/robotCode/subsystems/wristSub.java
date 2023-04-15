@@ -41,7 +41,7 @@ public class WristSub extends SubsystemBase {
   //this allows us to go in any direction
   public void movewristABS(double downspeed){
     WristMot.setNeutralMode(NeutralMode.Coast);
-    WristMot.set(downspeed * -.02);
+    WristMot.set(downspeed * .02);
 
   }
 

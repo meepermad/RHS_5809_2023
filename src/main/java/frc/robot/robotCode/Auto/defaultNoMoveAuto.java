@@ -18,18 +18,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 import frc.robot.robotCode.commands.*;
-import frc.robot.robotCode.subsystems.ElbowSub;
-import frc.robot.robotCode.subsystems.PnuematicsSub;
-import frc.robot.robotCode.subsystems.ShoulderSub;
-import frc.robot.robotCode.subsystems.Swerve;
-import frc.robot.robotCode.subsystems.WristSub;
+import frc.robot.robotCode.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class newNewAuto extends SequentialCommandGroup {
+public class defaultNoMoveAuto extends SequentialCommandGroup {
   /** Creates a new auto. */
-  public newNewAuto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
+  public defaultNoMoveAuto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a, IntakeSub b) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     
@@ -48,51 +44,43 @@ public class newNewAuto extends SequentialCommandGroup {
 
       Commands.race(new reset(swerve), new waitFor(0.5)),
       new resetGyro(swerve),
-      new InstantCommand(() -> new pnuematicIntakeClawClose(a)),
-      new waitFor(1),
+      new waitFor(0.5),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.3, ()-> 0.0,()-> false).withTimeout(2),
-      new pidfShoulder(x, 23.5).alongWith(
-        new pidfElbow(y, -101),
-        new pidfWrist(z, 30),
+      new pidfShoulder(x, 38).alongWith(
+        new pidfElbow(y, -141),
+        new pidfWrist(z, 99),
         new waitFor(1)
       ).withTimeout(1),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
-        new pidfShoulder(x, 23.5),
-        new pidfElbow(y, -101),
-        new pidfWrist(z, 30),
+        new pidfShoulder(x, 38),
+        new pidfElbow(y, -141),
+        new pidfWrist(z, 99),
         new waitFor(1)
       ).withTimeout(2.25),
       Commands.race(
-        new pnuematicIntakeClawOpen(a),
-        new pidfShoulder(x, 23.5),
-        new pidfElbow(y, -101),
-        new pidfWrist(z, 30),
+        new intakeWheelsSpinOut(b, 0, .85),
+        new pidfShoulder(x, 38),
+        new pidfElbow(y, -141),
+        new pidfWrist(z, 99),
         new waitFor(0.5)
       ),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.25, ()-> 0.0,()-> false).alongWith(
-        new pidfShoulder(x, 23.5),
-        new pidfElbow(y, -101),
-        new pidfWrist(z, 30),
+        new pidfShoulder(x, 38),
+        new pidfElbow(y, -141),
+        new pidfWrist(z, 99),
         new waitFor(1)
       ).withTimeout(0.5),
-      new pidfShoulder(x, -20).alongWith(
-        new pidfElbow(y, 0),
-        new pidfWrist(z, 73),
+      new pidfShoulder(x, -7).alongWith(
+        new pidfElbow(y, -1.2),
+        new pidfWrist(z, -3),
         new waitFor(1)
       ).withTimeout(1),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.45, ()-> 0.0,()-> false).alongWith(
-        new pidfShoulder(x, -20),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, 73),
-        new waitFor(3.5)
-      ).withTimeout(3.5),
-      Commands.race(
-        new pidfShoulder(x, -20),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, 73),
-        new waitFor(6),
-        new autoBalance(swerve)
-      )
+        new pidfShoulder(x, -7),
+        new pidfElbow(y, -1.2),
+        new pidfWrist(z, -3),
+        new waitFor(1)
+      ).withTimeout(1)
     );
   }
 }

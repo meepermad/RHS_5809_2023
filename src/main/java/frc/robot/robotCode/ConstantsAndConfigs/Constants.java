@@ -29,7 +29,7 @@ public final class Constants {
   public static class armConstants {
 public static final int kshouldermotorTOP = 7;
 public static final int kshouldermotorBOT = 5;
-public static final int kintakemotor = 9;
+public static final int kintakemotor = 29;
 public static final int kelbowmotor = 10;
 public static final int kwristmotor = 25;
 
@@ -176,7 +176,7 @@ public static final int kwristmotor = 25;
 
 public static final class JoysticksSensitivitys{
     public static final double stickDeadband = 0.2;
-    public static double moveSensitivity = 0.9; //change me to .25 when done
+    public static double moveSensitivity = 0.25; //change me to .25 when done
     public static double rotationSensitivity = .45;
 }
     
@@ -198,16 +198,16 @@ public static final class Encoders{
 }
 
 public static final class PIDS{
-    public static double kP_shoulder = .15;
-    public static double kI_shoulder = 0;
+    public static double kP_shoulder = .12;
+    public static double kI_shoulder = .1;
     public static double kD_shoulder = 0;
 
     public static double kP_elbow = .3;
     public static double kI_elbow = .0;
     public static double kD_elbow = .00;
 
-    public static double kP_wrist = 1;
-    public static double kI_wrist = .0;
+    public static double kP_wrist = 0.75;
+    public static double kI_wrist = .2;
     public static double kD_wrist = .0;
 
 }

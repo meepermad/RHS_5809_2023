@@ -21,13 +21,14 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 import frc.robot.robotCode.commands.*;
 import frc.robot.robotCode.subsystems.*;
+import frc.robot.lib.math.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class defaultAuto extends SequentialCommandGroup {
+public class theoryAuto extends SequentialCommandGroup {
   /** Creates a new simpleAuto. */
-  public defaultAuto(Swerve s_Swerve,ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
+  public theoryAuto(Swerve s_Swerve,ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a) {
     TrajectoryConfig config = new TrajectoryConfig(
         Constants.AutoConstants.kMaxSpeedMetersPerSecond,
         Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
@@ -37,26 +38,32 @@ public class defaultAuto extends SequentialCommandGroup {
         Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    Trajectory moveFoward = TrajectoryGenerator.generateTrajectory(
+    Trajectory step1 = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(new Translation2d(0.5, 0)),
-        new Pose2d(0, 1, new Rotation2d(0)),
+        List.of(new Translation2d(0.2, 0)),
+        new Pose2d(.4, 0, new Rotation2d(0)),
+        config);
+      
+    Trajectory step2 = TrajectoryGenerator.generateTrajectory(
+        new Pose2d(0, 0, new Rotation2d(0)),
+        List.of(new Translation2d(-0.2, 0)),
+        new Pose2d(-.4, 0, new Rotation2d(0)),
         config);
 
-    Trajectory moveBackward = TrajectoryGenerator.generateTrajectory(
+    Trajectory step3 = TrajectoryGenerator.generateTrajectory(
           new Pose2d(0, 0, new Rotation2d(0)),
-          List.of(new Translation2d(-0.25, 0)),
-          new Pose2d(0, -0.5, new Rotation2d(0)),
+          List.of(new Translation2d(2.5, 0)),
+          new Pose2d(5, 0, new Rotation2d(0)),
           config);
-    Trajectory moveBackwardFar = TrajectoryGenerator.generateTrajectory(
+    Trajectory step4 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(-1, 0)),
-            new Pose2d(0, -2.25, new Rotation2d(180)),
+            List.of(new Translation2d(-0.95, 0)),
+            new Pose2d(-1.9, 0, new Rotation2d(180)),
             config);
 
-          SwerveControllerCommand moveFowardCommand =
+          SwerveControllerCommand step1Command =
             new SwerveControllerCommand(
-              moveFoward,
+              step1,
               s_Swerve::getPose,
               Constants.Swerve.swerveKinematics,
               new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -65,9 +72,9 @@ public class defaultAuto extends SequentialCommandGroup {
               s_Swerve::setModuleStates,
               s_Swerve);
 
-              SwerveControllerCommand moveBackwardCommand =
+              SwerveControllerCommand step2Command =
             new SwerveControllerCommand(
-              moveBackward,
+              step2,
               s_Swerve::getPose,
               Constants.Swerve.swerveKinematics,
               new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -76,9 +83,20 @@ public class defaultAuto extends SequentialCommandGroup {
               s_Swerve::setModuleStates,
               s_Swerve);
 
-              SwerveControllerCommand moveBackwardFarCommand =
+              SwerveControllerCommand step3Command =
             new SwerveControllerCommand(
-              moveBackwardFar,
+              step3,
+              s_Swerve::getPose,
+              Constants.Swerve.swerveKinematics,
+              new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+              new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+              thetaController,
+              s_Swerve::setModuleStates,
+              s_Swerve);
+
+              SwerveControllerCommand step4Command =
+            new SwerveControllerCommand(
+              step4,
               s_Swerve::getPose,
               Constants.Swerve.swerveKinematics,
               new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -89,47 +107,51 @@ public class defaultAuto extends SequentialCommandGroup {
 
     addCommands(
       Commands.race(new reset(s_Swerve), new waitFor(0.5)),
-      Commands.race(new pnuematicIntakeClawClose(a), new waitFor(0.5)),
-      Commands.race(
-        new pidfShoulder(x, 20),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
-        new waitFor(2)
+      new InstantCommand(() -> new pnuematicIntakeClawClose(a)),
+      new InstantCommand(() -> s_Swerve.resetOdometry(step1.getInitialPose())),
+      step1Command.alongWith(
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30)
       ),
-      new InstantCommand(() -> s_Swerve.resetOdometry(moveFoward.getInitialPose())),
-      Commands.race(
-        new pidfShoulder(x, 20),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
-        moveFowardCommand
-      ),
-      Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
-        new waitFor(2)
+      new InstantCommand(() -> s_Swerve.resetOdometry(step2.getInitialPose())),
+      step2Command.alongWith(
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30)
       ),
       Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30),
+        new waitFor(1)
+      ),
+      Commands.race(
+        new pidfShoulder(x, 23),
+        new pidfElbow(y, -101),
+        new pidfWrist(z, 30),
         new pnuematicIntakeClawOpen(a),
-        new waitFor(1.5)
+        new waitFor(1)
       ),
-      new InstantCommand(() -> s_Swerve.resetOdometry(moveBackward.getInitialPose())),
+      new InstantCommand(() -> s_Swerve.resetOdometry(step3.getInitialPose())),
       
-      Commands.race(
-        new pidfShoulder(x, 25),
-        new pidfElbow(y, 117.5),
-        new pidfWrist(z, -45),
-        moveBackwardCommand
+      step3Command.alongWith(
+        new pidfShoulder(x, -20),
+        new pidfElbow(y, 20),
+        new pidfWrist(z, 73)
       ),
-      new InstantCommand(() -> s_Swerve.resetOdometry(moveBackwardFar.getInitialPose())),
+      new InstantCommand(() -> s_Swerve.resetOdometry(step4.getInitialPose())),
+      step4Command.alongWith(
+        new pidfShoulder(x, -20),
+        new pidfElbow(y, 20),
+        new pidfWrist(z, 73),
+        step4Command
+      ),
       Commands.race(
-        new pidfShoulder(x, 0),
-        new pidfElbow(y, 0),
-        new pidfWrist(z, -75),
-        moveBackwardFarCommand
+        new pidfShoulder(x, -20),
+        new pidfElbow(y, 20),
+        new pidfWrist(z, 73),
+        new autoBalance(s_Swerve)
       )
     );
   }
