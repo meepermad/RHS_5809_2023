@@ -216,7 +216,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
     //low scoring position
-    new JoystickButton(operator, 2).whileTrue(
+    new JoystickButton(operator, 2).onTrue(
         ((new pidfShoulder(a_ShoulderSub, -7)))
         .alongWith(new pidfElbow(a_elbowSub, -1.2))
         .alongWith(new pidfWrist(a_WristSub, -3))
@@ -224,23 +224,23 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     );
 
      // mid scoring positon
-     new JoystickButton(operator, 3).whileTrue(
-        ((new pidfShoulder(a_ShoulderSub, 13))
-        .alongWith(new pidfElbow(a_elbowSub, -87))
-        .alongWith(new pidfWrist(a_WristSub, 105)))
+     new JoystickButton(operator, 3).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 17))
+        .alongWith(new pidfElbow(a_elbowSub, -100))
+        .alongWith(new pidfWrist(a_WristSub, 98)))
         .until(()-> new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
     // high scoring position
-    new JoystickButton(operator, 4).whileTrue(
+    new JoystickButton(operator, 4).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 38))
-        .alongWith(new pidfElbow(a_elbowSub, -141))
-        .alongWith(new pidfWrist(a_WristSub, 99)))
+        .alongWith(new pidfElbow(a_elbowSub, -157))
+        .alongWith(new pidfWrist(a_WristSub, 106)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
     );
 
     // driving/home postion
-    new JoystickButton(operator, 1).whileTrue(
+    new JoystickButton(operator, 1).onTrue(
         ((new pidfShoulder(a_ShoulderSub, -7))
         .alongWith(new pidfElbow(a_elbowSub, -1.2))
         .alongWith(new pidfWrist(a_WristSub, -3)))
@@ -249,9 +249,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
     //pickup position
-     new JoystickButton(operator, 10).whileTrue(
+     new JoystickButton(operator, 10).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 24))
-        .alongWith(new pidfElbow(a_elbowSub, -17))
+        .alongWith(new pidfElbow(a_elbowSub, -19))
         .alongWith(new pidfWrist(a_WristSub, -79)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean())
      );

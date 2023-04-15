@@ -29,13 +29,13 @@ public class WristSub extends SubsystemBase {
   //This allows us to go up
   public void movewristUP(double upspeed){
     WristMot.setNeutralMode(NeutralMode.Coast);
-    WristMot.set(upspeed);
+    WristMot.set(-upspeed);
   }
 
   //this allows us to go down
   public void movewristDOWN(double downspeed){
     WristMot.setNeutralMode(NeutralMode.Coast);
-    WristMot.set(-1*downspeed);
+    WristMot.set(downspeed);
   }
 
   //this allows us to go in any direction

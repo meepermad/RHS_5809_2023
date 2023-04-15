@@ -198,17 +198,17 @@ public static final class Encoders{
 }
 
 public static final class PIDS{
-    public static double kP_shoulder = .12;
-    public static double kI_shoulder = .1;
-    public static double kD_shoulder = 0;
+    public static double kP_shoulder = .28;
+    public static double kI_shoulder = .0;
+    public static double kD_shoulder = .015;
 
-    public static double kP_elbow = .3;
-    public static double kI_elbow = .0;
-    public static double kD_elbow = .00;
+    public static double kP_elbow = .17;
+    public static double kI_elbow = .06;
+    public static double kD_elbow = .02;
 
-    public static double kP_wrist = 0.75;
-    public static double kI_wrist = .2;
-    public static double kD_wrist = .0;
+    public static double kP_wrist = 0.775;
+    public static double kI_wrist = .25;
+    public static double kD_wrist = .03;
 
 }
 }
