@@ -12,16 +12,13 @@ public class wristUp extends CommandBase {
   // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
   private final WristSub wristSub;
   private final double upspeed;
-  private final double downspeed;
-  
-// create the command to move
+  // create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
 // that's a bit kludge-y but I also don't particularlly mind it. Note that one of the
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
   public wristUp(WristSub wristSub, double upspeed, double downspeed) {
     this.wristSub = wristSub;
     this.upspeed = upspeed;
-    this.downspeed = downspeed;
     addRequirements(wristSub);
 
     // Use addRequirements() here to declare subsystem dependencies.

@@ -6,8 +6,6 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.robotCode.ConstantsAndConfigs.*;
 //imported the whole of the constants because I had issues doing it the "right" way - this works fine, and it's not a huge size penalty
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class IntakeSub extends SubsystemBase {
@@ -39,6 +37,10 @@ public class IntakeSub extends SubsystemBase {
      //kludge, where I manually invert leftmotor
      intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
      intakeMotor.set(-intakevomspeed);
+  }
+
+  public void brake(){
+    intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
   }
 
 

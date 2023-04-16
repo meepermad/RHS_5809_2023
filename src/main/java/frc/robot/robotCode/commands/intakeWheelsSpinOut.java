@@ -11,7 +11,6 @@ public class intakeWheelsSpinOut extends CommandBase {
   //any called variables in your subsytem go in here
   // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
   private final IntakeSub intakeSub;
-  private final double intakespeed;
   private final double intakevomspeed;
   
 //create the command to move
@@ -20,7 +19,6 @@ public class intakeWheelsSpinOut extends CommandBase {
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
   public intakeWheelsSpinOut(IntakeSub intakeSub, double intakespeed, double intakevomspeed) {
     this.intakeSub = intakeSub;
-    this.intakespeed = intakespeed;
     this.intakevomspeed = intakevomspeed;
     addRequirements(intakeSub);
 
@@ -40,7 +38,9 @@ public class intakeWheelsSpinOut extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  intakeSub.intakeVOM(0);  }
+  intakeSub.intakeVOM(0);
+  intakeSub.brake();
+  }
 
   // Returns true when the command should end.
   @Override

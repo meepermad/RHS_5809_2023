@@ -11,7 +11,6 @@ public class wristDown extends CommandBase {
   //any called variables in your subsytem go in here
   // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
   private final WristSub wristSub;
-  private final double upspeed;
   private final double downspeed;
   
 //create the command to move
@@ -20,7 +19,6 @@ public class wristDown extends CommandBase {
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
   public wristDown(WristSub wristSub, double upspeed, double downspeed) {
     this.wristSub = wristSub;
-    this.upspeed = upspeed;
     this.downspeed = downspeed;
     addRequirements(wristSub);
 

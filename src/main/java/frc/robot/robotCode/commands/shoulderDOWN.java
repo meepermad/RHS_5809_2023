@@ -8,7 +8,6 @@ public class shoulderDown extends CommandBase {
 
     //any called variables in your subsytem go in here
   private final ShoulderSub shoulderSub;
-  private final double speed;
   private final double speedD;
   
 //create the command to move
@@ -17,7 +16,6 @@ public class shoulderDown extends CommandBase {
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
   public shoulderDown(ShoulderSub shoulderSub, double speed, double speedD) {
     this.shoulderSub = shoulderSub;
-    this.speed = speed;
     this.speedD = speedD;
     addRequirements(shoulderSub);
 

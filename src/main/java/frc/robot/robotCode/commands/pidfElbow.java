@@ -7,14 +7,12 @@ package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.lib.util.*;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
-import frc.robot.robotCode.RobotKeybindsAndFunctions.RobotContainer;
 import frc.robot.robotCode.subsystems.*;
 
 public class pidfElbow extends CommandBase {
   /** Creates a new pidfShoulder. */
   private ElbowSub elbowSub;
   private double goal;
-  private boolean isInterrupted = false;
   private PIDFElbow angleController = new PIDFElbow("angle", Constants.PIDS.kP_elbow, Constants.PIDS.kI_elbow, Constants.PIDS.kD_elbow, 1);
   public pidfElbow(ElbowSub elbowSub, double goal) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,7 +23,6 @@ public class pidfElbow extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isInterrupted = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,7 +43,6 @@ public class pidfElbow extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    isInterrupted = true;
     elbowSub.elABS(0);
     elbowSub.brakeEL();
   }

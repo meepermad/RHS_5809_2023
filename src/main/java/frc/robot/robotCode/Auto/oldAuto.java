@@ -4,19 +4,8 @@
 
 package frc.robot.robotCode.Auto;
 
-import java.util.List;
-
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.robotCode.ConstantsAndConfigs.Constants;
 import frc.robot.robotCode.commands.*;
 import frc.robot.robotCode.subsystems.ElbowSub;
 import frc.robot.robotCode.subsystems.PnuematicsSub;

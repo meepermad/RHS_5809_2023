@@ -1,10 +1,7 @@
 package frc.robot.robotCode.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.robotCode.ConstantsAndConfigs.*;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants.pConstants;
 
 

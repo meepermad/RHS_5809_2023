@@ -2,7 +2,6 @@ package frc.robot.lib.util;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RevThroughBoreEncoder {
     private DutyCycleEncoder m_dutyCycleEncoder;

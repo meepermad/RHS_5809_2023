@@ -4,8 +4,6 @@
 
 package frc.robot.robotCode.RobotKeybindsAndFunctions;
 
-import java.beans.Encoder;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -13,18 +11,11 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.robotCode.Auto.*;
-import frc.robot.robotCode.ConstantsAndConfigs.Constants;
-//import frc.robot.robotCode.ConstantsAndConfigs.Constants.Swerve;
-import frc.robot.robotCode.ConstantsAndConfigs.Constants.OperatorConstants;
 import frc.robot.robotCode.commands.TeleopSwerve;
 import frc.robot.robotCode.commands.autoBalance;
 //import frc.robot.robotCode.subsystems.compressorSub;
@@ -32,31 +23,17 @@ import frc.robot.robotCode.subsystems.*;
 import frc.robot.robotCode.commands.intakeWheelsSpinIn;
 import frc.robot.robotCode.commands.intakeWheelsSpinOut;
 import frc.robot.robotCode.commands.wristUp;
-import frc.robot.robotCode.commands.wristDown;
-import frc.robot.robotCode.commands.elbowDown;
 import frc.robot.robotCode.commands.elbowUp;
-import frc.robot.robotCode.commands.shoulderDown;
 import frc.robot.robotCode.commands.shoulderUp;
-import frc.robot.robotCode.commands.waitFor;
-import frc.robot.robotCode.commands.pnuematicBrakeShoulderEngage;
-import frc.robot.robotCode.commands.pnuematicBrakeShoulderDisengage;
 import frc.robot.robotCode.commands.pidfElbow;
 import frc.robot.robotCode.commands.pidfShoulder;
 import frc.robot.robotCode.commands.pidfWrist;
 import frc.robot.robotCode.commands.pnuematicIntakeClawClose;
 import frc.robot.robotCode.commands.pnuematicIntakeClawOpen;
 import frc.robot.robotCode.commands.reset;
-import frc.robot.robotCode.commands.brakeWrist;
 //import frc.robot.robotCode.commands.candleRGB;
 import frc.robot.robotCode.commands.changeOffsetElbow;
 import frc.robot.robotCode.commands.changeOffsetShoulder;
-import frc.robot.robotCode.commands.pnuematicBrakeElbowDisengage;
-import frc.robot.robotCode.commands.pnuematicBrakeElbowEngage;
-//import frc.robot.robotCode.commands.compressorOFF;
-import frc.robot.robotCode.commands.brakeElbow;
-import frc.robot.robotCode.commands.brakeShoulder;
-//import frc.robot.robotCode.commands.compressorON;
-import frc.robot.robotCode.commands.autoSwerve;
 
 
 
@@ -112,8 +89,8 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   //private final compressorSub p_cpCompressorSub = new compressorSub();
 
   private static final Command kDefaultAuto = new defaultBalanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
-  private static final Command kCustomAuto = new oldAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
-  private Command m_autoSelected;
+  private static final Command kOutOfBoundsAuto = new defaultOutOfBoundsAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
+  private static final Command kNoMoveAuto = new defaultNoMoveAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   int r1,g1,b1;
@@ -121,7 +98,8 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("Old Auto", kCustomAuto);
+    m_chooser.addOption("Out of Bounds Auto", kOutOfBoundsAuto);
+    m_chooser.addOption("No Move Auto", kNoMoveAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
       s_Swerve.setDefaultCommand(
           new TeleopSwerve(
@@ -217,10 +195,10 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     //low scoring position
     new JoystickButton(operator, 2).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, -7)))
-        .alongWith(new pidfElbow(a_elbowSub, -1.2))
-        .alongWith(new pidfWrist(a_WristSub, -3))
-        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
+      ((new pidfShoulder(a_ShoulderSub, 42))
+      .alongWith(new pidfElbow(a_elbowSub, -53))
+      .alongWith(new pidfWrist(a_WristSub, 48)))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean() || new JoystickButton(operator, 8).getAsBoolean())
     );
 
      // mid scoring positon
@@ -228,23 +206,23 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
         ((new pidfShoulder(a_ShoulderSub, 17))
         .alongWith(new pidfElbow(a_elbowSub, -100))
         .alongWith(new pidfWrist(a_WristSub, 98)))
-        .until(()-> new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
+        .until(()-> new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean() || new JoystickButton(operator, 8).getAsBoolean())
     );
 
     // high scoring position
     new JoystickButton(operator, 4).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 38))
         .alongWith(new pidfElbow(a_elbowSub, -157))
-        .alongWith(new pidfWrist(a_WristSub, 106)))
-        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
+        .alongWith(new pidfWrist(a_WristSub, 109)))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean() || new JoystickButton(operator, 8).getAsBoolean())
     );
 
     // driving/home postion
     new JoystickButton(operator, 1).onTrue(
         ((new pidfShoulder(a_ShoulderSub, -7))
         .alongWith(new pidfElbow(a_elbowSub, -1.2))
-        .alongWith(new pidfWrist(a_WristSub, -3)))
-        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
+        .alongWith(new pidfWrist(a_WristSub, -5)))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean() || new JoystickButton(operator, 8).getAsBoolean())
     );
 
 
@@ -253,10 +231,17 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
         ((new pidfShoulder(a_ShoulderSub, 24))
         .alongWith(new pidfElbow(a_elbowSub, -19))
         .alongWith(new pidfWrist(a_WristSub, -79)))
-        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean())
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 8).getAsBoolean())
      );
 
 
+     //ground intake
+     new JoystickButton(operator, 8).onTrue(
+        ((new pidfShoulder(a_ShoulderSub, 42))
+        .alongWith(new pidfElbow(a_elbowSub, -53))
+        .alongWith(new pidfWrist(a_WristSub, 48)))
+        .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
+     );
     
 
 
@@ -294,7 +279,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     //m_candleSubsystem.setRGB(r1, b1, g1);
     System.out.println("Auto");
     s_Swerve.resetBalance();
-    return new defaultBalanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
+    return m_chooser.getSelected();
     //return new balanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);
     //return m_chooser.getSelected();
 }

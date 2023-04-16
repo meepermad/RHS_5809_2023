@@ -7,14 +7,12 @@ package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.lib.util.*;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
-import frc.robot.robotCode.RobotKeybindsAndFunctions.RobotContainer;
 import frc.robot.robotCode.subsystems.*;
 
 public class pidfWrist extends CommandBase {
   /** Creates a new pidfShoulder. */
   private final WristSub wristSub;
   private final double goal;
-  private boolean isInterrupted = false;
   private PIDFWrist angleController = new PIDFWrist("angle", Constants.PIDS.kP_wrist, Constants.PIDS.kI_wrist, Constants.PIDS.kD_wrist, 1);
   public pidfWrist(WristSub wristSub, double goal) {
     this.wristSub = wristSub;
@@ -25,7 +23,6 @@ public class pidfWrist extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isInterrupted = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +39,6 @@ public class pidfWrist extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    isInterrupted = true;
     wristSub.movewristABS(0);
     wristSub.brakeWrist();
   }

@@ -12,16 +12,13 @@ public class intakeWheelsSpinIn extends CommandBase {
   // the way I'm doing this is lazy but functional. SpeedD isn't used here, but fight me.
   private final IntakeSub intakeSub;
   private final double intakespeed;
-  private final double intakevomspeed;
-  
-//create the command to move
+  //create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
 // that's a bit kludge-y but I also don't particularlly mind it. Note that one of the
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
   public intakeWheelsSpinIn(IntakeSub intakeSub, double intakespeed, double intakevomspeed) {
     this.intakeSub = intakeSub;
     this.intakespeed = intakespeed;
-    this.intakevomspeed = intakevomspeed;
     addRequirements(intakeSub);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -40,7 +37,9 @@ public class intakeWheelsSpinIn extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  intakeSub.intakeNOM(0);  }
+  intakeSub.intakeNOM(0);
+  intakeSub.brake();
+  }
 
   // Returns true when the command should end.
   @Override

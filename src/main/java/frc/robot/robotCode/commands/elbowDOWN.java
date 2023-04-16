@@ -9,7 +9,6 @@ public class elbowDown extends CommandBase {
 
     //any called variables in your subsytem go in here
   private final ElbowSub elbowSub;
-  private final double speed;
   private final double speedD;
   
 //create the command to move
@@ -18,7 +17,6 @@ public class elbowDown extends CommandBase {
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
   public elbowDown(ElbowSub elbowSub, double speed, double speedD) {
     this.elbowSub = elbowSub;
-    this.speed = speed;
     this.speedD = speedD;
     addRequirements(elbowSub);
 

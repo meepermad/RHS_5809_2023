@@ -4,26 +4,19 @@
 package frc.robot.robotCode.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.robotCode.subsystems.ElbowSub;
-import frc.robot.robotCode.commands.pnuematicBrakeElbowDisengage;
-import frc.robot.robotCode.commands.pnuematicBrakeElbowEngage;
-import frc.robot.robotCode.subsystems.PnuematicsSub;
 
 public class elbowUp extends CommandBase {
 
     //any called variables in your subsytem go in here
   private final ElbowSub elbowSub;
   private final double speed;
-  private final double speedD;
-  //private pnuematicsSub pnuematicsSub;
-  
-//create the command to move
+  //create the command to move
 //i'm setting it up to allow for a speed up and down to be passed no matter what.
 // that's a bit kludge-y but I also don't particularlly mind it. Note that one of the
 // two values (speed, speedD) needs to be zero (0) ANY time you send this command. 
   public elbowUp(ElbowSub elbowSub, double speed, double speedD) {
     this.elbowSub = elbowSub;
     this.speed = speed;
-    this.speedD = speedD;
     addRequirements(elbowSub);
  
 
