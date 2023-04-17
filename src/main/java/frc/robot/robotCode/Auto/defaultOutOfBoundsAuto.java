@@ -21,17 +21,22 @@ public class defaultOutOfBoundsAuto extends SequentialCommandGroup {
     addCommands(
       Commands.race(new reset(swerve), new waitFor(0.5)),
       new resetGyro(swerve),
-      new waitFor(0.5),
+      Commands.race(
+        new waitFor(0.5),
+        new intakeWheelsSpinIn(b, .3, 0)
+      ),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.3, ()-> 0.0,()-> false).withTimeout(2),
       new pidfShoulder(x, 38).alongWith(
         new pidfElbow(y, -157),
         new pidfWrist(z, 109),
+        new intakeWheelsSpinIn(b, .3, 0),
         new waitFor(1)
       ).withTimeout(1),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
         new pidfShoulder(x, 38),
         new pidfElbow(y, -157),
         new pidfWrist(z, 109),
+        new intakeWheelsSpinIn(b, .3, 0),
         new waitFor(1)
       ).withTimeout(2.25),
       Commands.race(

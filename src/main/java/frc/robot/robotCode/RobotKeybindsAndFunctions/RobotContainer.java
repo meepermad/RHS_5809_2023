@@ -33,7 +33,7 @@ import frc.robot.robotCode.commands.pnuematicIntakeClawOpen;
 import frc.robot.robotCode.commands.reset;
 //import frc.robot.robotCode.commands.candleRGB;
 import frc.robot.robotCode.commands.changeOffsetElbow;
-import frc.robot.robotCode.commands.changeOffsetShoulder;
+import frc.robot.robotCode.commands.*;
 
 
 
@@ -73,7 +73,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
   /* Subsystems */
   public static final Swerve s_Swerve = new Swerve();
-  //public static final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
+  public static final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem(driver);
   //i'm using the the "a_" to denote arm subsystems.  *spiderman camera "neat" meme here*
   public static final ElbowSub a_elbowSub = new ElbowSub(elbowEncoder);
   public static final IntakeSub a_intakeSub = new IntakeSub();
@@ -168,7 +168,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       //this is the intake IN/OUT command ON behavoir
       new JoystickButton(operator, 5).whileTrue(new intakeWheelsSpinIn(a_intakeSub, .85, 0));
       new JoystickButton(operator, 6).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
-      new JoystickButton(driver, 6).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
+      new JoystickButton(driver, 5).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
 
       //this is the intake IN/OUT command OFF behavoir
       //new JoystickButton(driver, 9).onFalse(new intakeIN(a_intakeSub, .0, 0));
@@ -226,7 +226,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     );
 
 
-    //pickup position
+    //single intake
      new JoystickButton(operator, 10).onTrue(
         ((new pidfShoulder(a_ShoulderSub, 24))
         .alongWith(new pidfElbow(a_elbowSub, -19))
@@ -235,11 +235,11 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
      );
 
 
-     //ground intake
+     //double intake
      new JoystickButton(operator, 8).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, 42))
-        .alongWith(new pidfElbow(a_elbowSub, -53))
-        .alongWith(new pidfWrist(a_WristSub, 48)))
+        ((new pidfShoulder(a_ShoulderSub, 30))
+        .alongWith(new pidfElbow(a_elbowSub, -129))
+        .alongWith(new pidfWrist(a_WristSub, 119)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean())
      );
     
@@ -250,12 +250,12 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
       //panic KILL IT ALL switch
 
 
-    //yellow  
-    //new JoystickButton(driver,1).whileTrue(new candleRGB(m_candleSubsystem, 255, 255, 0, r1, g1, b1));
-    //purple
-    //new JoystickButton(driver,2).whileTrue(new candleRGB(m_candleSubsystem, 221,160,221, r1, g1, b1));
-     // new JoystickButton(driver, 9).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
-     // new JoystickButton(driver, 10).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
+    //purple  
+    new JoystickButton(driver,1).whileTrue(new candleRGB(m_candleSubsystem, 255, 255, 0, r1, g1, b1));
+    //yellow
+    new JoystickButton(driver,2).whileTrue(new candleRGB(m_candleSubsystem, 221,0 ,221, r1, g1, b1));
+    //  new JoystickButton(driver, 9).onTrue(new pbrakeSHOULDER_ON(p_pPnuematicsSub));
+    //  new JoystickButton(driver, 10).onTrue(new pbrakeSHOULDER_OUT(p_pPnuematicsSub));
     
        
     }
@@ -276,8 +276,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
         b1 = 255;
       }
 
-    //m_candleSubsystem.setRGB(r1, b1, g1);
-    System.out.println("Auto");
+    m_candleSubsystem.setRGB(r1, b1, g1);
     s_Swerve.resetBalance();
     return m_chooser.getSelected();
     //return new balanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub);

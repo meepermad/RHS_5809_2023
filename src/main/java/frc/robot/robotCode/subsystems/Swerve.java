@@ -24,7 +24,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
-    private PIDController balancePID = new PIDController(0.075, 0, .008);
+    private PIDController balancePID = new PIDController(0.085, 0, .008);
 	private double oldPitch;
     private double time;
     private SwerveModuleState[] m_desiredStates;
@@ -159,7 +159,7 @@ public class Swerve extends SubsystemBase {
 			setModuleStates(abc);
 		} else {
 			//drive 
-			double xPower = MathUtil.clamp(balancePID.calculate(pitch), -0.15, 0.15);
+			double xPower = MathUtil.clamp(balancePID.calculate(pitch), -0.175, 0.175);
             SwerveModuleState[] abc = Constants.Swerve.swerveKinematics.toSwerveModuleStates(new ChassisSpeeds(xPower, 0, 0));
 			setModuleStates(abc);
 		}

@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   //public static final LimeLight limeVisionSubsystem = new LimeLight();
-  Alliance alliance = DriverStation.getAlliance();
   int r1,g1,b1;
 
   /**

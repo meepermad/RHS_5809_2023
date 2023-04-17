@@ -122,7 +122,7 @@ public static final int kwristmotor = 25;
             public static final int driveMotorID = 13;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 20;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(272.0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(264);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -142,7 +142,7 @@ public static final int kwristmotor = 25;
             public static final int driveMotorID = 16;
             public static final int angleMotorID = 12;
             public static final int canCoderID = 19;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(180.0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(181.0);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -176,7 +176,7 @@ public static final int kwristmotor = 25;
 
 public static final class JoysticksSensitivitys{
     public static final double stickDeadband = 0.2;
-    public static double moveSensitivity = 0.25; //change me to .25 when done
+    public static double moveSensitivity = 0.85; //change me to .25 when done
     public static double rotationSensitivity = .45;
 }
     
