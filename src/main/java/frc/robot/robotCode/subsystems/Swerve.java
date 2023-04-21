@@ -159,7 +159,7 @@ public class Swerve extends SubsystemBase {
 			setModuleStates(abc);
 		} else {
 			//drive 
-			double xPower = MathUtil.clamp(balancePID.calculate(pitch), -0.175, 0.175);
+			double xPower = MathUtil.clamp(balancePID.calculate(pitch), -0.2, 0.2);
             SwerveModuleState[] abc = Constants.Swerve.swerveKinematics.toSwerveModuleStates(new ChassisSpeeds(xPower, 0, 0));
 			setModuleStates(abc);
 		}

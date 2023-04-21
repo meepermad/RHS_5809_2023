@@ -4,6 +4,7 @@
 
 package frc.robot.robotCode.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.lib.util.*;
 import frc.robot.robotCode.ConstantsAndConfigs.Constants;
@@ -29,15 +30,19 @@ public class pidfElbow extends CommandBase {
   @Override
   public void execute() {
     if(Math.abs(angleController.getPositionError()) > 0.5)
-      elbowSub.elABS(angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
+      elbowSub.elABS(MathUtil.clamp(angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())), -20, 15));
     else
       elbowSub.brakeEL();
-   System.out.println("E | Current angle | " + elbowSub.getAngle());
-   System.out.println("E | PID Value | " + angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset())));
-   System.out.println("E | Position Error | " + angleController.getPositionError());
+
+   //running functions to fix arm
+   elbowSub.getAngle();
+   angleController.calculate(elbowSub.getAngle(), (goal + elbowSub.getOffset()));
+   angleController.getPositionError();
+
+
    //System.out.println("Elbow Offset | " + elbowSub.getOffset());
    //System.out.println(setpoint);
-   System.out.println("");
+   //System.out.println("");
   }
 
   // Called once the command ends or is interrupted.

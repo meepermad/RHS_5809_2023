@@ -12,9 +12,9 @@ import frc.robot.robotCode.subsystems.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class defaultNoMoveAuto extends SequentialCommandGroup {
+public class defaultBalanceAutoWithMobility extends SequentialCommandGroup {
   /** Creates a new auto. */
-  public defaultNoMoveAuto(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a, IntakeSub b) {
+  public defaultBalanceAutoWithMobility(Swerve swerve, ShoulderSub x, ElbowSub y, WristSub z, PnuematicsSub a, IntakeSub b) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     
@@ -38,9 +38,9 @@ public class defaultNoMoveAuto extends SequentialCommandGroup {
         new pidfWrist(z, 109),
         new intakeWheelsSpinIn(b, .3, 0),
         new waitFor(1)
-      ).withTimeout(2.25),
+      ).withTimeout(1),
       Commands.race(
-        new intakeWheelsSpinOut(b, 0, .85),
+        new intakeWheelsSpinOut(b, 0, .55),
         new pidfShoulder(x, 38),
         new pidfElbow(y, -157),
         new pidfWrist(z, 109),
@@ -62,12 +62,25 @@ public class defaultNoMoveAuto extends SequentialCommandGroup {
         new pidfWrist(z, -5),
         new waitFor(1)
       ).withTimeout(1),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.45, ()-> 0.0,()-> false).alongWith(
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.55, ()-> 0.0,()-> false).alongWith(
         new pidfShoulder(x, -7),
         new pidfElbow(y, -1.2),
         new pidfWrist(z, -5),
-        new waitFor(.8)
-      ).withTimeout(.8)
+        new waitFor(3.125)
+      ).withTimeout(3.125),
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.55, ()-> 0.0,()-> false).alongWith(
+        new pidfShoulder(x, -7),
+        new pidfElbow(y, -1.2),
+        new pidfWrist(z, -5),
+        new waitFor(1)
+      ).withTimeout(1),
+      Commands.race(
+        new pidfShoulder(x, -7),
+        new pidfElbow(y, -1.2),
+        new pidfWrist(z, -5),
+        new waitFor(4),
+        new autoBalance(swerve)
+      )
     );
   }
 }

@@ -23,13 +23,13 @@ public class defaultBalanceAuto extends SequentialCommandGroup {
       new resetGyro(swerve),
       Commands.race(
         new waitFor(0.5),
-        new intakeWheelsSpinIn(b, .3, 0)
+        new intakeWheelsSpinIn(b, .5, 0)
       ),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.3, ()-> 0.0,()-> false).withTimeout(2),
       new pidfShoulder(x, 38).alongWith(
         new pidfElbow(y, -157),
         new pidfWrist(z, 109),
-        new intakeWheelsSpinIn(b, .3, 0),
+        new intakeWheelsSpinIn(b, .5, 0),
         new waitFor(1)
       ).withTimeout(1),
       new newAutoSwerve(swerve, ()-> 0.0, ()-> -0.3, ()-> 0.0,()-> false).alongWith(
@@ -38,7 +38,7 @@ public class defaultBalanceAuto extends SequentialCommandGroup {
         new pidfWrist(z, 109),
         new intakeWheelsSpinIn(b, .3, 0),
         new waitFor(1)
-      ).withTimeout(2.25),
+      ).withTimeout(1),
       Commands.race(
         new intakeWheelsSpinOut(b, 0, .55),
         new pidfShoulder(x, 38),
@@ -52,22 +52,27 @@ public class defaultBalanceAuto extends SequentialCommandGroup {
         new pidfWrist(z, 109),
         new waitFor(1)
       ).withTimeout(0.5),
+      new pidfShoulder(x, 15).alongWith(
+        new pidfElbow(y, -75),
+        new pidfWrist(z, 50),
+        new waitFor(1)
+      ).withTimeout(1),
       new pidfShoulder(x, -7).alongWith(
         new pidfElbow(y, -1.2),
         new pidfWrist(z, -5),
         new waitFor(1)
       ).withTimeout(1),
-      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.45, ()-> 0.0,()-> false).alongWith(
+      new newAutoSwerve(swerve, ()-> 0.0, ()-> 0.55, ()-> 0.0,()-> false).alongWith(
         new pidfShoulder(x, -7),
         new pidfElbow(y, -1.2),
         new pidfWrist(z, -5),
-        new waitFor(3.5)
-      ).withTimeout(3.5),
+        new waitFor(1.875)
+      ).withTimeout(1.875),
       Commands.race(
         new pidfShoulder(x, -7),
         new pidfElbow(y, -1.2),
         new pidfWrist(z, -5),
-        new waitFor(6),
+        new waitFor(5),
         new autoBalance(swerve)
       )
     );

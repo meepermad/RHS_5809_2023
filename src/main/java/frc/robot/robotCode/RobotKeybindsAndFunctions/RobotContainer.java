@@ -91,6 +91,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private static final Command kDefaultAuto = new defaultBalanceAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
   private static final Command kOutOfBoundsAuto = new defaultOutOfBoundsAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
   private static final Command kNoMoveAuto = new defaultNoMoveAuto(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
+  private static final Command kBalanceAndMobility = new defaultBalanceAutoWithMobility(s_Swerve, a_ShoulderSub, a_elbowSub, a_WristSub, p_pPnuematicsSub, a_intakeSub);
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   int r1,g1,b1;
@@ -100,12 +101,13 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("Out of Bounds Auto", kOutOfBoundsAuto);
     m_chooser.addOption("No Move Auto", kNoMoveAuto);
+    m_chooser.addOption("Mobility and Balance", kBalanceAndMobility);
     SmartDashboard.putData("Auto choices", m_chooser);
       s_Swerve.setDefaultCommand(
           new TeleopSwerve(
               s_Swerve, 
-              () -> -driver.getRawAxis(translationAxis), 
-              () -> -driver.getRawAxis(strafeAxis), 
+              () -> -driver.getRawAxis(translationAxis) * 1.12, 
+              () -> -driver.getRawAxis(strafeAxis) * 1.12, 
               () -> driver.getRawAxis(rotationAxis), 
               () -> robotCentric.getAsBoolean()
           )
@@ -166,8 +168,9 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
 
       //this is the intake IN/OUT command ON behavoir
-      new JoystickButton(operator, 5).whileTrue(new intakeWheelsSpinIn(a_intakeSub, .85, 0));
-      new JoystickButton(operator, 6).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
+      new JoystickButton(operator, 5).whileTrue(new intakeWheelsSpinIn(a_intakeSub, 1, 0));
+      new JoystickButton(operator, 6).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, 1));
+      new JoystickButton(operator, 5).whileFalse(new intakeWheelsSpinIn(a_intakeSub, .3, 0));
       new JoystickButton(driver, 5).whileTrue(new intakeWheelsSpinOut(a_intakeSub, 0, .85));
 
       //this is the intake IN/OUT command OFF behavoir
@@ -211,7 +214,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
     // high scoring position
     new JoystickButton(operator, 4).onTrue(
-        ((new pidfShoulder(a_ShoulderSub, 38))
+        ((new pidfShoulder(a_ShoulderSub, 40))
         .alongWith(new pidfElbow(a_elbowSub, -157))
         .alongWith(new pidfWrist(a_WristSub, 109)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 1).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean() || new JoystickButton(operator, 8).getAsBoolean())
@@ -221,7 +224,7 @@ private final int strafeAxis = XboxController.Axis.kLeftX.value;
     new JoystickButton(operator, 1).onTrue(
         ((new pidfShoulder(a_ShoulderSub, -7))
         .alongWith(new pidfElbow(a_elbowSub, -1.2))
-        .alongWith(new pidfWrist(a_WristSub, -5)))
+        .alongWith(new pidfWrist(a_WristSub, -7)))
         .until(()-> new JoystickButton(operator, 3).getAsBoolean() || new JoystickButton(operator, 2).getAsBoolean() || new JoystickButton(operator, 4).getAsBoolean() || new JoystickButton(operator, 10).getAsBoolean() || new JoystickButton(operator, 8).getAsBoolean())
     );
 
